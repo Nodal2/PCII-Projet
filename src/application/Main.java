@@ -12,6 +12,8 @@ public class Main {
 		fenetre.add(affichage); //ajoute le component a la fenetre
 		fenetre.pack();
 		fenetre.setVisible(true); //rend la fenetre visible
+
+		//test commentaire pour push steven
 	}
 
 }
