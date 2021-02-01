@@ -19,10 +19,4 @@ public class Modele {
 	public int getPosY() {
 		return this.posY;
 	}
-	
-	
-	
-	
-
-
 }
