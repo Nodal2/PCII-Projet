@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import modele.Voiture;
 import vue.Affichage;
 
+
 public class Main {
 
 	public static void main(String[] args) {

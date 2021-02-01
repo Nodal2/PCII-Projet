@@ -1,10 +1,12 @@
 package modele;
-
-public class Voiture {
 	
+public class Voiture {
+
+	/** constantes */
 	public final static int LARGEUR_VOITURE = 150;
 	public final static int HAUTEUR_VOITURE = 150;
-	
+
+	/** attributs */
 	private int posX;
 	private int posY;
 	
@@ -12,7 +14,8 @@ public class Voiture {
 		this.posX = x;
 		this.posY = y;
 	}
-	
+
+	/** accesseur */
 	public int getPosX() {
 		return this.posX;
 	}
