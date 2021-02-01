@@ -2,12 +2,15 @@ package application;
 import javax.swing.JFrame;
 
 import controleur.Controleur;
+import modele.Voiture;
 import vue.Affichage;
+
 
 public class Main {
 
 	public static void main(String[] args) {
-		Affichage affichage = new Affichage();
+		Voiture modele = new Voiture(500, 500);
+		Affichage affichage = new Affichage(modele);
 		Controleur controleur = new Controleur(affichage);
 		affichage.setFocusable(true);
 		affichage.addKeyListener(controleur);
