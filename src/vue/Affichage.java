@@ -1,6 +1,6 @@
 package vue;
 
-import Modele.Modele;
+import modele.Modele;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

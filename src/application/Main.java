@@ -1,7 +1,7 @@
 package application;
 import javax.swing.JFrame;
 
-import Modele.Modele;
+import modele.Modele;
 import vue.Affichage;
 
 public class Main {
