@@ -3,16 +3,16 @@ package Modele;
 public class Modele {
 
     /**Attributs */
-    private int Pos_X = 50; // Position x de la voiture
-    private int Pos_y = 50; // Position y de la voiture
+    public int Pos_x = 500; // Position x de la voiture
+    public int Pos_y = 50; // Position y de la voiture
 
     /** Constantes */
-    private static int LARG_VOIT = 50; // Largeur de la voiture
-    private static int LONG_VOIT = 50; // Longueur de la voiture
+    private static int LARG_VOIT = 150; // Largeur de la voiture
+    private static int LONG_VOIT = 530; // Longueur de la voiture
 
     /** Accesseurs */
-    public int getPos_X(){
-        return this.Pos_X;
+    public int getPos_x(){
+        return this.Pos_x;
     }
 
     public int getPos_y(){
@@ -20,11 +20,19 @@ public class Modele {
     }
 
     public void setPos_X(int pos_X) {
-        this.Pos_X = pos_X;
+        this.Pos_x = pos_X;
     }
 
     public void setPos_y(int pos_y) {
         this.Pos_y = pos_y;
+    }
+
+    public static int getLargVoit() {
+        return LARG_VOIT;
+    }
+
+    public static int getLongVoit() {
+        return LONG_VOIT;
     }
 
     /** Constructeur */

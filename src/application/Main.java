@@ -1,12 +1,16 @@
 package application;
 import javax.swing.JFrame;
 
+import Modele.Modele;
 import vue.Affichage;
 
 public class Main {
 
 	public static void main(String[] args) {
-		Affichage affichage = new Affichage();
+
+		Modele modele = new Modele();
+		Affichage affichage = new Affichage(modele);
+
 		JFrame fenetre = new JFrame("Projet"); //instancie une fenetre avec un titre
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //permet de quitter le programme quand on clique sur la croix
 		fenetre.add(affichage); //ajoute le component a la fenetre
