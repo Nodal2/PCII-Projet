@@ -20,3 +20,4 @@ public class Modele {
 		return this.posY;
 	}
 }
+
