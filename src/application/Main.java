@@ -1,14 +1,14 @@
 package application;
 import javax.swing.JFrame;
 
-import Modele.Modele;
+import modele.Modele;
 import vue.Affichage;
 
 public class Main {
 
 	public static void main(String[] args) {
 
-		Modele modele = new Modele();
+		Modele modele = new Modele(500, 500);
 		Affichage affichage = new Affichage(modele);
 
 		JFrame fenetre = new JFrame("Projet"); //instancie une fenetre avec un titre

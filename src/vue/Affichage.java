@@ -1,6 +1,6 @@
 package vue;
 
-import Modele.Modele;
+import modele.Modele;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -25,12 +25,8 @@ public class Affichage extends JPanel {
 	
 	@Override
 	public void paint(Graphics g) {
-		//g.clearRect(0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE);
 		super.paint(g); //permet de nettoyer l'image
-		super.revalidate();
-		//super.repaint();
-
-		g.drawOval(this.modele.getPos_x(), this.modele.getPos_y(), this.modele.getLargVoit() , this.modele.getLongVoit()); //Permet de dessiner un ovale
+		g.drawOval(this.modele.getPosX(), this.modele.getPosY(), Modele.LARGEUR_VOITURE , Modele.HAUTEUR_VOITURE); //Permet de dessiner un ovale
 
 	}
 
