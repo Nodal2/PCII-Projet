@@ -3,14 +3,17 @@ package controleur;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import modele.Voiture;
 import vue.Affichage;
 
 public class Controleur implements KeyListener{
 	
 	private Affichage affichage;
+	private Voiture voiture;
 	
-	public Controleur(Affichage affichage) {
+	public Controleur(Affichage affichage, Voiture voiture) {
 		this.affichage = affichage;
+		this.voiture = voiture;
 	}
 
 	@Override
@@ -21,22 +24,21 @@ public class Controleur implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		int touche = e.getKeyCode();
 		if(touche == KeyEvent.VK_RIGHT) {
-			//dire a la moto d'aller a droite
+			this.voiture.setDroite(true);
 		}
 		if(touche == KeyEvent.VK_LEFT) {
-			//dire a la moto d'aller a gauche
+			this.voiture.setGauche(true);
 		}
-		this.affichage.repaint();
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int touche = e.getKeyCode();
 		if(touche == KeyEvent.VK_RIGHT) {
-			//dire a la moto d'arreter d'aller a droite
+			this.voiture.setDroite(false);
 		}
 		if(touche == KeyEvent.VK_LEFT) {
-			//dire a la moto d'arreter d'aller a gauche
+			this.voiture.setGauche(false);
 		}
 		this.affichage.repaint();
 	}

@@ -1,5 +1,6 @@
 package vue;
 
+import modele.Terrain;
 import modele.Voiture;
 
 import java.awt.Dimension;
@@ -11,22 +12,20 @@ public class Affichage extends JPanel {
 	private static final long serialVersionUID = 6883630088377101348L;
 
 	/** Attribut */
-	private Voiture modele;
-	
-	/** constantes */
-	public static final int LARGEUR_FENETRE = 1000;
-	public static final int HAUTEUR_FENETRE = 600;
+	private Voiture voiture;
+	private Terrain terrain;
 	
 	/** constructeur */
-	public Affichage(Voiture e) {
-		this.modele = e;
-		setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
+	public Affichage(Voiture voiture, Terrain terrain) {
+		this.voiture = voiture;
+		this.terrain = terrain;
+		setPreferredSize(new Dimension(Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_TERRAIN));
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g); //permet de nettoyer l'image
-		g.drawOval(this.modele.getPosX(), this.modele.getPosY(), Voiture.LARGEUR_VOITURE , Voiture.HAUTEUR_VOITURE); //Permet de dessiner un ovale
+		g.drawOval(this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE , Voiture.HAUTEUR_VOITURE); //Permet de dessiner un ovale
 
 	}
 
