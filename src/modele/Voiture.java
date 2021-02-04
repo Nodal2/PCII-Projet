@@ -13,7 +13,8 @@ public class Voiture {
 	private int velocite;
 	private boolean gauche;
 	private boolean droite;
-
+	
+	/** constructeur */
 	public Voiture(int x, int y) {
 		this.posX = x;
 		this.posY = y;
@@ -21,46 +22,59 @@ public class Voiture {
 		this.droite = false;
 		this.gauche = false;
 	}
-
+	
+	/** cette procedure permet a la voiture de bouger si elle va a gauche ou a droite et de freiner sinon */
 	public void controler() {
-		if(this.posX + this.velocite < 0) {		
-			this.velocite = -posX;
+		if(this.gauche && !this.droite) {
+			this.versLaGauche();
 		}
-		else if(this.posX + LARGEUR_VOITURE + this.velocite > Terrain.LARGEUR_TERRAIN) {
-			this.velocite = Terrain.LARGEUR_TERRAIN-LARGEUR_VOITURE-posX;
+		else if(this.droite && !this.gauche) {
+			this.versLaDroite();
 		}
-		else {
-			if(this.gauche && !this.droite) {
-				this.aGauche();
-			}
-			else if(this.droite && !this.gauche) {
-				this.aDroite();
-			}
-			else{
-				this.freiner();
-			}
-		}	
-	}
-
-	public void aGauche() {
-		this.velocite -= VITESSE_LATERALE;
-		this.posX += velocite;	
-	}
-
-	public void aDroite() {
-		this.velocite += VITESSE_LATERALE;
+		else{
+			this.freiner();
+		}
 		this.posX += velocite;
-	}
+		this.resterDansTerrain();
 
+
+	}
+	
+	/** cette procedure permet de rester entre les bornes du terrain */
+	private void resterDansTerrain() {
+		if( this.posX < 0 ) {
+			this.posX = 0;
+			this.velocite = 0;
+		}
+		else if ( this.posX + LARGEUR_VOITURE > Terrain.LARGEUR_TERRAIN ) { // il faut prendre en compte la largeur de la voiture
+			this.posX = Terrain.LARGEUR_TERRAIN - LARGEUR_VOITURE;
+			this.velocite = 0;
+		}
+	}
+	
+	/** cette procedure permet d'augmenter le poids de la vitesse vers la gauche */
+	private void versLaGauche() {
+		this.velocite -= VITESSE_LATERALE;	
+
+	}
+	
+	/** cette procedure permet d'augmenter le poids de la vitesse vers la droite */
+	private void versLaDroite() {
+		this.velocite += VITESSE_LATERALE;
+	}
+	
+	/** cette procedure permet d'inhiber la velocite vers la gauche ou la droite */
 	public void freiner() {
 		if(this.velocite < 0) {
-			this.aDroite();
+			this.versLaDroite();
 		}
 		else if(this.velocite > 0) {
-			this.aGauche();
+			this.versLaGauche();
 		}
 	}
-
+	
+	/** getters et setters */
+	
 	public int getPosX() {
 		return this.posX;
 	}
