@@ -23,35 +23,33 @@ public class Voiture {
 	}
 
 	public void controler() {
-		
-		if(this.posX + this.velocite < 0) {
-			this.velocite = -(posX-VITESSE_LATERALE);
+		if(this.posX + this.velocite < 0) {		
+			this.velocite = -posX;
 		}
 		else if(this.posX + LARGEUR_VOITURE + this.velocite > Terrain.LARGEUR_TERRAIN) {
-			this.velocite = Terrain.LARGEUR_TERRAIN-(this.posX+LARGEUR_VOITURE+VITESSE_LATERALE);
+			this.velocite = Terrain.LARGEUR_TERRAIN-LARGEUR_VOITURE-posX;
 		}
 		else {
 			if(this.gauche && !this.droite) {
 				this.aGauche();
 			}
-			if(this.droite && !this.gauche) {
+			else if(this.droite && !this.gauche) {
 				this.aDroite();
 			}
-			if((!this.droite && !this.gauche) || (this.droite && this.gauche)) {
+			else{
 				this.freiner();
 			}
-		}
-		
+		}	
 	}
 
 	public void aGauche() {
 		this.velocite -= VITESSE_LATERALE;
-		this.posX += (int)velocite;	
+		this.posX += velocite;	
 	}
 
 	public void aDroite() {
 		this.velocite += VITESSE_LATERALE;
-		this.posX += (int)velocite;
+		this.posX += velocite;
 	}
 
 	public void freiner() {
