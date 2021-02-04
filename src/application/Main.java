@@ -2,11 +2,11 @@ package application;
 import javax.swing.JFrame;
 
 import controleur.Controleur;
-import modele.Afficher;
 import modele.Conduire;
 import modele.Terrain;
 import modele.Voiture;
 import vue.Affichage;
+import vue.Afficher;
 
 
 public class Main {
@@ -25,7 +25,7 @@ public class Main {
 		Afficher afficher = new Afficher(affichage);
 		afficher.start();
 		
-		JFrame fenetre = new JFrame("Projet"); //instancie une fenetre avec un titre
+		JFrame fenetre = new JFrame("MagneticRoad"); //instancie une fenetre avec un titre
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //permet de quitter le programme quand on clique sur la croix
 		fenetre.add(affichage); //ajoute le component a la fenetre
 		fenetre.pack();

@@ -3,8 +3,8 @@ package modele;
 public class Voiture {
 
 	/** constantes */
-	public final static int LARGEUR_VOITURE = 100;
-	public final static int HAUTEUR_VOITURE = 100;
+	public final static int LARGEUR_VOITURE = 10;
+	public final static int HAUTEUR_VOITURE = 10;
 	private final static int VITESSE_LATERALE = 1;
 
 	/** attributs */
@@ -46,12 +46,12 @@ public class Voiture {
 
 	public void aGauche() {
 		this.velocite -= VITESSE_LATERALE;
-		this.posX += (int)velocite;	
+		this.posX += velocite;	
 	}
 
 	public void aDroite() {
 		this.velocite += VITESSE_LATERALE;
-		this.posX += (int)velocite;
+		this.posX += velocite;
 	}
 
 	public void freiner() {

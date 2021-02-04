@@ -1,6 +1,4 @@
-package modele;
-
-import vue.Affichage;
+package vue;
 
 public class Afficher extends Thread{
 	
@@ -15,12 +13,11 @@ public class Afficher extends Thread{
 		while(true) {
 			this.affichage.repaint();
 			try {
-				Thread.sleep(20);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		
 		
 	}
 
