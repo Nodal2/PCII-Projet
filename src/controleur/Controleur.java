@@ -4,15 +4,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import modele.Voiture;
-import vue.Affichage;
 
 public class Controleur implements KeyListener{
 	
-	private Affichage affichage;
 	private Voiture voiture;
 	
-	public Controleur(Affichage affichage, Voiture voiture) {
-		this.affichage = affichage;
+	public Controleur(Voiture voiture) {
 		this.voiture = voiture;
 	}
 
@@ -40,7 +37,6 @@ public class Controleur implements KeyListener{
 		if(touche == KeyEvent.VK_LEFT) {
 			this.voiture.setGauche(false);
 		}
-		this.affichage.repaint();
 	}
 
 }

@@ -12,14 +12,14 @@ import vue.Afficher;
 public class Main {
 
 	public static void main(String[] args) {
-		Voiture voiture = new Voiture(Terrain.LARGEUR_TERRAIN/2, Terrain.HAUTEUR_TERRAIN/2);
+		Voiture voiture = new Voiture(50, 400);
 		Terrain terrain = new Terrain();
 		
 		Conduire conduire = new Conduire(voiture);
 		conduire.start();
 		
 		Affichage affichage = new Affichage(voiture, terrain);
-		Controleur controleur = new Controleur(affichage,voiture);
+		Controleur controleur = new Controleur(voiture);
 		affichage.setFocusable(true);
 		affichage.addKeyListener(controleur);
 		Afficher afficher = new Afficher(affichage);

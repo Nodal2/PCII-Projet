@@ -13,20 +13,11 @@ public class Afficher extends Thread{
 		while(true) {
 			this.affichage.repaint();
 			try {
-<<<<<<< HEAD
 				Thread.sleep(10);
-=======
-				Thread.sleep(20);
->>>>>>> PCII-controler_voiture
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		
-<<<<<<< HEAD
-=======
-		
->>>>>>> PCII-controler_voiture
 	}
 
 }

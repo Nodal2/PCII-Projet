@@ -3,8 +3,8 @@ package modele;
 public class Voiture {
 
 	/** constantes */
-	public final static int LARGEUR_VOITURE = 10;
-	public final static int HAUTEUR_VOITURE = 10;
+	public final static int LARGEUR_VOITURE = 100;
+	public final static int HAUTEUR_VOITURE = 50;
 	private final static int VITESSE_LATERALE = 1;
 
 	/** attributs */
@@ -25,7 +25,6 @@ public class Voiture {
 	
 	/** cette procedure permet a la voiture de bouger si elle va a gauche ou a droite et de freiner sinon */
 	public void controler() {
-		System.out.println(this.posX);
 		if(this.gauche && !this.droite) {
 			this.versLaGauche();
 		}
@@ -35,19 +34,19 @@ public class Voiture {
 		else{
 			this.freiner();
 		}
-		this.posX += velocite;
-		this.resterDansTerrain();
+		this.posX += velocite; // mise a jour de la position
+		this.resterDansTerrain(); //correction de la position si en dehors du terrain
 	}
 
 	
-	/** cette procedure permet de rester entre les bornes du terrain */
+	/** cette procedure permet de corriger la position et d'annuler la velocite si la voiture est hors des bornes du terrain */
 	private void resterDansTerrain() {
 		if( this.posX < 0 ) {
 			this.posX = 0;
 			this.velocite = 0;
 		}
-		else if ( this.posX + LARGEUR_VOITURE > Terrain.LARGEUR_TERRAIN ) { // il faut prendre en compte la largeur de la voiture
-			this.posX = Terrain.LARGEUR_TERRAIN - LARGEUR_VOITURE;
+		else if ( this.posX + LARGEUR_VOITURE > Terrain.LARGEUR_TERRAIN -1 ) { // il faut prendre en compte la largeur de la voiture
+			this.posX = Terrain.LARGEUR_TERRAIN - LARGEUR_VOITURE -1;
 			this.velocite = 0;
 		}
 	}
