@@ -63,7 +63,7 @@ public class Route {
 			Point2D dernier = new Point2D.Double(c.getP2().getX(),c.getP2().getY()+this.voiture.getVitesse());
 			c.setCurve(premier, controle, dernier);
 		});
-		if(this.courbes.get(this.courbes.size()-1).getP2().getY() > 100) {
+		if(this.courbes.get(this.courbes.size()-1).getP2().getY() > Terrain.HAUTEUR_HORIZON) {
 			this.courbes.add(ajouterCourbe(this.courbes.get(this.courbes.size()-1).getCtrlPt(),this.courbes.get(this.courbes.size()-1).getP2()));
 		}
 		if(this.courbes.get(1).getCtrlY()>Terrain.HAUTEUR_TERRAIN) {

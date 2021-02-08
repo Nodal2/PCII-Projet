@@ -10,6 +10,7 @@ import modele.Voiture;
 import vue.Affichage;
 import vue.Afficher;
 import vue.TerrainVue;
+import vue.VoitureVue;
 
 
 public class Main {
@@ -19,8 +20,9 @@ public class Main {
 		Route route = new Route(voiture,200);
 		Terrain terrain = new Terrain(route);
 		TerrainVue terrainVue = new TerrainVue(terrain);
+		VoitureVue voitureVue = new VoitureVue(voiture);
 		
-		Affichage affichage = new Affichage(voiture, terrainVue);
+		Affichage affichage = new Affichage(voitureVue, terrainVue);
 		Controleur controleur = new Controleur(voiture);
 		affichage.setFocusable(true);
 		affichage.addKeyListener(controleur);
