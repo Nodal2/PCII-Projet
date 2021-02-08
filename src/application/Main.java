@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 
 import controleur.Controleur;
 import modele.Conduire;
+import modele.DessinDecor;
 import modele.Terrain;
 import modele.Voiture;
 import vue.Affichage;
@@ -14,11 +15,12 @@ public class Main {
 	public static void main(String[] args) {
 		Voiture voiture = new Voiture(50, 400);
 		Terrain terrain = new Terrain();
+		DessinDecor decor = new DessinDecor();
 		
 		Conduire conduire = new Conduire(voiture);
 		conduire.start();
 		
-		Affichage affichage = new Affichage(voiture, terrain);
+		Affichage affichage = new Affichage(voiture, terrain, decor);
 		Controleur controleur = new Controleur(voiture);
 		affichage.setFocusable(true);
 		affichage.addKeyListener(controleur);
