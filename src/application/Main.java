@@ -16,7 +16,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Voiture voiture = new Voiture(50, 400, 3);
-		Route route = new Route(voiture);
+		Route route = new Route(voiture,200);
 		Terrain terrain = new Terrain(route);
 		TerrainVue terrainVue = new TerrainVue(terrain);
 		

@@ -6,16 +6,18 @@ import java.util.ArrayList;
 
 public class Route {
 	
-	public final static int BORNE_INF_X = 350;
+	public final static int BORNE_INF_X = 200;
 	public final static int BORNE_SUP_X = Terrain.LARGEUR_TERRAIN/2;
 	private final static int ECART_POINT_MAX_Y = 100;
 	
 	
 	private ArrayList<QuadCurve2D> courbes;
+	private int largeur;
 	private Voiture voiture;
 	
-	public Route(Voiture voiture) {
+	public Route(Voiture voiture, int largeur) {
 		this.voiture = voiture;
+		this.largeur = largeur;
 		this.initBord();
 	}
 	
@@ -30,12 +32,12 @@ public class Route {
 	public QuadCurve2D ajouterCourbe(Point2D dernierPointControle, Point2D dernierPointFinal) {
 		Point2D nouveauControle;
 		Point2D nouveauDernier;
-		if(dernierPointControle.getY() == dernierPointFinal.getY()+getLargeurRoute()/2) {
+		if(dernierPointControle.getY() == dernierPointFinal.getY()+(BORNE_SUP_X-BORNE_INF_X)/2) {
 			if(dernierPointControle.getX() < dernierPointFinal.getX()) {
-				nouveauControle = new Point2D.Double(BORNE_SUP_X,dernierPointFinal.getY()-getLargeurRoute()/2); 
+				nouveauControle = new Point2D.Double(BORNE_SUP_X,dernierPointFinal.getY()-(BORNE_SUP_X-BORNE_INF_X)/2); 
 			}
 			else {
-				nouveauControle = new Point2D.Double(BORNE_INF_X, dernierPointFinal.getY()-getLargeurRoute()/2); 
+				nouveauControle = new Point2D.Double(BORNE_INF_X, dernierPointFinal.getY()-(BORNE_SUP_X-BORNE_INF_X)/2); 
 				
 			}
 			int maxY = (int)nouveauControle.getY() - ECART_POINT_MAX_Y/2;
@@ -46,7 +48,7 @@ public class Route {
 			int maxY = (int)dernierPointFinal.getY() - ECART_POINT_MAX_Y/2;
 			int minY = (int)dernierPointFinal.getY() - ECART_POINT_MAX_Y;
 			nouveauControle = new Point2D.Double(dernierPointFinal.getX(),(int)(Math.random() * (maxY - minY) + minY)); 
-			nouveauDernier = new Point2D.Double(BORNE_INF_X+(getLargeurRoute()/2), nouveauControle.getY()-getLargeurRoute()/2); 
+			nouveauDernier = new Point2D.Double(BORNE_INF_X+((BORNE_SUP_X-BORNE_INF_X)/2), nouveauControle.getY()-(BORNE_SUP_X-BORNE_INF_X)/2); 
 		}
 		QuadCurve2D nouvelleCourbe = new QuadCurve2D.Double();
 		nouvelleCourbe.setCurve(dernierPointFinal, nouveauControle, nouveauDernier);
@@ -71,7 +73,7 @@ public class Route {
 	}
 	
 	public int getLargeurRoute() {
-		return BORNE_SUP_X-BORNE_INF_X;
+		return this.largeur;
 	}
 	
 	public ArrayList<QuadCurve2D> getCourbes() {
