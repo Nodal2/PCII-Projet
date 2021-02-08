@@ -5,6 +5,7 @@ import modele.Voiture;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
@@ -13,18 +14,20 @@ public class Affichage extends JPanel {
 
 	/** Attribut */
 	private Voiture voiture;
-	private Terrain terrain;
+	private TerrainVue terrainVue;
 	
 	/** constructeur */
-	public Affichage(Voiture voiture, Terrain terrain) {
+	public Affichage(Voiture voiture, TerrainVue terrainVue) {
 		this.voiture = voiture;
-		this.terrain = terrain;
+		this.terrainVue = terrainVue;
 		setPreferredSize(new Dimension(Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_TERRAIN));
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g); //permet de nettoyer l'image
+		Graphics2D g2 = (Graphics2D)g;
+		this.terrainVue.afficherRoute(g2);
 		g.drawOval(this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE , Voiture.HAUTEUR_VOITURE); //Permet de dessiner un ovale
 
 	}

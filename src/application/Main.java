@@ -3,22 +3,26 @@ import javax.swing.JFrame;
 
 import controleur.Controleur;
 import modele.Conduire;
+import modele.Route;
 import modele.Terrain;
 import modele.Voiture;
 import vue.Affichage;
 import vue.Afficher;
+import vue.TerrainVue;
 
 
 public class Main {
 
 	public static void main(String[] args) {
 		Voiture voiture = new Voiture(50, 400);
-		Terrain terrain = new Terrain();
+		Route route = new Route();
+		Terrain terrain = new Terrain(route);
+		TerrainVue terrainVue = new TerrainVue(terrain);
 		
 		Conduire conduire = new Conduire(voiture);
 		conduire.start();
 		
-		Affichage affichage = new Affichage(voiture, terrain);
+		Affichage affichage = new Affichage(voiture, terrainVue);
 		Controleur controleur = new Controleur(voiture);
 		affichage.setFocusable(true);
 		affichage.addKeyListener(controleur);
