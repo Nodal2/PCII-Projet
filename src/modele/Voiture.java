@@ -10,15 +10,17 @@ public class Voiture {
 	/** attributs */
 	private int posX;
 	private int posY;
-	private int velocite;
+	private int velociteLaterale;
+	private int vitesse;
 	private boolean gauche;
 	private boolean droite;
 	
 	/** constructeur */
-	public Voiture(int x, int y) {
+	public Voiture(int x, int y, int vitesse) {
 		this.posX = x;
 		this.posY = y;
-		this.velocite = 0;
+		this.velociteLaterale = 0;
+		this.vitesse = vitesse;
 		this.droite = false;
 		this.gauche = false;
 	}
@@ -34,7 +36,7 @@ public class Voiture {
 		else{
 			this.freiner();
 		}
-		this.posX += velocite; // mise a jour de la position
+		this.posX += velociteLaterale; // mise a jour de la position
 		this.resterDansTerrain(); //correction de la position si en dehors du terrain
 	}
 
@@ -43,31 +45,31 @@ public class Voiture {
 	private void resterDansTerrain() {
 		if( this.posX < 0 ) {
 			this.posX = 0;
-			this.velocite = 0;
+			this.velociteLaterale = 0;
 		}
 		else if ( this.posX + LARGEUR_VOITURE > Terrain.LARGEUR_TERRAIN -1 ) { // il faut prendre en compte la largeur de la voiture
 			this.posX = Terrain.LARGEUR_TERRAIN - LARGEUR_VOITURE -1;
-			this.velocite = 0;
+			this.velociteLaterale = 0;
 		}
 	}
 	
 	/** cette procedure permet d'augmenter le poids de la vitesse vers la gauche */
 	private void versLaGauche() {
-		this.velocite -= VITESSE_LATERALE;	
+		this.velociteLaterale -= VITESSE_LATERALE;	
 
 	}
 	
 	/** cette procedure permet d'augmenter le poids de la vitesse vers la droite */
 	private void versLaDroite() {
-		this.velocite += VITESSE_LATERALE;
+		this.velociteLaterale += VITESSE_LATERALE;
 	}
 	
 	/** cette procedure permet d'inhiber la velocite vers la gauche ou la droite */
 	public void freiner() {
-		if(this.velocite < 0) {
+		if(this.velociteLaterale < 0) {
 			this.versLaDroite();
 		}
-		else if(this.velocite > 0) {
+		else if(this.velociteLaterale > 0) {
 			this.versLaGauche();
 		}
 	}
@@ -87,6 +89,10 @@ public class Voiture {
 
 	public void setDroite(boolean droite) {
 		this.droite = droite;
+	}
+	
+	public int getVitesse() {
+		return this.vitesse;
 	}
 
 }

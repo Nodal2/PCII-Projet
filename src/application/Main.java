@@ -2,6 +2,7 @@ package application;
 import javax.swing.JFrame;
 
 import controleur.Controleur;
+import modele.Avancer;
 import modele.Conduire;
 import modele.Route;
 import modele.Terrain;
@@ -14,8 +15,8 @@ import vue.TerrainVue;
 public class Main {
 
 	public static void main(String[] args) {
-		Voiture voiture = new Voiture(50, 400);
-		Route route = new Route();
+		Voiture voiture = new Voiture(50, 400, 1);
+		Route route = new Route(voiture);
 		Terrain terrain = new Terrain(route);
 		TerrainVue terrainVue = new TerrainVue(terrain);
 		
@@ -26,8 +27,10 @@ public class Main {
 		Controleur controleur = new Controleur(voiture);
 		affichage.setFocusable(true);
 		affichage.addKeyListener(controleur);
-		Afficher afficher = new Afficher(affichage);
-		afficher.start();
+		
+		//lancement des threads
+		new Afficher(affichage).start();
+		new Avancer(route).start();
 		
 		JFrame fenetre = new JFrame("MagneticRoad"); //instancie une fenetre avec un titre
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //permet de quitter le programme quand on clique sur la croix
