@@ -16,9 +16,9 @@ import vue.VoitureVue;
 public class Main {
 
 	public static void main(String[] args) {
-		Voiture voiture = new Voiture(50, 400, 3);
-		Route route = new Route(voiture,200);
-		Terrain terrain = new Terrain(route);
+		Voiture voiture = new Voiture(50, 400, 5);
+		Route route = new Route(voiture);
+		Terrain terrain = new Terrain(route, voiture);
 		TerrainVue terrainVue = new TerrainVue(terrain);
 		VoitureVue voitureVue = new VoitureVue(voiture);
 		

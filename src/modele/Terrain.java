@@ -3,14 +3,16 @@ package modele;
 public class Terrain {
 	public final static int LARGEUR_TERRAIN = 1000;
 	public final static int HAUTEUR_TERRAIN = 600;
-	public final static int HAUTEUR_HORIZON = 200;
+	public final static int HAUTEUR_HORIZON = 100;
 	
 	private Route route;
+	private Voiture voiture;
 	private Horizon horizon;
 	
-	public Terrain(Route route) {
+	public Terrain(Route route, Voiture voiture) {
 		this.route = route;
 		this.horizon = new Horizon(HAUTEUR_HORIZON);
+		this.voiture = voiture;
 	}
 	
 	public Horizon getHorizon() {
@@ -19,6 +21,10 @@ public class Terrain {
 	
 	public Route getRoute() {
 		return this.route;
+	}
+	
+	public Voiture getVoiture() {
+		return this.voiture;
 	}
 
 }

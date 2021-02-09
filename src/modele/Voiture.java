@@ -5,7 +5,7 @@ public class Voiture {
 	/** constantes */
 	public final static int LARGEUR_VOITURE = 100;
 	public final static int HAUTEUR_VOITURE = 50;
-	private final static int VITESSE_LATERALE = 2;
+	private final static int VITESSE_LATERALE = 1;
 
 	/** attributs */
 	private int posX;

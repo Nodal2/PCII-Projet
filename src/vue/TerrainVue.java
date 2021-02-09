@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
 
+import modele.Route;
 import modele.Terrain;
 
 public class TerrainVue {
@@ -50,13 +51,26 @@ public class TerrainVue {
 	
 	private void afficherBordDroite(Graphics2D g) {
 		this.terrain.getRoute().getCourbes().forEach(c -> {
-			Point2D nouveauPremier = new Point2D.Double(c.getP1().getX() + this.terrain.getRoute().getLargeurRoute(), c.getP1().getY());
-			Point2D nouveauDernier = new Point2D.Double(c.getP2().getX() + this.terrain.getRoute().getLargeurRoute(), c.getP2().getY());
-			Point2D nouveauControle = new Point2D.Double(c.getCtrlX() + this.terrain.getRoute().getLargeurRoute(), c.getCtrlY());
+			Point2D nouveauPremier = new Point2D.Double(c.getP1().getX() + Route.LARGEUR*((c.getP1().getY())/this.terrain.getVoiture().getPosY()), c.getP1().getY());
+			Point2D nouveauDernier = new Point2D.Double(c.getP2().getX() + Route.LARGEUR*((c.getP2().getY())/this.terrain.getVoiture().getPosY()), c.getP2().getY());
+			Point2D nouveauControle = new Point2D.Double(c.getCtrlX() + Route.LARGEUR*((c.getCtrlY())/this.terrain.getVoiture().getPosY()), c.getCtrlY());
 			QuadCurve2D nouvelleCourbe = new QuadCurve2D.Double();
 			nouvelleCourbe.setCurve(nouveauPremier, nouveauControle, nouveauDernier);
 			g.draw(nouvelleCourbe);
 		});
 	}
+	
+	
+	/*
+	private void afficherBordDroite(Graphics2D g) {
+		this.terrain.getRoute().getCourbes().forEach(c -> {
+			Point2D nouveauPremier = new Point2D.Double(c.getP1().getX() + Route.LARGEUR, c.getP1().getY());
+			Point2D nouveauDernier = new Point2D.Double(c.getP2().getX() + Route.LARGEUR, c.getP2().getY());
+			Point2D nouveauControle = new Point2D.Double(c.getCtrlX() + Route.LARGEUR, c.getCtrlY());
+			QuadCurve2D nouvelleCourbe = new QuadCurve2D.Double();
+			nouvelleCourbe.setCurve(nouveauPremier, nouveauControle, nouveauDernier);
+			g.draw(nouvelleCourbe);
+		});
+	}*/
 
 }

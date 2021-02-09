@@ -6,18 +6,18 @@ import java.util.ArrayList;
 
 public class Route {
 	
-	public final static int BORNE_INF_X = 200;
-	public final static int BORNE_SUP_X = Terrain.LARGEUR_TERRAIN/2;
-	private final static int ECART_POINT_MAX_Y = 100;
+	public final static int BORNE_INF_X = 100;
+	public final static int LARGEUR = 200;
+	public final static int BORNE_SUP_X = Terrain.LARGEUR_TERRAIN-BORNE_INF_X-LARGEUR;
+	
+	private final static int ECART_POINT_MAX_Y = 200;
 	
 	
 	private ArrayList<QuadCurve2D> courbes;
-	private int largeur;
 	private Voiture voiture;
 	
-	public Route(Voiture voiture, int largeur) {
+	public Route(Voiture voiture) {
 		this.voiture = voiture;
-		this.largeur = largeur;
 		this.initBord();
 	}
 	
@@ -71,10 +71,7 @@ public class Route {
 			
 		}
 	}
-	
-	public int getLargeurRoute() {
-		return this.largeur;
-	}
+
 	
 	public ArrayList<QuadCurve2D> getCourbes() {
 		return this.courbes;
