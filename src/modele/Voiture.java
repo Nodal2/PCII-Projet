@@ -6,8 +6,8 @@ import java.awt.geom.QuadCurve2D;
 public class Voiture {
 
 	/** constantes */
-	public final static int LARGEUR_VOITURE = 200;
-	public final static int HAUTEUR_VOITURE = 50;
+	public final static int LARGEUR_VOITURE = 10;
+	public final static int HAUTEUR_VOITURE = 10;
 	private final static int VITESSE_MAXIMALE = 5;
 	private final static float ACCELERATION = 0.005f;
 	private final static float FREINAGE = 0.02f;
@@ -82,21 +82,25 @@ public class Voiture {
 	}
 	
 	public void controleVitesse() {
-		QuadCurve2D courbeCouranteGauche = getCourbeCourante();
-		
-		int p1x = (int)courbeCouranteGauche.getP1().getX()+Route.LARGEUR/2; //definition ligne milieu de route
-		int p1y = (int)courbeCouranteGauche.getP1().getY()+Route.LARGEUR/2;
-		int p2x = (int)courbeCouranteGauche.getP2().getX()+Route.LARGEUR/2;
-		int p2y = (int)courbeCouranteGauche.getP2().getY()+Route.LARGEUR/2;
-		
-		float pente = (p1y-p2y)/(float)(p1x-p2x); //calcul de la pente de cette ligne
-		float x = -((p1y-posY)/pente)+p1x; 
-		if(posX+LARGEUR_VOITURE/2 < x-Route.LARGEUR || posX+LARGEUR_VOITURE/2 > x + Route.LARGEUR) {
+		float x = getXMilieuRoute();
+		if(posX+LARGEUR_VOITURE/2 < x-Route.LARGEUR/2 || posX+LARGEUR_VOITURE/2 > x + Route.LARGEUR/2) {
 			this.freiner();
 		}
 		else {
 			this.accelerer();
 		}
+	}
+	
+	public float getXMilieuRoute() {
+		QuadCurve2D courbeCouranteGauche = getCourbeCourante();
+		
+		int p1x = (int)courbeCouranteGauche.getP1().getX(); //definition ligne milieu de route
+		int p1y = (int)courbeCouranteGauche.getP1().getY();
+		int p2x = (int)courbeCouranteGauche.getP2().getX();
+		int p2y = (int)courbeCouranteGauche.getP2().getY();
+		
+		float pente = (p1y-p2y)/(float)(p1x-p2x); //calcul de la pente de cette ligne
+		return -((p1y-posY)/pente)+p1x+Route.LARGEUR/2; 
 	}
 	
 	private void accelerer() {
@@ -112,7 +116,7 @@ public class Voiture {
 		
 	}
 	
-	private QuadCurve2D getCourbeCourante() {
+	public QuadCurve2D getCourbeCourante() {
 		for(QuadCurve2D courbe : this.terrain.getRoute().getCourbes()) {
 			if(courbe.getP2().getY() <= this.posY && courbe.getP1().getY() >= this.posY) {
 				return courbe;

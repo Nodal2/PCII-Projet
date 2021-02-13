@@ -46,7 +46,6 @@ public class TerrainVue {
 			g.drawOval((int)c.getCtrlX(), (int)c.getCtrlY(), 10, 10);
 			*/
 		});
-
 	}
 
 

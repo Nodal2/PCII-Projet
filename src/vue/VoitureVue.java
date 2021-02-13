@@ -2,7 +2,6 @@ package vue;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
 import modele.Voiture;
 
 public class VoitureVue {
@@ -17,5 +16,4 @@ public class VoitureVue {
 		g.setColor(Color.black);
 		g.drawOval(this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE , Voiture.HAUTEUR_VOITURE); //Permet de dessiner un ovale
 	}
-
 }
