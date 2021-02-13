@@ -16,9 +16,10 @@ import vue.VoitureVue;
 public class Main {
 
 	public static void main(String[] args) {
-		Voiture voiture = new Voiture(50, 400, 5);
+		Voiture voiture = new Voiture(50, 400, 2);
 		Route route = new Route(voiture);
 		Terrain terrain = new Terrain(route, voiture);
+		voiture.setTerrain(terrain);
 		TerrainVue terrainVue = new TerrainVue(terrain);
 		VoitureVue voitureVue = new VoitureVue(voiture);
 		

@@ -11,7 +11,9 @@ public class Avancer extends Thread {
 	@Override
 	public void run() {
 		while(true) {
-			this.route.avancer();
+			synchronized(this.route.getCourbes()) {
+				this.route.avancer();
+			}
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {

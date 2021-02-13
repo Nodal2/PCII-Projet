@@ -3,7 +3,7 @@ package modele;
 public class Terrain {
 	public final static int LARGEUR_TERRAIN = 1000;
 	public final static int HAUTEUR_TERRAIN = 600;
-	public final static int HAUTEUR_HORIZON = 100;
+	public final static int HAUTEUR_HORIZON = 150;
 	
 	private Route route;
 	private Voiture voiture;

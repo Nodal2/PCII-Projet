@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Route {
 	
-	public final static int BORNE_INF_X = 100;
+	public final static int BORNE_INF_X = 200;
 	public final static int LARGEUR = 200;
 	public final static int BORNE_SUP_X = Terrain.LARGEUR_TERRAIN-BORNE_INF_X-LARGEUR;
 	
@@ -57,12 +57,14 @@ public class Route {
 	}
 	
 	public void avancer() {
+		//on incremente les coordonnees Y de chaque points des courbes de la route
 		this.courbes.forEach(c -> {
 			Point2D premier = new Point2D.Double(c.getP1().getX(),c.getP1().getY()+this.voiture.getVitesse());
 			Point2D controle = new Point2D.Double(c.getCtrlX(),c.getCtrlY()+this.voiture.getVitesse());
 			Point2D dernier = new Point2D.Double(c.getP2().getX(),c.getP2().getY()+this.voiture.getVitesse());
 			c.setCurve(premier, controle, dernier);
 		});
+		//partie qui ajoute et supprime des courbes au fur et a mesure de l'avancement
 		if(this.courbes.get(this.courbes.size()-1).getP2().getY() > Terrain.HAUTEUR_HORIZON) {
 			this.courbes.add(ajouterCourbe(this.courbes.get(this.courbes.size()-1).getCtrlPt(),this.courbes.get(this.courbes.size()-1).getP2()));
 		}
