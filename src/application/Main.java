@@ -9,6 +9,7 @@ import modele.Terrain;
 import modele.Voiture;
 import vue.Affichage;
 import vue.Afficher;
+import vue.DessinDecor;
 import vue.TerrainVue;
 import vue.VoitureVue;
 
@@ -22,8 +23,9 @@ public class Main {
 		voiture.setTerrain(terrain);
 		TerrainVue terrainVue = new TerrainVue(terrain);
 		VoitureVue voitureVue = new VoitureVue(voiture);
-		
-		Affichage affichage = new Affichage(voitureVue, terrainVue);
+		DessinDecor decor = new DessinDecor();
+		Affichage affichage = new Affichage(voitureVue, terrainVue, decor);
+
 		Controleur controleur = new Controleur(voiture);
 		affichage.setFocusable(true);
 		affichage.addKeyListener(controleur);

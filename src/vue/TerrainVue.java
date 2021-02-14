@@ -22,7 +22,7 @@ public class TerrainVue {
 	public void afficherTerrain(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
 		this.afficherRoute(g2);
-		this.afficherLigneHorizon(g);
+		//this.afficherLigneHorizon(g);
 	}
 
 	private void afficherRoute(Graphics2D g) {
@@ -47,10 +47,10 @@ public class TerrainVue {
 			*/
 		});
 	}
+	
 
 
-
-	private void afficherLigneHorizon(Graphics g) {
+	private void afficherDecors(Graphics g) {
 		g.drawLine(0,this.terrain.getHorizon().getY(), Terrain.LARGEUR_TERRAIN, this.terrain.getHorizon().getY());
 		g.setColor(Color.cyan);
 		g.fillRect(0, 0, Terrain.LARGEUR_TERRAIN, this.terrain.getHorizon().getY());
