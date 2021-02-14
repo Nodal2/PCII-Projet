@@ -6,12 +6,12 @@ import java.awt.geom.QuadCurve2D;
 public class Voiture {
 
 	/** constantes */
-	public final static int LARGEUR_VOITURE = 10;
+	public final static int LARGEUR_VOITURE = 200;
 	public final static int HAUTEUR_VOITURE = 10;
-	private final static int VITESSE_MAXIMALE = 5;
-	private final static float ACCELERATION = 0.005f;
-	private final static float FREINAGE = 0.02f;
-	private final static float VITESSE_LATERALE = 0.5f;
+	private final static int VITESSE_MAXIMALE = 5; //vitesse verticale max
+	private final static float ACCELERATION = 0.01f; //force de l'acceleration
+	private final static float FREINAGE = 0.05f; //force du freinage
+	private final static float VITESSE_LATERALE = 0.5f; //vitesse de deplacement laterale du vehicule
 
 	/** attributs */
 	private int posX;

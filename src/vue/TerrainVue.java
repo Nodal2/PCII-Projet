@@ -59,13 +59,18 @@ public class TerrainVue {
 
 	private void afficherBordDroite(Graphics2D g) {
 		this.terrain.getRoute().getCourbes().forEach(c -> {
-			Point2D nouveauPremier = new Point2D.Double(c.getP1().getX() + Route.LARGEUR*((c.getP1().getY())/this.terrain.getVoiture().getPosY()), c.getP1().getY());
-			Point2D nouveauDernier = new Point2D.Double(c.getP2().getX() + Route.LARGEUR*((c.getP2().getY())/this.terrain.getVoiture().getPosY()), c.getP2().getY());
-			Point2D nouveauControle = new Point2D.Double(c.getCtrlX() + Route.LARGEUR*((c.getCtrlY())/this.terrain.getVoiture().getPosY()), c.getCtrlY());
+			Point2D nouveauPremier = new Point2D.Double(c.getP1().getX() + calculLargeurPerspective((int)c.getP1().getY()), c.getP1().getY());
+			Point2D nouveauDernier = new Point2D.Double(c.getP2().getX() +calculLargeurPerspective((int)c.getP2().getY()) , c.getP2().getY());
+			Point2D nouveauControle = new Point2D.Double(c.getCtrlX() + calculLargeurPerspective((int)c.getCtrlY()), c.getCtrlY());
 			QuadCurve2D nouvelleCourbe = new QuadCurve2D.Double();
 			nouvelleCourbe.setCurve(nouveauPremier, nouveauControle, nouveauDernier);
 			g.draw(nouvelleCourbe);
 		});
+	}
+	
+	/** cette fonction calcul la largeur entre les deux cotes de la route en prenant en compte la perspective */
+	private int calculLargeurPerspective(int y) {
+		return ((y-this.terrain.getHorizon().getY())*Route.LARGEUR)/(this.terrain.getVoiture().getPosY()-this.terrain.getHorizon().getY());
 	}
 
 

@@ -51,11 +51,11 @@ public class DecorsVue {
 		}
 		
 		/** dessin des décors autours de la route */
-		
+		/*
 		for(int i = 0; i<this.decoration.size()-1; i++){
 			Point p1 = this.decoration.get(i);
 
 			g.drawRect(p1.x, p1.y, DECOR_LARG, DECOR_HAUT);
-		}
+		}*/
     }
 }
