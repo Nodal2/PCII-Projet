@@ -48,7 +48,7 @@ public class Voiture {
 	}
 
 	
-	/** cette procedure permet de corriger la position et d'annuler la velocite si la voiture est hors des bornes du terrain */
+	/** cette procedure permet de corriger la position et d'annuler la velocite si la voiture est hors des bornes du terrain (et donc de l'ecran)*/
 	private void resterDansTerrain() {
 		if( this.posX < 0 ) {
 			this.posX = 0;
