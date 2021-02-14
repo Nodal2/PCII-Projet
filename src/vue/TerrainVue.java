@@ -57,6 +57,7 @@ public class TerrainVue {
 
 	}
 
+	/*
 	private void afficherBordDroite(Graphics2D g) {
 		this.terrain.getRoute().getCourbes().forEach(c -> {
 			Point2D nouveauPremier = new Point2D.Double(c.getP1().getX() + Route.LARGEUR*((c.getP1().getY())/this.terrain.getVoiture().getPosY()), c.getP1().getY());
@@ -68,8 +69,10 @@ public class TerrainVue {
 		});
 	}
 
+	 */
 
-	/*
+
+
 	private void afficherBordDroite(Graphics2D g) {
 		this.terrain.getRoute().getCourbes().forEach(c -> {
 			Point2D nouveauPremier = new Point2D.Double(c.getP1().getX() + Route.LARGEUR, c.getP1().getY());
@@ -79,6 +82,6 @@ public class TerrainVue {
 			nouvelleCourbe.setCurve(nouveauPremier, nouveauControle, nouveauDernier);
 			g.draw(nouvelleCourbe);
 		});
-	}*/
+	}
 
 }

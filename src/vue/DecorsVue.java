@@ -1,6 +1,7 @@
 package vue;
 
 import modele.Terrain;
+import modele.Route;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -8,18 +9,17 @@ import java.util.Random;
 
 public class DecorsVue {
 
-    /** Attributs */
-    public int posxlignep1 = 0; //position x du premier point constiturant la ligne d'horizon
     public int posyligne = Terrain.HAUTEUR_TERRAIN - 450; //position y de la ligne d'horizon
-    public int posxlignep2 = Terrain.LARGEUR_TERRAIN; //position x du deuxieme point constiturant la ligne d'horizon
     public int DECOR_LARG = 35; // largeur des decors
     public int DECOR_HAUT = 70; // hauteur des decors
     private ArrayList<Point> montagne = new ArrayList<>(); //liste contenant les point dessinant la montagne
     private ArrayList<Point> decoration = new ArrayList<>(); // liste contenant point pour les decors
+    private static final int nbDeco = 15;
+    private static final int nbMontagne = 25;
 
     /** Constructeur */
     public DecorsVue(){
-        for(int i=0; i<=Terrain.LARGEUR_TERRAIN+1; i++){
+        for(int i=0; i<=nbMontagne-1; i++){
             if(i == 0){
                 Random r2 = new Random();
                 int pointy = 0 + r2.nextInt(posyligne - 0);
@@ -33,11 +33,15 @@ public class DecorsVue {
             }
         }
 
-        for(int i=0; i<=14; i++){
+        for(int i=0; i<=(nbDeco-1)/2; i++){
             Random r1 = new Random();
             Random r2 = new Random();
-            Point p = new Point(0 + r1.nextInt(Terrain.LARGEUR_TERRAIN-0), posyligne + r2.nextInt(Terrain.HAUTEUR_TERRAIN - posyligne));
+            Random r3 = new Random();
+            Random r4 = new Random();
+            Point p = new Point(0 + r1.nextInt(Route.BORNE_INF_X-0), posyligne + r2.nextInt(Terrain.HAUTEUR_TERRAIN - posyligne));
+            Point p2 = new Point (Route.BORNE_SUP_X + r3.nextInt(Terrain.LARGEUR_TERRAIN - Route.BORNE_SUP_X),posyligne + r4.nextInt(Terrain.HAUTEUR_TERRAIN - posyligne));
             this.decoration.add(p);
+            this.decoration.add(p2);
         }
     }
     
