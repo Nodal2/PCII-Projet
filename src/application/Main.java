@@ -5,6 +5,7 @@ import controleur.Controleur;
 import modele.*;
 import vue.Affichage;
 import vue.Afficher;
+import vue.DecorsVue;
 import vue.TerrainVue;
 import vue.VoitureVue;
 
@@ -18,7 +19,7 @@ public class Main {
 		voiture.setTerrain(terrain);
 		TerrainVue terrainVue = new TerrainVue(terrain);
 		VoitureVue voitureVue = new VoitureVue(voiture);
-		DessinDecor decor = new DessinDecor();
+		DecorsVue decor = new DecorsVue();
 
 		Affichage affichage = new Affichage(voitureVue, terrainVue, decor);
 		Controleur controleur = new Controleur(voiture);

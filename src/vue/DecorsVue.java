@@ -1,4 +1,4 @@
-package modele;
+package vue;
 
 import modele.Terrain;
 
@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class DessinDecor {
+public class DecorsVue {
 
     /** Attributs */
     public int posxlignep1 = 0; //position x du premier point constiturant la ligne d'horizon
@@ -18,7 +18,7 @@ public class DessinDecor {
     private ArrayList<Point> decoration = new ArrayList<>(); // liste contenant point pour les decors
 
     /** Constructeur */
-    public DessinDecor(){
+    public DecorsVue(){
         for(int i=0; i<=Terrain.LARGEUR_TERRAIN+1; i++){
             if(i == 0){
                 Random r2 = new Random();
@@ -28,7 +28,6 @@ public class DessinDecor {
             }
             else {
                 Random r = new Random();
-                Random r2 = new Random();
                 Point point2 = new Point((this.montagne.get(i-1).x)+50, (0+r.nextInt(posyligne-0)));
                 this.montagne.add(point2);
             }
@@ -41,22 +40,22 @@ public class DessinDecor {
             this.decoration.add(p);
         }
     }
+    
+    public void afficherDecor(Graphics g) {
+    	/** dessin de la ligne brisée pour les montagnes */
+		for(int i = 0; i<this.montagne.size()-1; i++){
+			Point p1 = this.montagne.get(i);
+			Point p2 = this.montagne.get(i+1);
 
-    public ArrayList<Point> getMontagne(){
-        ArrayList<Point> p = new ArrayList<>();
-        for(int i=0; i<=this.montagne.size()-1; i++){
-            p.add(this.montagne.get(i));
-        }
-        return p;
+			g.drawLine(p1.x, p1.y, p2.x, p2.y);
+		}
+		
+		/** dessin des décors autours de la route */
+		
+		for(int i = 0; i<this.decoration.size()-1; i++){
+			Point p1 = this.decoration.get(i);
+
+			g.drawRect(p1.x, p1.y, DECOR_LARG, DECOR_HAUT);
+		}
     }
-
-    public ArrayList<Point> getDecoration(){
-        ArrayList<Point> p = new ArrayList<>();
-        for(int i=0; i<=this.decoration.size()-1; i++){
-            p.add(this.decoration.get(i));
-        }
-        return p;
-    }
-
-
 }
