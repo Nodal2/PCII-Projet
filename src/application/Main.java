@@ -2,11 +2,7 @@ package application;
 import javax.swing.JFrame;
 
 import controleur.Controleur;
-import modele.Avancer;
-import modele.Conduire;
-import modele.Route;
-import modele.Terrain;
-import modele.Voiture;
+import modele.*;
 import vue.Affichage;
 import vue.Afficher;
 import vue.TerrainVue;
@@ -22,8 +18,9 @@ public class Main {
 		voiture.setTerrain(terrain);
 		TerrainVue terrainVue = new TerrainVue(terrain);
 		VoitureVue voitureVue = new VoitureVue(voiture);
-		
-		Affichage affichage = new Affichage(voitureVue, terrainVue);
+		DessinDecor decor = new DessinDecor();
+
+		Affichage affichage = new Affichage(voitureVue, terrainVue, decor);
 		Controleur controleur = new Controleur(voiture);
 		affichage.setFocusable(true);
 		affichage.addKeyListener(controleur);
