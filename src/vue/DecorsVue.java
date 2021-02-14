@@ -19,6 +19,7 @@ public class DecorsVue {
 
     /** Constructeur */
     public DecorsVue(){
+        /*
         for(int i=0; i<=nbMontagne-1; i++){
             if(i == 0){
                 Random r2 = new Random();
@@ -31,8 +32,32 @@ public class DecorsVue {
                 Point point2 = new Point((this.montagne.get(i-1).x)+50, (0+r.nextInt(posyligne-0)));
                 this.montagne.add(point2);
             }
+        }*/
+
+        /** boucle pour crèer les points faisant la montagne */
+        int cpt = 0;
+
+        Random r5 = new Random();
+        int pointy = 0 + r5.nextInt(posyligne - 0);
+        Point point1 = new Point(0, pointy);
+        this.montagne.add(point1);
+
+        while(this.montagne.get(cpt).x < Terrain.LARGEUR_TERRAIN){
+            if(cpt == 0){
+                cpt++;
+                Random r = new Random();
+                Point point2 = new Point((this.montagne.get(cpt-1).x)+50, (0+r.nextInt(posyligne-0)));
+                this.montagne.add(point2);
+            }
+            else {
+                cpt++;
+                Random r = new Random();
+                Point point2 = new Point((this.montagne.get(cpt-1).x)+50, (0+r.nextInt(posyligne-0)));
+                this.montagne.add(point2);
+            }
         }
 
+        /** boucle pour crée les points pour les décorations */
         for(int i=0; i<=(nbDeco-1)/2; i++){
             Random r1 = new Random();
             Random r2 = new Random();
