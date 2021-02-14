@@ -22,7 +22,7 @@ public class Main {
 		//initialisation des classes de la vue
 		TerrainVue terrainVue = new TerrainVue(terrain);
 		VoitureVue voitureVue = new VoitureVue(voiture);
-		DecorsVue decor = new DecorsVue();
+		DecorsVue decor = new DecorsVue(terrain);
 		Affichage affichage = new Affichage(voitureVue, terrainVue, decor);
 		
 		//intialisation du controleur et ecoute de l'affichage

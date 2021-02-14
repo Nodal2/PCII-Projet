@@ -6,49 +6,47 @@ import java.util.ArrayList;
 
 public class Route {
 	
-	public final static int BORNE_INF_X = 200;
-	public final static int LARGEUR = 200;
-	public final static int BORNE_SUP_X = Terrain.LARGEUR_TERRAIN-BORNE_INF_X-LARGEUR;
-	
-	private final static int ECART_POINT_MAX_Y = 200;
-	
+	public final static int BORNE_INF_X = 300;
+	public final static int LARGEUR = 150;
+	public final static int BORNE_SUP_X = Terrain.LARGEUR_TERRAIN-BORNE_INF_X-LARGEUR;	
 	
 	private ArrayList<QuadCurve2D> courbes;
 	private Voiture voiture;
 	
 	public Route(Voiture voiture) {
 		this.voiture = voiture;
-		this.initBord();
+		this.initCoteGauche();
 	}
 	
-	private void initBord() {
+	private void initCoteGauche() {
 		this.courbes = new ArrayList<>();
-		this.courbes.add(ajouterCourbe(new Point2D.Double(BORNE_INF_X,Terrain.HAUTEUR_TERRAIN), new Point2D.Double(BORNE_INF_X,Terrain.HAUTEUR_TERRAIN)));
+		QuadCurve2D premiereCourbe = new QuadCurve2D.Double();
+		premiereCourbe.setCurve(new Point2D.Double(BORNE_INF_X,Terrain.HAUTEUR_TERRAIN), new Point2D.Double(BORNE_INF_X, Terrain.HAUTEUR_TERRAIN-LARGEUR), new Point2D.Double(BORNE_INF_X+(BORNE_SUP_X-BORNE_INF_X)/2, Terrain.HAUTEUR_TERRAIN-2*LARGEUR));
+		this.courbes.add(premiereCourbe);
 		while(this.courbes.get(this.courbes.size()-1).getP2().getY() > 0) {
-			this.courbes.add(ajouterCourbe(this.courbes.get(this.courbes.size()-1).getCtrlPt(),this.courbes.get(this.courbes.size()-1).getP2()));
+			this.courbes.add(ajouterCourbeCoteGauche());
 		}
 	}
 	
-	public QuadCurve2D ajouterCourbe(Point2D dernierPointControle, Point2D dernierPointFinal) {
+	public QuadCurve2D ajouterCourbeCoteGauche() {
+		Point2D dernierPointControle = this.courbes.get(this.courbes.size()-1).getCtrlPt();
+		Point2D dernierPointFinal = this.courbes.get(this.courbes.size()-1).getP2();
 		Point2D nouveauControle;
 		Point2D nouveauDernier;
-		if(dernierPointControle.getY() == dernierPointFinal.getY()+(BORNE_SUP_X-BORNE_INF_X)/2) {
+		if(dernierPointControle.getX() != dernierPointFinal.getX()) {
 			if(dernierPointControle.getX() < dernierPointFinal.getX()) {
-				nouveauControle = new Point2D.Double(BORNE_SUP_X,dernierPointFinal.getY()-(BORNE_SUP_X-BORNE_INF_X)/2); 
+				nouveauControle = new Point2D.Double(BORNE_SUP_X,dernierPointFinal.getY()-LARGEUR); 
 			}
 			else {
-				nouveauControle = new Point2D.Double(BORNE_INF_X, dernierPointFinal.getY()-(BORNE_SUP_X-BORNE_INF_X)/2); 
+				nouveauControle = new Point2D.Double(BORNE_INF_X, dernierPointFinal.getY()-LARGEUR); 
 				
 			}
-			int maxY = (int)nouveauControle.getY() - ECART_POINT_MAX_Y/2;
-			int minY = (int)nouveauControle.getY() -  ECART_POINT_MAX_Y;
-			nouveauDernier = new Point2D.Double(nouveauControle.getX(),(int)(Math.random() * (maxY - minY) + minY)); 
+
+			nouveauDernier = new Point2D.Double(nouveauControle.getX(),nouveauControle.getY()-LARGEUR); 
 		}
 		else {
-			int maxY = (int)dernierPointFinal.getY() - ECART_POINT_MAX_Y/2;
-			int minY = (int)dernierPointFinal.getY() - ECART_POINT_MAX_Y;
-			nouveauControle = new Point2D.Double(dernierPointFinal.getX(),(int)(Math.random() * (maxY - minY) + minY)); 
-			nouveauDernier = new Point2D.Double(BORNE_INF_X+((BORNE_SUP_X-BORNE_INF_X)/2), nouveauControle.getY()-(BORNE_SUP_X-BORNE_INF_X)/2); 
+			nouveauControle = new Point2D.Double(dernierPointFinal.getX(),dernierPointFinal.getY()-LARGEUR); 
+			nouveauDernier = new Point2D.Double(BORNE_INF_X+(BORNE_SUP_X-BORNE_INF_X)/2, nouveauControle.getY()-LARGEUR); 
 		}
 		QuadCurve2D nouvelleCourbe = new QuadCurve2D.Double();
 		nouvelleCourbe.setCurve(dernierPointFinal, nouveauControle, nouveauDernier);
@@ -66,7 +64,7 @@ public class Route {
 		});
 		//partie qui ajoute et supprime des courbes au fur et a mesure de l'avancement
 		if(this.courbes.get(this.courbes.size()-1).getP2().getY() > Terrain.HAUTEUR_HORIZON) {
-			this.courbes.add(ajouterCourbe(this.courbes.get(this.courbes.size()-1).getCtrlPt(),this.courbes.get(this.courbes.size()-1).getP2()));
+			this.courbes.add(ajouterCourbeCoteGauche());
 		}
 		if(this.courbes.get(1).getCtrlY()>Terrain.HAUTEUR_TERRAIN) {
 			this.courbes.remove(0);

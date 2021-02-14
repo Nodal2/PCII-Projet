@@ -36,7 +36,7 @@ public class TerrainVue {
 	}
 
 	private void afficherBordGauche(Graphics2D g) {
-
+		
 		this.terrain.getRoute().getCourbes().forEach(c -> {
 			g.draw(c);
 			/*
@@ -56,7 +56,7 @@ public class TerrainVue {
 		g.fillRect(0, 0, Terrain.LARGEUR_TERRAIN, this.terrain.getHorizon().getY());
 
 	}
-
+	
 	private void afficherBordDroite(Graphics2D g) {
 		this.terrain.getRoute().getCourbes().forEach(c -> {
 			Point2D nouveauPremier = new Point2D.Double(c.getP1().getX() + calculLargeurPerspective((int)c.getP1().getY()), c.getP1().getY());
