@@ -13,10 +13,13 @@ import modele.Terrain;
 public class TerrainVue {
 
 	private Terrain terrain;
-
+	private Color couleurCiel;
+	private Color couleurSol;
 
 	public TerrainVue(Terrain terrain) {
 		this.terrain = terrain;
+		this.couleurCiel = new Color(0,149,224);
+		this.couleurSol = new Color(114,174,0 );
 	}
 
 	public void afficherTerrain(Graphics g) {
@@ -26,6 +29,9 @@ public class TerrainVue {
 	}
 
 	private void afficherRoute(Graphics2D g) {
+		g.setColor(this.couleurSol);
+		g.fillRect(0, this.terrain.getHorizon().getY(), Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_TERRAIN);
+		g.setColor(Color.black);
 		try {
 			afficherBordGauche(g);
 			afficherBordDroite(g);
@@ -52,7 +58,7 @@ public class TerrainVue {
 
 	private void afficherLigneHorizon(Graphics g) {
 		g.drawLine(0,this.terrain.getHorizon().getY(), Terrain.LARGEUR_TERRAIN, this.terrain.getHorizon().getY());
-		g.setColor(Color.cyan);
+		g.setColor(this.couleurCiel);
 		g.fillRect(0, 0, Terrain.LARGEUR_TERRAIN, this.terrain.getHorizon().getY());
 
 	}

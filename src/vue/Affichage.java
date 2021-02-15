@@ -14,12 +14,13 @@ public class Affichage extends JPanel {
 	private TerrainVue terrainVue;
 	private DecorsVue decorsVue;
 	
+	
+	
 	/** constructeur */
 	public Affichage(VoitureVue voitureVue, TerrainVue terrainVue, DecorsVue decorsVue) {
 		this.voitureVue = voitureVue;
 		this.terrainVue = terrainVue;
 		this.decorsVue = decorsVue;
-		this.setBackground(Color.gray);
 		setPreferredSize(new Dimension(Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_TERRAIN));
 	}
 	

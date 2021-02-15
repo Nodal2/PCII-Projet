@@ -1,4 +1,6 @@
 package application;
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 
 import controleur.Controleur;
@@ -6,6 +8,7 @@ import modele.*;
 import vue.Affichage;
 import vue.Afficher;
 import vue.DecorsVue;
+import vue.HUD;
 import vue.TerrainVue;
 import vue.VoitureVue;
 
@@ -14,7 +17,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		//initialisation des classes du modele
-		Voiture voiture = new Voiture(50, 400, 2);
+		Voiture voiture = new Voiture(50, 500, 2);
 		Route route = new Route(voiture);
 		Terrain terrain = new Terrain(route, voiture);
 		voiture.setTerrain(terrain);
@@ -22,6 +25,7 @@ public class Main {
 		//initialisation des classes de la vue
 		TerrainVue terrainVue = new TerrainVue(terrain);
 		VoitureVue voitureVue = new VoitureVue(voiture);
+		HUD hud = new HUD(voiture);
 		DecorsVue decor = new DecorsVue(terrain);
 		Affichage affichage = new Affichage(voitureVue, terrainVue, decor);
 		
@@ -33,12 +37,14 @@ public class Main {
 		//lancement des threads
 		new Conduire(voiture).start();
 		new Avancer(route).start();
-		new Afficher(affichage).start();
+		new Afficher(affichage, hud).start();
 		
 		//instanciation de la fenetre
 		JFrame fenetre = new JFrame("MagneticRoad"); //instancie une fenetre avec un titre
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //permet de quitter le programme quand on clique sur la croix
-		fenetre.add(affichage); //ajoute le component a la fenetre
+		fenetre.setLayout(new BorderLayout());
+		fenetre.add(affichage, BorderLayout.CENTER); //ajoute le component a la fenetre
+		fenetre.add(hud, BorderLayout.SOUTH);
 		fenetre.pack();
 		fenetre.setVisible(true); //rend la fenetre visible
 	}
