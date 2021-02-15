@@ -1,12 +1,10 @@
 package modele;
 
-import java.awt.geom.QuadCurve2D;
-
 
 public class Voiture {
 
 	/** constantes */
-	public final static int LARGEUR_VOITURE = 100;
+	public final static int LARGEUR_VOITURE = 150;
 	public final static int HAUTEUR_VOITURE = 30;
 	public final static int VITESSE_MAXIMALE = 5; //vitesse verticale max
 	private final static float ACCELERATION = 0.01f; //force de l'acceleration
@@ -82,8 +80,8 @@ public class Voiture {
 	}
 	
 	public void controleVitesse() {
-		float x = getXMilieuRoute();
-		if(posX+LARGEUR_VOITURE/2 < x-Route.LARGEUR/2 || posX+LARGEUR_VOITURE/2 > x + Route.LARGEUR/2) {
+		float x = this.terrain.getRoute().getXMilieuRoute(posY);
+		if(posX+LARGEUR_VOITURE/2 < x-Route.LARGEUR || posX+LARGEUR_VOITURE/2 > x + Route.LARGEUR) {
 			this.freiner();
 		}
 		else {
@@ -91,38 +89,25 @@ public class Voiture {
 		}
 	}
 	
-	public float getXMilieuRoute() {
-		QuadCurve2D courbeCouranteGauche = getCourbeCourante();
-		
-		int p1x = (int)courbeCouranteGauche.getP1().getX(); //definition ligne milieu de route
-		int p1y = (int)courbeCouranteGauche.getP1().getY();
-		int p2x = (int)courbeCouranteGauche.getP2().getX();
-		int p2y = (int)courbeCouranteGauche.getP2().getY();
-		
-		float pente = (p1y-p2y)/(float)(p1x-p2x); //calcul de la pente de cette ligne
-		return -((p1y-posY)/pente)+p1x+Route.LARGEUR/2; 
+	
+	
+	public int vitesseEnKmH() {
+		return  (int)(vitesse*25);
 	}
 	
 	private void accelerer() {
-		if(vitesse+ACCELERATION < VITESSE_MAXIMALE) {
-			this.vitesse += ACCELERATION;
+		this.vitesse += ACCELERATION;
+		if(vitesse > VITESSE_MAXIMALE) {
+			this.vitesse = VITESSE_MAXIMALE;
 		}
 	}
 	
 	private void freiner() {
-		if(this.vitesse - FREINAGE > 0) {
-			this.vitesse -= FREINAGE;
+		this.vitesse -= FREINAGE;
+		if(this.vitesse < 0) {
+			this.vitesse = 0;
 		}
 		
-	}
-	
-	public QuadCurve2D getCourbeCourante() {
-		for(QuadCurve2D courbe : this.terrain.getRoute().getCourbes()) {
-			if(courbe.getP2().getY() <= this.posY && courbe.getP1().getY() >= this.posY) {
-				return courbe;
-			}
-		}
-		return null;
 	}
 	
 	/** getters et setters */

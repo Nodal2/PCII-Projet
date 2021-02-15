@@ -7,16 +7,14 @@ public class Terrain {
 	
 	private Route route;
 	private Voiture voiture;
-	private Horizon horizon;
+	private Chronometre chronometre;
+	
 	
 	public Terrain(Route route, Voiture voiture) {
 		this.route = route;
-		this.horizon = new Horizon(HAUTEUR_HORIZON);
 		this.voiture = voiture;
-	}
-	
-	public Horizon getHorizon() {
-		return this.horizon;
+		this.chronometre = new Chronometre();
+		
 	}
 	
 	public Route getRoute() {
@@ -25,6 +23,10 @@ public class Terrain {
 	
 	public Voiture getVoiture() {
 		return this.voiture;
+	}
+	
+	public Chronometre getChronometre() {
+		return this.chronometre;
 	}
 
 }

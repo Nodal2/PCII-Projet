@@ -25,8 +25,8 @@ public class Main {
 		//initialisation des classes de la vue
 		TerrainVue terrainVue = new TerrainVue(terrain);
 		VoitureVue voitureVue = new VoitureVue(voiture);
-		HUD hud = new HUD(voiture);
-		DecorsVue decor = new DecorsVue(terrain);
+		HUD hud = new HUD(voiture, terrain);
+		DecorsVue decor = new DecorsVue();
 		Affichage affichage = new Affichage(voitureVue, terrainVue, decor);
 		
 		//intialisation du controleur et ecoute de l'affichage
@@ -43,8 +43,8 @@ public class Main {
 		JFrame fenetre = new JFrame("MagneticRoad"); //instancie une fenetre avec un titre
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //permet de quitter le programme quand on clique sur la croix
 		fenetre.setLayout(new BorderLayout());
-		fenetre.add(affichage, BorderLayout.CENTER); //ajoute le component a la fenetre
-		fenetre.add(hud, BorderLayout.SOUTH);
+		fenetre.add(affichage, BorderLayout.CENTER); //ajoute le component au centre du border layout
+		fenetre.add(hud, BorderLayout.SOUTH); //ajoute le component en bas du border layout
 		fenetre.pack();
 		fenetre.setVisible(true); //rend la fenetre visible
 	}

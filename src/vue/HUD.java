@@ -23,24 +23,26 @@ public class HUD extends JPanel {
 	private JLabel labelTempsRestant;
 	private JLabel labelScore;
 	private Voiture voiture;
+	private Terrain terrain;
 	private Color couleurHUD;
 	private Color couleurVitesse;
 	private Color couleurTempsRestant;
-	private Color couleurScore;
+	private Color couleurTemps;
 
-	public HUD(Voiture voiture) {
+	public HUD(Voiture voiture, Terrain terrain) {
 		this.setLayout(null);
 		this.setBorder(BorderFactory.createRaisedSoftBevelBorder());
 		this.voiture = voiture;
+		this.terrain = terrain;
 		this.couleurHUD = new Color(106,140,140);
 		this.couleurVitesse = new Color(100,100,100);
 		this.couleurTempsRestant = new Color(160, 124,157);
-		this.couleurScore = new Color(0,150,150);
+		this.couleurTemps = new Color(0,150,150);
 		setPreferredSize(new Dimension(LARGEUR_HUD, HAUTEUR_HUD));
 		this.setBackground(this.couleurHUD);
 		initialiserLabelVitesse();
 		initialiserLabelTempsRestant();
-		initialiserLabelScore();
+		initialiserLabelTemps();
 		
 	}
 	
@@ -49,11 +51,11 @@ public class HUD extends JPanel {
 		super.paint(g); //permet de nettoyer l'image
 		updateLabelVitesse();
 		updateLabelTempsRestant();
-		updateLabelScore();
+		updateLabelTemps();
 	}
 	
 	private void updateLabelVitesse() {
-		this.labelVitesse.setText("Speed : "+convertirEnKm(this.voiture.getVitesse())+" Km/h");
+		this.labelVitesse.setText("Speed : "+this.voiture.vitesseEnKmH()+" Km/h");
 		if(this.voiture.getVitesse() < Voiture.VITESSE_MAXIMALE/5) {
 			this.labelVitesse.setForeground(Color.red);
 		}
@@ -69,8 +71,8 @@ public class HUD extends JPanel {
 		this.labelTempsRestant.setText("Time left : ");
 	}
 	
-	private void updateLabelScore() {
-		this.labelScore.setText("Score : ");
+	private void updateLabelTemps() {
+		this.labelScore.setText(""+this.terrain.getChronometre());
 	}
 	
 	private void initialiserLabelVitesse() {
@@ -91,20 +93,12 @@ public class HUD extends JPanel {
 		this.add(labelTempsRestant);
 	}
 	
-	private void initialiserLabelScore() {
-		this.labelScore =  new JLabel("label score", SwingConstants.CENTER);
+	private void initialiserLabelTemps() {
+		this.labelScore =  new JLabel("label temps", SwingConstants.CENTER);
 		this.labelScore.setBounds(LARGEUR_LABELS*6, (HAUTEUR_HUD-HAUTEUR_LABELS)/2, LARGEUR_LABELS, HAUTEUR_LABELS);
 		this.labelScore.setOpaque(true);
-		this.labelScore.setBackground(this.couleurScore);	
+		this.labelScore.setBackground(this.couleurTemps);	
 		this.labelScore.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 		this.add(labelScore);
-	}
-	
-	private int convertirEnKm(float vitesse) {
-		int resultat =  (int)(vitesse*25);
-		if(resultat == 1) {
-			resultat = 0;
-		}
-		return resultat;
 	}
 }

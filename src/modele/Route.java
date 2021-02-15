@@ -8,20 +8,23 @@ public class Route {
 	
 	public final static int BORNE_INF_X = 300;
 	public final static int LARGEUR = 150;
+	private final static int DISTANCE_Y = 30;
 	public final static int BORNE_SUP_X = Terrain.LARGEUR_TERRAIN-BORNE_INF_X-LARGEUR;	
 	
 	private ArrayList<QuadCurve2D> courbes;
 	private Voiture voiture;
+	private PointControle pointControle;
 	
 	public Route(Voiture voiture) {
 		this.voiture = voiture;
 		this.initCoteGauche();
+		this.pointControle = new PointControle(this.voiture);
 	}
 	
 	private void initCoteGauche() {
 		this.courbes = new ArrayList<>();
 		QuadCurve2D premiereCourbe = new QuadCurve2D.Double();
-		premiereCourbe.setCurve(new Point2D.Double(BORNE_INF_X,Terrain.HAUTEUR_TERRAIN), new Point2D.Double(BORNE_INF_X, Terrain.HAUTEUR_TERRAIN-LARGEUR), new Point2D.Double(BORNE_INF_X+(BORNE_SUP_X-BORNE_INF_X)/2, Terrain.HAUTEUR_TERRAIN-2*LARGEUR));
+		premiereCourbe.setCurve(new Point2D.Double(BORNE_INF_X,Terrain.HAUTEUR_TERRAIN), new Point2D.Double(BORNE_INF_X, Terrain.HAUTEUR_TERRAIN-DISTANCE_Y), new Point2D.Double(BORNE_INF_X+(BORNE_SUP_X-BORNE_INF_X)/2, Terrain.HAUTEUR_TERRAIN-2*DISTANCE_Y));
 		this.courbes.add(premiereCourbe);
 		while(this.courbes.get(this.courbes.size()-1).getP2().getY() > 0) {
 			this.courbes.add(ajouterCourbeCoteGauche());
@@ -35,18 +38,18 @@ public class Route {
 		Point2D nouveauDernier;
 		if(dernierPointControle.getX() != dernierPointFinal.getX()) {
 			if(dernierPointControle.getX() < dernierPointFinal.getX()) {
-				nouveauControle = new Point2D.Double(BORNE_SUP_X,dernierPointFinal.getY()-LARGEUR); 
+				nouveauControle = new Point2D.Double(BORNE_SUP_X,dernierPointFinal.getY()-DISTANCE_Y); 
 			}
 			else {
-				nouveauControle = new Point2D.Double(BORNE_INF_X, dernierPointFinal.getY()-LARGEUR); 
+				nouveauControle = new Point2D.Double(BORNE_INF_X, dernierPointFinal.getY()-DISTANCE_Y); 
 				
 			}
 
-			nouveauDernier = new Point2D.Double(nouveauControle.getX(),nouveauControle.getY()-LARGEUR); 
+			nouveauDernier = new Point2D.Double(nouveauControle.getX(),nouveauControle.getY()-DISTANCE_Y); 
 		}
 		else {
-			nouveauControle = new Point2D.Double(dernierPointFinal.getX(),dernierPointFinal.getY()-LARGEUR); 
-			nouveauDernier = new Point2D.Double(BORNE_INF_X+(BORNE_SUP_X-BORNE_INF_X)/2, nouveauControle.getY()-LARGEUR); 
+			nouveauControle = new Point2D.Double(dernierPointFinal.getX(),dernierPointFinal.getY()-DISTANCE_Y); 
+			nouveauDernier = new Point2D.Double(BORNE_INF_X+(BORNE_SUP_X-BORNE_INF_X)/2, nouveauControle.getY()-DISTANCE_Y); 
 		}
 		QuadCurve2D nouvelleCourbe = new QuadCurve2D.Double();
 		nouvelleCourbe.setCurve(dernierPointFinal, nouveauControle, nouveauDernier);
@@ -70,6 +73,32 @@ public class Route {
 			this.courbes.remove(0);
 			
 		}
+		this.pointControle.avancer();
+	}
+	
+	public QuadCurve2D getCourbeCourante(int y) {
+		for(QuadCurve2D courbe : this.courbes) {
+			if(courbe.getP2().getY() <= y && courbe.getP1().getY() >= y) {
+				return courbe;
+			}
+		}
+		return null;
+	}
+	
+	public float getXMilieuRoute(int y) {
+		QuadCurve2D courbeCouranteGauche = this.getCourbeCourante(y);
+		
+		int p1x = (int)courbeCouranteGauche.getP1().getX(); //definition ligne milieu de route
+		int p1y = (int)courbeCouranteGauche.getP1().getY();
+		int p2x = (int)courbeCouranteGauche.getP2().getX();
+		int p2y = (int)courbeCouranteGauche.getP2().getY();
+		
+		float pente = (p1y-p2y)/(float)(p1x-p2x); //calcul de la pente de cette ligne
+		return -((p1y-y)/pente)+p1x+Route.LARGEUR/2; 
+	}
+	
+	public PointControle getPointControle() {
+		return this.pointControle;
 	}
 
 	

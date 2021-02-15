@@ -13,23 +13,21 @@ public class DecorsVue {
     public int DECOR_HAUT = 70; // hauteur des decors
     private ArrayList<Point> montagne; //liste contenant les point dessinant la montagne
     private ArrayList<Point> decoration; // liste contenant point pour les decors
-    private Terrain terrain;
 
     /** Constructeur */
-    public DecorsVue(Terrain terrain){
+    public DecorsVue(){
     	this.montagne = new ArrayList<>();
     	this.decoration = new ArrayList<>();
-    	this.terrain = terrain;
         for(int i=0; i<=Terrain.LARGEUR_TERRAIN+1; i++){
             if(i == 0){
                 Random r2 = new Random();
-                int pointy = 0 + r2.nextInt(this.terrain.getHorizon().getY() - 0);
+                int pointy = 0 + r2.nextInt(Terrain.HAUTEUR_HORIZON - 0);
                 Point point1 = new Point(0, pointy);
                 this.montagne.add(point1);
             }
             else {
                 Random r = new Random();
-                Point point2 = new Point((this.montagne.get(i-1).x)+50, (0+r.nextInt(this.terrain.getHorizon().getY()-0)));
+                Point point2 = new Point((this.montagne.get(i-1).x)+50, (0+r.nextInt(Terrain.HAUTEUR_HORIZON-0)));
                 this.montagne.add(point2);
             }
         }
@@ -37,7 +35,7 @@ public class DecorsVue {
         for(int i=0; i<=14; i++){
             Random r1 = new Random();
             Random r2 = new Random();
-            Point p = new Point(0 + r1.nextInt(Terrain.LARGEUR_TERRAIN-0), this.terrain.getHorizon().getY() + r2.nextInt(Terrain.HAUTEUR_TERRAIN - this.terrain.getHorizon().getY()));
+            Point p = new Point(0 + r1.nextInt(Terrain.LARGEUR_TERRAIN-0), Terrain.HAUTEUR_HORIZON + r2.nextInt(Terrain.HAUTEUR_TERRAIN - Terrain.HAUTEUR_HORIZON));
             this.decoration.add(p);
         }
     }
