@@ -9,8 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+
 import modele.Terrain;
 import modele.Voiture;
+import modele.CompteARebour;
 
 public class HUD extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -28,10 +30,14 @@ public class HUD extends JPanel {
 	private Color couleurTempsRestant;
 	private Color couleurScore;
 
-	public HUD(Voiture voiture) {
+	private CompteARebour timer;
+
+
+	public HUD(Voiture voiture, CompteARebour timer) {
 		this.setLayout(null);
 		this.setBorder(BorderFactory.createRaisedSoftBevelBorder());
 		this.voiture = voiture;
+		this.timer = timer;
 		this.couleurHUD = new Color(106,140,140);
 		this.couleurVitesse = new Color(100,100,100);
 		this.couleurTempsRestant = new Color(160, 124,157);
@@ -66,7 +72,8 @@ public class HUD extends JPanel {
 	}
 	
 	private void updateLabelTempsRestant() {
-		this.labelTempsRestant.setText("Time left : ");
+
+		this.labelTempsRestant.setText("Time left : " + timer);
 	}
 	
 	private void updateLabelScore() {
@@ -107,4 +114,5 @@ public class HUD extends JPanel {
 		}
 		return resultat;
 	}
+
 }

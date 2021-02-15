@@ -21,11 +21,12 @@ public class Main {
 		Route route = new Route(voiture);
 		Terrain terrain = new Terrain(route, voiture);
 		voiture.setTerrain(terrain);
+		CompteARebour timer = new CompteARebour();
 		
 		//initialisation des classes de la vue
 		TerrainVue terrainVue = new TerrainVue(terrain);
 		VoitureVue voitureVue = new VoitureVue(voiture);
-		HUD hud = new HUD(voiture);
+		HUD hud = new HUD(voiture, timer);
 		DecorsVue decor = new DecorsVue(terrain);
 		Affichage affichage = new Affichage(voitureVue, terrainVue, decor);
 		
