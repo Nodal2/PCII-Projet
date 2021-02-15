@@ -17,6 +17,7 @@ public class HUD extends JPanel {
 	private static final int LARGEUR_HUD = Terrain.LARGEUR_TERRAIN;
 	private static final int HAUTEUR_HUD = Terrain.HAUTEUR_TERRAIN/6;
 	private static final int LARGEUR_LABELS = LARGEUR_HUD/8;
+	private static final int HAUTEUR_LABELS = HAUTEUR_HUD-20;
 	
 	private JLabel labelVitesse;
 	private JLabel labelTempsRestant;
@@ -74,7 +75,7 @@ public class HUD extends JPanel {
 	
 	private void initialiserLabelVitesse() {
 		this.labelVitesse =  new JLabel("label vitesse", SwingConstants.CENTER);
-		this.labelVitesse.setBounds(LARGEUR_LABELS, 0, LARGEUR_LABELS, HAUTEUR_HUD);
+		this.labelVitesse.setBounds(LARGEUR_LABELS, (HAUTEUR_HUD-HAUTEUR_LABELS)/2, LARGEUR_LABELS, HAUTEUR_LABELS);
 		this.labelVitesse.setOpaque(true);
 		this.labelVitesse.setBackground(this.couleurVitesse);		
 		this.labelVitesse.setBorder(BorderFactory.createLoweredSoftBevelBorder());
@@ -83,7 +84,7 @@ public class HUD extends JPanel {
 	
 	private void initialiserLabelTempsRestant() {
 		this.labelTempsRestant =  new JLabel("label temps", SwingConstants.CENTER);
-		this.labelTempsRestant.setBounds(LARGEUR_LABELS*5, 0, LARGEUR_LABELS, HAUTEUR_HUD);
+		this.labelTempsRestant.setBounds(LARGEUR_LABELS*5, (HAUTEUR_HUD-HAUTEUR_LABELS)/2, LARGEUR_LABELS, HAUTEUR_LABELS);
 		this.labelTempsRestant.setOpaque(true);
 		this.labelTempsRestant.setBackground(this.couleurTempsRestant);	
 		this.labelTempsRestant.setBorder(BorderFactory.createLoweredSoftBevelBorder());
@@ -92,7 +93,7 @@ public class HUD extends JPanel {
 	
 	private void initialiserLabelScore() {
 		this.labelScore =  new JLabel("label score", SwingConstants.CENTER);
-		this.labelScore.setBounds(LARGEUR_LABELS*6, 0, LARGEUR_LABELS, HAUTEUR_HUD);
+		this.labelScore.setBounds(LARGEUR_LABELS*6, (HAUTEUR_HUD-HAUTEUR_LABELS)/2, LARGEUR_LABELS, HAUTEUR_LABELS);
 		this.labelScore.setOpaque(true);
 		this.labelScore.setBackground(this.couleurScore);	
 		this.labelScore.setBorder(BorderFactory.createLoweredSoftBevelBorder());
