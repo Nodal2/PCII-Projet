@@ -6,21 +6,25 @@ import java.util.ArrayList;
 
 public class Route {
 	
-	public final static int BORNE_INF_X = 300;
-	public final static int LARGEUR = 150;
-	private final static int DISTANCE_Y = 30;
-	public final static int BORNE_SUP_X = Terrain.LARGEUR_TERRAIN-BORNE_INF_X-LARGEUR;	
+	/** constantes */
+	public final static int BORNE_INF_X = 300; ////position X min des points de la courbe de gauche
+	public final static int LARGEUR = 150; //largeur de la route
+	private final static int DISTANCE_Y = 30; //distance qui separe chaque point de chaque courbe
+	public final static int BORNE_SUP_X = Terrain.LARGEUR_TERRAIN-BORNE_INF_X-LARGEUR; //position X max des points de la courbe de gauche
 	
+	/** attributs */
 	private ArrayList<QuadCurve2D> courbes;
 	private Voiture voiture;
 	private PointControle pointControle;
 	
+	/** constructeur */
 	public Route(Voiture voiture) {
 		this.voiture = voiture;
 		this.initCoteGauche();
 		this.pointControle = new PointControle(this.voiture);
 	}
 	
+	/** cette methode initialise la liste de courbe de bas en haut jusqu'a ce que le dernier point de la derniere courbe soit en dehors de l'ecran */
 	private void initCoteGauche() {
 		this.courbes = new ArrayList<>();
 		QuadCurve2D premiereCourbe = new QuadCurve2D.Double();
@@ -31,7 +35,8 @@ public class Route {
 		}
 	}
 	
-	public QuadCurve2D ajouterCourbeCoteGauche() {
+	/** cette methode permet d'ajouter une courbe a la liste */
+	private QuadCurve2D ajouterCourbeCoteGauche() {
 		Point2D dernierPointControle = this.courbes.get(this.courbes.size()-1).getCtrlPt();
 		Point2D dernierPointFinal = this.courbes.get(this.courbes.size()-1).getP2();
 		Point2D nouveauControle;
@@ -42,9 +47,7 @@ public class Route {
 			}
 			else {
 				nouveauControle = new Point2D.Double(BORNE_INF_X, dernierPointFinal.getY()-DISTANCE_Y); 
-				
 			}
-
 			nouveauDernier = new Point2D.Double(nouveauControle.getX(),nouveauControle.getY()-DISTANCE_Y); 
 		}
 		else {
