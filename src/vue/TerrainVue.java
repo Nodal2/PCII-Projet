@@ -11,13 +11,15 @@ public class TerrainVue {
 	
 	/** attributs */
 	private Terrain terrain;
+	private VoitureVue voitureVue;
 	private RouteVue routeVue;
 	private Color couleurCiel;
 	private Color couleurSol;
 	private Point pointDeFuite;
-	
-	public TerrainVue(Terrain terrain) {
+
+	public TerrainVue(Terrain terrain, VoitureVue voitureVue) {
 		this.terrain = terrain;
+		this.voitureVue = voitureVue;
 		this.routeVue = new RouteVue(this.terrain.getRoute(), this);
 		this.pointDeFuite = new Point(Terrain.LARGEUR_TERRAIN/2, Terrain.HAUTEUR_HORIZON);
 		this.couleurCiel = new Color(0,149,224);
@@ -31,6 +33,8 @@ public class TerrainVue {
 		Graphics2D g2 = (Graphics2D)g;
 		this.routeVue.afficherRoute(g2);
 		this.afficherLigneHorizon(g);
+		this.voitureVue.afficherVoiture(g);
+		this.routeVue.afficherPointControle(g);
 	}
 	
 	/** cette methode permet de tracer une ligne horizontale delimitant l'horizon */

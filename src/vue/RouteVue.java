@@ -39,7 +39,6 @@ public class RouteVue {
 		}catch(ConcurrentModificationException | NullPointerException e) {
 			System.out.println("impossible d'afficher cette courbe : courbe supprimee ! "+e); //car il est possible de vouloir afficher une courbe supprimee
 		}
-		afficherPointControle(g);
 	}
 	
 	/** cette methode permet d'afficher les courbes du cote droit et gauche de la route */
@@ -69,7 +68,8 @@ public class RouteVue {
 	}
 	
 	/** cette methode permet d'afficher le point de controle */
-	private void afficherPointControle(Graphics g) {
+	public void afficherPointControle(Graphics g) {
+		g.setColor(Color.black);
 		if(this.route.getPointControle().getPosY() >= Terrain.HAUTEUR_HORIZON && this.route.getPointControle().getPosY() <= Terrain.HAUTEUR_TERRAIN) { //on affiche le point de controle seulement si il est a l'ecran		
 			Point2D point1 = this.terrainVue.calculPointPerspective(this.route.getXMilieuRoute(this.route.getPointControle().getPosY())-Route.LARGEUR,this.route.getPointControle().getPosY());
 			Point2D point2 = this.terrainVue.calculPointPerspective(this.route.getXMilieuRoute(this.route.getPointControle().getPosY())+Route.LARGEUR,this.route.getPointControle().getPosY());

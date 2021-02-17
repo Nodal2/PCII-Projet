@@ -23,11 +23,11 @@ public class Main {
 		voiture.setTerrain(terrain);
 		
 		//initialisation des classes de la vue
-		TerrainVue terrainVue = new TerrainVue(terrain);
 		VoitureVue voitureVue = new VoitureVue(voiture);
+		TerrainVue terrainVue = new TerrainVue(terrain, voitureVue);
 		HUD hud = new HUD(voiture, terrain);
 		DecorsVue decor = new DecorsVue();
-		Affichage affichage = new Affichage(voitureVue, terrainVue, decor);
+		Affichage affichage = new Affichage(terrainVue, decor);
 		
 		//intialisation du controleur et ecoute de l'affichage
 		Controleur controleur = new Controleur(voiture);

@@ -10,15 +10,13 @@ public class Affichage extends JPanel {
 	private static final long serialVersionUID = 6883630088377101348L;
 
 	/** Attribut */
-	private VoitureVue voitureVue;
 	private TerrainVue terrainVue;
 	private DecorsVue decorsVue;
 	
 	
 	
 	/** constructeur */
-	public Affichage(VoitureVue voitureVue, TerrainVue terrainVue, DecorsVue decorsVue) {
-		this.voitureVue = voitureVue;
+	public Affichage(TerrainVue terrainVue, DecorsVue decorsVue) {
 		this.terrainVue = terrainVue;
 		this.decorsVue = decorsVue;
 		setPreferredSize(new Dimension(Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_TERRAIN));
@@ -28,7 +26,6 @@ public class Affichage extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g); //permet de nettoyer l'image
 		this.terrainVue.afficherTerrain(g);
-		this.voitureVue.afficherVoiture(g);
 		this.decorsVue.afficherDecor(g);
 	}
 
