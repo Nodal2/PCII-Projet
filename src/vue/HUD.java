@@ -30,16 +30,18 @@ public class HUD extends JPanel {
 	private Color couleurTemps;
 
 	public HUD(Voiture voiture, Terrain terrain) {
-		this.setLayout(null);
-		this.setBorder(BorderFactory.createRaisedSoftBevelBorder());
+		this.setLayout(null); //cette ligne permet de repositionner librement les labels
+		this.setBorder(BorderFactory.createRaisedSoftBevelBorder()); //style de la bordure de l'HUD
 		this.voiture = voiture;
 		this.terrain = terrain;
+		//initialisation des couleurs
 		this.couleurHUD = new Color(106,140,140);
 		this.couleurVitesse = new Color(100,100,100);
 		this.couleurTempsRestant = new Color(160, 124,157);
 		this.couleurTemps = new Color(0,150,150);
 		setPreferredSize(new Dimension(LARGEUR_HUD, HAUTEUR_HUD));
 		this.setBackground(this.couleurHUD);
+		//creation des labels
 		initialiserLabelVitesse();
 		initialiserLabelTempsRestant();
 		initialiserLabelTemps();
@@ -54,6 +56,7 @@ public class HUD extends JPanel {
 		updateLabelTemps();
 	}
 	
+	/** cette methode permet de mettre a jour le texte du label vitesse avec la vitesse courante de la voiture du joueur */
 	private void updateLabelVitesse() {
 		this.labelVitesse.setText("Speed : "+this.voiture.vitesseEnKmH()+" Km/h");
 		if(this.voiture.getVitesse() < Voiture.VITESSE_MAXIMALE/5) {

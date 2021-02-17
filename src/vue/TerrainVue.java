@@ -8,12 +8,14 @@ import java.awt.geom.Point2D;
 import modele.Terrain;
 
 public class TerrainVue {
+	
+	/** attributs */
 	private Terrain terrain;
 	private RouteVue routeVue;
 	private Color couleurCiel;
 	private Color couleurSol;
 	private Point pointDeFuite;
-
+	
 	public TerrainVue(Terrain terrain) {
 		this.terrain = terrain;
 		this.routeVue = new RouteVue(this.terrain.getRoute(), this);
@@ -21,7 +23,8 @@ public class TerrainVue {
 		this.couleurCiel = new Color(0,149,224);
 		this.couleurSol = new Color(114,174,0);
 	}
-
+	
+	/** cette methode permet d'afficher tous les elements presents sur le traain */
 	public void afficherTerrain(Graphics g) {
 		g.setColor(this.couleurSol);
 		g.fillRect(0, Terrain.HAUTEUR_HORIZON, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_TERRAIN);
@@ -29,21 +32,23 @@ public class TerrainVue {
 		this.routeVue.afficherRoute(g2);
 		this.afficherLigneHorizon(g);
 	}
-
 	
-
+	/** cette methode permet de tracer une ligne horizontale delimitant l'horizon */
 	private void afficherLigneHorizon(Graphics g) {
 		g.drawLine(0,Terrain.HAUTEUR_HORIZON, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_HORIZON);
 		g.setColor(this.couleurCiel);
 		g.fillRect(0, 0, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_HORIZON);
 	}
-
+	
+	/** cette fonction positionne un nouveau point a partir de deux coordonnees en fonction de la position du point de fuite */
 	public Point2D calculPointPerspective(double x, double y) {
 		double nouveauX;
+		//si le point est au dessus de la ligne d'horizon, le nouveau point s'ecrase a la position du point de fuite
 		if(y<this.pointDeFuite.y) {
 			return new Point2D.Double(this.pointDeFuite.x, this.pointDeFuite.y);
 		}
 		else {
+			//nouveau Y qui s'ecrase plus il est proche du point de fuite
 			double nouveauY = (y-this.pointDeFuite.y)*((y-this.pointDeFuite.y)/(this.terrain.getVoiture().getPosY()-this.pointDeFuite.y))+this.pointDeFuite.y;
 			if(x<this.pointDeFuite.x) {
 				nouveauX = this.pointDeFuite.x-((y-this.pointDeFuite.y)*(this.pointDeFuite.x-x))/(this.terrain.getVoiture().getPosY()-this.pointDeFuite.y);
@@ -54,6 +59,4 @@ public class TerrainVue {
 			return new Point2D.Double(nouveauX, nouveauY);
 		}
 	}
-	
-
 }

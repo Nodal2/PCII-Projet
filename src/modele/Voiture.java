@@ -79,6 +79,7 @@ public class Voiture {
 		}
 	}
 	
+	/** permet de freiner ou accelerer la voiture du joueur en fonction de sa position par rapport a la route */
 	public void controleVitesse() {
 		float x = this.terrain.getRoute().getXMilieuRoute(posY);
 		if(posX+LARGEUR_VOITURE/2 < x-Route.LARGEUR || posX+LARGEUR_VOITURE/2 > x + Route.LARGEUR) {
@@ -90,11 +91,12 @@ public class Voiture {
 	}
 	
 	
-	
+	/** cette fonction retourne la vitesse de la voiture multipliee (pas vraiment en Km/H) */
 	public int vitesseEnKmH() {
 		return  (int)(vitesse*25);
 	}
 	
+	/** permet d'augmenter la vitesse de la voiture sans depasser la vitesse maximale */
 	private void accelerer() {
 		this.vitesse += ACCELERATION;
 		if(vitesse > VITESSE_MAXIMALE) {
@@ -102,6 +104,7 @@ public class Voiture {
 		}
 	}
 	
+	/** permet de diminuer la vitesse de la voiture sans depasser la vitesse minimale */
 	private void freiner() {
 		this.vitesse -= FREINAGE;
 		if(this.vitesse < 0) {

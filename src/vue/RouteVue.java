@@ -5,7 +5,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ConcurrentModificationException;
+
+import javax.imageio.ImageIO;
 
 import modele.Route;
 import modele.Terrain;
@@ -14,18 +19,25 @@ public class RouteVue {
 	
 	private Route route;
 	private TerrainVue terrainVue;
+	private BufferedImage imagePointDeControle;
 
 	public RouteVue(Route route, TerrainVue terrainVue) {
 		this.route = route;
 		this.terrainVue = terrainVue;
+		try {
+			this.imagePointDeControle = ImageIO.read(new File("assets/checkpoint.png"));
+		} catch (IOException e) {
+			System.out.println("impossible d'afficher l'image ! : "+e);
+		}
 	}
 	
+	/** cette methode permet d'afficher la route */
 	public void afficherRoute(Graphics2D g) {
 		g.setColor(Color.black);
 		try {
 			afficherBordGaucheDroite(g);
 		}catch(ConcurrentModificationException | NullPointerException e) {
-			System.out.println("impossible d'afficher cette courbe : courbe supprimee ! "+e);
+			System.out.println("impossible d'afficher cette courbe : courbe supprimee ! "+e); //car il est possible de vouloir afficher une courbe supprimee
 		}
 		afficherPointControle(g);
 	}
@@ -62,6 +74,11 @@ public class RouteVue {
 			Point2D point1 = this.terrainVue.calculPointPerspective(this.route.getXMilieuRoute(this.route.getPointControle().getPosY())-Route.LARGEUR,this.route.getPointControle().getPosY());
 			Point2D point2 = this.terrainVue.calculPointPerspective(this.route.getXMilieuRoute(this.route.getPointControle().getPosY())+Route.LARGEUR,this.route.getPointControle().getPosY());
 			g.drawLine((int)point1.getX(), (int)point1.getY(), (int)point2.getX(), (int)point2.getY());
+			//affichage de l'image
+			int largeurImage = (int)(point2.getX()-point1.getX());
+			int hauteurImage = (int)(point2.getX()-point1.getX())/2;
+			g.drawImage(this.imagePointDeControle, (int)point1.getX(), (int)point1.getY()-hauteurImage, largeurImage, hauteurImage, null);
+
 		}
 	}
 	

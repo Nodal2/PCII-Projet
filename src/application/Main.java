@@ -42,7 +42,7 @@ public class Main {
 		//instanciation de la fenetre
 		JFrame fenetre = new JFrame("MagneticRoad"); //instancie une fenetre avec un titre
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //permet de quitter le programme quand on clique sur la croix
-		fenetre.setLayout(new BorderLayout());
+		fenetre.setLayout(new BorderLayout()); //la fenetre devient un BorderLayout permettant de positionner l'affichage et L'HUD proprement
 		fenetre.add(affichage, BorderLayout.CENTER); //ajoute le component au centre du border layout
 		fenetre.add(hud, BorderLayout.SOUTH); //ajoute le component en bas du border layout
 		fenetre.pack();
