@@ -17,7 +17,7 @@ public class PointControle {
 	/** cette procedure permet de faire reculer le point en fonction du nombre de fois ou il a deja recule */
 	public void reculerPointControle() {
 		this.numeroEtape++;
-		this.posY = -100*this.numeroEtape;
+		this.posY = -Terrain.HAUTEUR_TERRAIN*this.numeroEtape;
 	}
 	
 	/** cette methode permet de modifier la position Y du point de controle pour le faire avancer */
@@ -27,10 +27,6 @@ public class PointControle {
 		if(Terrain.HAUTEUR_TERRAIN < this.posY) {
 			this.reculerPointControle();
 		}
-	}
-	
-	public void setPosY(int y) {
-		this.posY = y;
 	}
 	
 	public int getPosY() {

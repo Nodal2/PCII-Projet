@@ -4,7 +4,7 @@ package modele;
 public class Voiture {
 
 	/** constantes */
-	public final static int LARGEUR_VOITURE = 150;
+	public final static int LARGEUR_VOITURE = 100;
 	public final static int HAUTEUR_VOITURE = 30;
 	public final static int VITESSE_MAXIMALE = 5; //vitesse verticale max
 	private final static float ACCELERATION = 0.01f; //force de l'acceleration
