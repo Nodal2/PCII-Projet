@@ -1,5 +1,6 @@
 package vue;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,14 +17,16 @@ import modele.Route;
 import modele.Terrain;
 
 public class RouteVue {
-	
+	private final static int LARGEUR_BORDURE = 3;
 	private Route route;
 	private TerrainVue terrainVue;
+	private Color couleurBordureRoute;
 	private BufferedImage imagePointDeControle;
 
 	public RouteVue(Route route, TerrainVue terrainVue) {
 		this.route = route;
 		this.terrainVue = terrainVue;
+		this.couleurBordureRoute = new Color(50,50,50);
 		try {
 			this.imagePointDeControle = ImageIO.read(new File("assets/checkpoint.png"));
 		} catch (IOException e) {
@@ -61,13 +64,19 @@ public class RouteVue {
 			nouvelleCourbeDroite.setCurve(nouveauPremierDroite, nouveauControleDroite, nouveauDernierDroite);
 			
 			//dessin des courbes
+			g.setStroke(new BasicStroke(LARGEUR_BORDURE));
+			g.setColor(this.couleurBordureRoute);
 			g.draw(nouvelleCourbeGauche);
 			g.draw(nouvelleCourbeDroite);
+			g.setStroke(new BasicStroke(1));	
+			g.drawLine((int)nouvelleCourbeGauche.getP1().getX(), (int)nouvelleCourbeGauche.getP1().getY(), 
+					(int)nouvelleCourbeDroite.getP1().getX(), (int)nouvelleCourbeDroite.getP1().getY());
+			g.setColor(Color.black);
 		});
 
 	}
 	
-	/** cette methode permet d'afficher le point de controle */
+	/** cette methode permet d'afficher le point de controle sur la route*/
 	public void afficherPointControle(Graphics g) {
 		g.setColor(Color.black);
 		if(this.route.getPointControle().getPosY() >= Terrain.HAUTEUR_HORIZON && this.route.getPointControle().getPosY() <= Terrain.HAUTEUR_TERRAIN) { //on affiche le point de controle seulement si il est a l'ecran		

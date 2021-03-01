@@ -25,7 +25,7 @@ public class TerrainVue {
 		this.routeVue = new RouteVue(this.terrain.getRoute(), this);
 		this.pointDeFuite = new Point(Terrain.LARGEUR_TERRAIN/2, Terrain.HAUTEUR_HORIZON);
 		this.couleurCiel = new Color(0,149,255);
-		this.couleurSol = new Color(114,174,0);
+		this.couleurSol = new Color(114,114,114);
 	}
 	
 	/** cette methode permet d'afficher tous les elements presents sur le train */
