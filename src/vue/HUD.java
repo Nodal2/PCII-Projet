@@ -73,7 +73,7 @@ public class HUD extends JPanel {
 	
 	private void updateLabelTempsRestant() {
 
-		this.labelTempsRestant.setText("Time left : " + timer);
+		this.labelTempsRestant.setText("Time left : " + timer.toString());
 	}
 	
 	private void updateLabelScore() {

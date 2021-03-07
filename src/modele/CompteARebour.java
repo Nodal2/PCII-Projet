@@ -33,9 +33,27 @@ public class CompteARebour {
             @Override
             public void run(){
                 tempsini--;
+                System.out.println(tempsini);
             }
         }, 1000, 1000);
     }
+
+    public String toString(){
+        String affichage = "";
+        int minutes = this.tempsini/60;
+        int secondes = this.tempsini%60;
+        if (minutes<10){
+            affichage+="0";
+        }
+        affichage+=minutes;
+        affichage+=":";
+        if(secondes<10){
+            affichage+="0";
+        }
+        affichage+=secondes;
+        return affichage;
+    }
+
 
 
 }
