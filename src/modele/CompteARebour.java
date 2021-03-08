@@ -4,12 +4,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class CompteARebour {
-	private static final int TEMPS_INITIAL = 40;
+	private static final int TEMPS_INITIAL = 120;
     private Timer timer;
     private int tempsini;
 
     public int getTempsini(){
         return this.tempsini;
+    }
+
+    public void setTempsInitial(int n){
+        tempsini = n;
     }
     
     public CompteARebour(){
@@ -21,6 +25,18 @@ public class CompteARebour {
                 tempsini--;
             }
         }, 1000, 1000);
+    }
+
+
+
+    /** methode reinitialisant le timer avec une valeur indiqué en parametre soustrait au temps initial */
+    public void reset(int n){
+        if(TEMPS_INITIAL-n > 40) {
+            setTempsInitial(TEMPS_INITIAL - n);
+        }
+        else {
+            setTempsInitial(40);
+        }
     }
 
     public String toString(){

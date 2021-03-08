@@ -32,15 +32,14 @@ public class HUD extends JPanel {
 	private Color couleurTemps;
 
 
-	private CompteARebour timer;
+	//private CompteARebour timer;
 
 
-	public HUD(Voiture voiture, Terrain terrain, CompteARebour timer) {
+	public HUD(Voiture voiture, Terrain terrain) {
 		this.setLayout(null);
 		this.setBorder(BorderFactory.createRaisedSoftBevelBorder());
 		this.voiture = voiture;
 		this.terrain = terrain;
-		this.timer = timer;
 		this.couleurHUD = new Color(106,140,140);
 		this.couleurVitesse = new Color(100,100,100);
 		this.couleurTempsRestant = new Color(160, 124,157);
@@ -78,7 +77,7 @@ public class HUD extends JPanel {
 	
 	private void updateLabelTempsRestant() {
 
-		this.labelTempsRestant.setText("Time left : " + timer.toString());
+		this.labelTempsRestant.setText("Time left : " + this.terrain.getRoute().getPointControle().getCompteARebour().toString());
 	}
 	
 	private void updateLabelTemps() {

@@ -16,6 +16,7 @@ public class Route {
 	private ArrayList<QuadCurve2D> courbes;
 	private Voiture voiture;
 	private PointControle pointControle;
+	private CompteARebour compteARebour;
 	
 	/** constructeur */
 	public Route(Voiture voiture) {

@@ -18,17 +18,17 @@ public class Main {
 	public static void main(String[] args) {
 		//initialisation des classes du modele
 		Voiture voiture = new Voiture(50, 500, 2);
+		//CompteARebour timer = new CompteARebour();
 		Route route = new Route(voiture);
 		Terrain terrain = new Terrain(route, voiture);
 		voiture.setTerrain(terrain);
-		CompteARebour timer = new CompteARebour();
 		
 		//initialisation des classes de la vue
 		VoitureVue voitureVue = new VoitureVue(voiture);
 		TerrainVue terrainVue = new TerrainVue(terrain, voitureVue);
 		DecorsVue decor = new DecorsVue();
 		Affichage affichage = new Affichage(terrainVue, decor);
-		HUD hud = new HUD(voiture, terrain, timer);
+		HUD hud = new HUD(voiture, terrain);
 		
 		//intialisation du controleur et ecoute de l'affichage
 		Controleur controleur = new Controleur(voiture);
