@@ -15,7 +15,8 @@ public class TerrainVue {
 	private Terrain terrain;
 	private VoitureVue voitureVue;
 	private RouteVue routeVue;
-	private Color couleurCiel;
+	private Color couleurCielHaut;
+	private Color couleurCielBas;
 	private Color couleurSol;
 	private Point pointDeFuite;
 
@@ -24,8 +25,9 @@ public class TerrainVue {
 		this.voitureVue = voitureVue;
 		this.routeVue = new RouteVue(this.terrain.getRoute(), this);
 		this.pointDeFuite = new Point(Terrain.LARGEUR_TERRAIN/2, Terrain.HAUTEUR_HORIZON);
-		this.couleurCiel = new Color(0,149,255);
-		this.couleurSol = new Color(114,114,114);
+		this.couleurCielHaut = new Color(100,100,100);
+		this.couleurCielBas = new Color(150,150,150);
+		this.couleurSol = new Color(150,178,24);
 	}
 	
 	/** cette methode permet d'afficher tous les elements presents sur le train */
@@ -42,7 +44,7 @@ public class TerrainVue {
 	/** cette methode permet de tracer une ligne horizontale delimitant l'horizon */
 	private void afficherLigneHorizon(Graphics g) {
 		g.drawLine(0,Terrain.HAUTEUR_HORIZON, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_HORIZON);
-		GradientPaint grandient = new GradientPaint(0,Terrain.HAUTEUR_HORIZON,Color.orange,0, 0,this.couleurCiel);
+		GradientPaint grandient = new GradientPaint(0,Terrain.HAUTEUR_HORIZON,this.couleurCielBas,0, 0,this.couleurCielHaut);
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setPaint(grandient);
 		g2.fill(new Rectangle(0, 0, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_HORIZON));
