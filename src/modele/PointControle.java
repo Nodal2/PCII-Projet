@@ -11,7 +11,7 @@ public class PointControle {
 	public PointControle(Voiture voiture) {
 		this.voiture = voiture;
 		this.numeroEtape = 0;
-		reculerPointControle();
+		//reculerPointControle();
 	}
 	
 	/** cette procedure permet de faire reculer le point en fonction du nombre de fois ou il a deja recule */
