@@ -12,7 +12,6 @@ import javax.swing.SwingConstants;
 
 import modele.Terrain;
 import modele.Voiture;
-import modele.CompteARebour;
 
 public class HUD extends JPanel {
 	private static final long serialVersionUID = 1L;
