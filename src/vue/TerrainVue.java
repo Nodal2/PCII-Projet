@@ -69,4 +69,16 @@ public class TerrainVue {
 			return new Point2D.Double(nouveauX, nouveauY);
 		}
 	}
+	
+	public Terrain getTerrain() {
+		return this.terrain;
+	}
+	
+	public void setTerrain(Terrain terrain) {
+		this.terrain = terrain;
+	}
+	
+	public RouteVue getRouteVue() {
+		return this.routeVue;
+	}
 }

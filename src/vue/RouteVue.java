@@ -151,5 +151,9 @@ public class RouteVue {
 			g.draw(nouvelleCourbe);
 		});
 	}
+	
+	public void setRoute(Route route) {
+		this.route = route;
+	}
 
 }

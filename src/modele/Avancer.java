@@ -1,7 +1,7 @@
 package modele;
 
 public class Avancer extends Thread {
-	
+	private volatile boolean running = true;
 	private Route route;
 	
 	public Avancer(Route route) {
@@ -10,7 +10,7 @@ public class Avancer extends Thread {
 	
 	@Override
 	public void run() {
-		while(true) {
+		while(running) {
 			synchronized(this.route.getCourbes()) {
 				this.route.avancer();
 			}
@@ -20,8 +20,10 @@ public class Avancer extends Thread {
 				e.printStackTrace();
 			}
 		}
-		
-		
+	}
+	
+	public void arreter() {
+		this.running = false;
 	}
 
 }

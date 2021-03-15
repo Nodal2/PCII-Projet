@@ -14,11 +14,11 @@ public class Terrain {
 	//private CompteARebour compteARebour;
 	
 	/** constructeur */
-	public Terrain(Route route, Voiture voiture) {
-		this.route = route;
+	public Terrain(Voiture voiture) {
+		this.route = new Route(voiture);
 		this.voiture = voiture;
 		this.chronometre = new Chronometre();
-		//this.compteARebour = new CompteARebour();
+
 	}
 	
 	/** getters et setters */

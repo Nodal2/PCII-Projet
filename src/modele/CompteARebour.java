@@ -4,25 +4,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class CompteARebour {
-	private static final int TEMPS_INITIAL = 120;
+	private static final int TEMPS_INITIAL = 60;
     private Timer timer;
-    private int tempsini;
-
-    public int getTempsini(){
-        return this.tempsini;
-    }
-
-    public void setTempsInitial(int n){
-        tempsini = n;
-    }
+    private int tempsCourant;
     
     public CompteARebour(){
-    	this.tempsini = TEMPS_INITIAL;
+    	this.tempsCourant = TEMPS_INITIAL;
         this.timer = new Timer();
         this.timer.schedule(new TimerTask(){
             @Override
             public void run(){
-                tempsini--;
+            	tempsCourant--;
             }
         }, 1000, 1000);
     }
@@ -31,18 +23,13 @@ public class CompteARebour {
 
     /** methode reinitialisant le timer avec une valeur indiqué en parametre soustrait au temps initial */
     public void reset(int n){
-        if(TEMPS_INITIAL-n > 40) {
-            setTempsInitial(TEMPS_INITIAL - n);
-        }
-        else {
-            setTempsInitial(40);
-        }
+       this.tempsCourant += n;
     }
 
     public String toString(){
         String affichage = "";
-        int minutes = this.tempsini/60;
-        int secondes = this.tempsini%60;
+        int minutes = this.tempsCourant/60;
+        int secondes = this.tempsCourant%60;
         if (minutes<10){
             affichage+="0";
         }
@@ -53,6 +40,14 @@ public class CompteARebour {
         }
         affichage+=secondes;
         return affichage;
+    }
+    
+    public Timer getTimer() {
+    	return this.timer;
+    }
+    
+    public int getTempsCourant() {
+    	return this.tempsCourant;
     }
 
 

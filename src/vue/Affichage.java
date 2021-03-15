@@ -29,4 +29,12 @@ public class Affichage extends JPanel {
 		this.decorsVue.afficherDecor(g);
 	}
 
+	public TerrainVue getTerrainVue() {
+		return terrainVue;
+	}
+
+	public DecorsVue getDecorsVue() {
+		return decorsVue;
+	}
+
 }
