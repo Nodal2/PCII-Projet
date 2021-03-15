@@ -18,7 +18,7 @@ public class Partie {
 
 	private void initPartie() {
 		//initialisation des classes du modele
-		this.voiture = new Voiture(50, 500, 2);
+		this.voiture = new Voiture(50, 450, 2);
 		this.terrain = new Terrain(voiture);
 		voiture.setTerrain(terrain);
 
