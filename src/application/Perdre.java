@@ -1,5 +1,7 @@
 package application;
 
+import vue.MenuRejouer;
+
 public class Perdre extends Thread {
 	public boolean perdu = false;
 	private Partie partie;
@@ -15,6 +17,7 @@ public class Perdre extends Thread {
 		while(!perdu) {
 			if(this.partie.getVoiture().getVitesse() == 0 || this.partie.getTerrain().getRoute().getPointControle().getCompteARebour().getTempsini() <= 0) {
 				this.stopperLesThreads();
+				new MenuRejouer(this.partie.getTerrain(), this.manager.getFenetre());
 				this.perdu = true;
 			}
 			try {

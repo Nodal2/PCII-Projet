@@ -9,7 +9,6 @@ import vue.Affichage;
 import vue.Afficher;
 import vue.DecorsVue;
 import vue.HUD;
-import vue.MenuRejouer;
 import vue.TerrainVue;
 import vue.VoitureVue;
 
@@ -74,5 +73,9 @@ public class PartieManager {
 	
 	public Afficher getAfficher() {
 		return this.afficher;
+	}
+	
+	public JFrame getFenetre() {
+		return this.fenetre;
 	}
 }
