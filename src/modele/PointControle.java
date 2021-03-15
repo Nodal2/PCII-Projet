@@ -24,7 +24,6 @@ public class PointControle {
 	
 	/** cette methode permet de modifier la position Y du point de controle pour le faire avancer */
 	public void avancer() {
-		System.out.println(this.numeroEtape);
 		this.posY = this.posY+(int)this.voiture.getVitesse();
 		if(Terrain.HAUTEUR_TERRAIN < this.posY) {
 			this.reculerPointControle();
