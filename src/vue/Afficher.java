@@ -1,7 +1,7 @@
 package vue;
 
 public class Afficher extends Thread{
-	
+	private volatile boolean running = true;
 	private Affichage affichage;
 	private HUD hud;
 
@@ -12,7 +12,7 @@ public class Afficher extends Thread{
 	
 	@Override
 	public void run() {
-		while(true) {
+		while(running) {
 			this.affichage.repaint();
 			this.hud.repaint();
 			try {
@@ -21,6 +21,10 @@ public class Afficher extends Thread{
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void arreter() {
+		this.running = false;
 	}
 
 }

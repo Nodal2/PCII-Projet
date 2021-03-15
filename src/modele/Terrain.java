@@ -13,11 +13,10 @@ public class Terrain {
 	private Chronometre chronometre;
 	
 	/** constructeur */
-	public Terrain(Route route, Voiture voiture) {
-		this.route = route;
+	public Terrain(Voiture voiture) {
+		this.route = new Route(voiture);
 		this.voiture = voiture;
-		this.chronometre = new Chronometre();
-		
+		this.chronometre = new Chronometre();	
 	}
 	
 	/** getters et setters */

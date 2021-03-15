@@ -38,5 +38,9 @@ public class Controleur implements KeyListener{
 			this.voiture.setGauche(false);
 		}
 	}
+	
+	public void setVoiture(Voiture voiture) {
+		this.voiture = voiture;
+	}
 
 }

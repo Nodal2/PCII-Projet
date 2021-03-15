@@ -16,4 +16,8 @@ public class VoitureVue {
 		g.setColor(Color.black);
 		g.drawOval(this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE , Voiture.HAUTEUR_VOITURE); //Permet de dessiner un ovale
 	}
+	
+	public void setVoiture(Voiture voiture) {
+		this.voiture = voiture;
+	}
 }

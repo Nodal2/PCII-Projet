@@ -38,6 +38,10 @@ public class CompteARebour {
         affichage+=secondes;
         return affichage;
     }
+    
+    public Timer getTimer() {
+    	return this.timer;
+    }
 
 
 

@@ -113,6 +113,10 @@ public class Voiture {
 		
 	}
 	
+	private void sePosisionnerAuCentreDeLaRoute() {
+		this.posX = (int)this.terrain.getRoute().getXMilieuRoute(posY);
+	}
+	
 	/** getters et setters */
 	
 	public int getPosX() {
@@ -132,6 +136,7 @@ public class Voiture {
 	
 	public void setTerrain(Terrain terrain) {
 		this.terrain = terrain;
+		this.sePosisionnerAuCentreDeLaRoute();
 	}
 	
 	public float getVitesse() {

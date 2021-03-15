@@ -6,12 +6,13 @@ public class PointControle {
 	private Voiture voiture;
 	private int numeroEtape;
 	private int posY;
+	private CompteARebour timer;
 	
 	/** constructeur */
 	public PointControle(Voiture voiture) {
 		this.voiture = voiture;
 		this.numeroEtape = 0;
-		//reculerPointControle();
+		this.timer = new CompteARebour();
 	}
 	
 	/** cette procedure permet de faire reculer le point en fonction du nombre de fois ou il a deja recule */
@@ -37,6 +38,10 @@ public class PointControle {
 		if(this.voiture.getPosY() < this.posY) {
 			//TODO
 		}
+	}
+	
+	public CompteARebour getCompteARebour() {
+		return this.timer;
 	}
 
 }

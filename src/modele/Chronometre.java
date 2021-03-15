@@ -38,5 +38,9 @@ public class Chronometre {
 	public int getSecondesEcoulees() {
 		return this.secondesEcoulees;
 	}
+	
+	public Timer getTimer() {
+    	return this.timer;
+    }
 
 }
