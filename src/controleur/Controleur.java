@@ -26,6 +26,9 @@ public class Controleur implements KeyListener{
 		if(touche == KeyEvent.VK_LEFT) {
 			this.voiture.setGauche(true);
 		}
+		if(touche == KeyEvent.VK_UP) {
+			this.voiture.setSaute(true);
+		}
 	}
 
 	@Override

@@ -10,14 +10,18 @@ public class Voiture {
 	private final static float ACCELERATION = 0.01f; //force de l'acceleration
 	private final static float FREINAGE = 0.05f; //force du freinage
 	private final static float VITESSE_LATERALE = 0.5f; //vitesse de deplacement laterale du vehicule
+	private final static float VITESSE_VERTICALE = 0.5f; //vitesse de deplacement verticale du vehicule
+	private final static int HAUTEUR_SAUT = 200;
 
 	/** attributs */
 	private int posX;
 	private int posY;
 	private float velociteLaterale;
+	private float velociteVerticale;
 	private float vitesse;
 	private boolean gauche;
 	private boolean droite;
+	private boolean saute;
 	private Terrain terrain;
 	
 	/** constructeur */
@@ -25,29 +29,42 @@ public class Voiture {
 		this.posX = x;
 		this.posY = y;
 		this.velociteLaterale = 0;
+		this.velociteVerticale = 0;
 		this.vitesse = vitesse;
 		this.droite = false;
 		this.gauche = false;
+		this.saute = false;
 	}
 	
 	/** cette procedure permet a la voiture de bouger si elle va a gauche ou a droite et de freiner sinon */
 	public void controler() {
-		if(this.gauche && !this.droite) {
+		if(this.gauche && !this.droite && !this.saute) {
 			this.versLaGauche();
 		}
-		else if(this.droite && !this.gauche) {
+		else if(this.droite && !this.gauche && !this.saute) {
 			this.versLaDroite();
 		}
 		else{
 			this.freinerLateralement();
 		}
-		this.posX += velociteLaterale; // mise a jour de la position
-		this.resterDansTerrain(); //correction de la position si en dehors du terrain
+		this.sauter();
+		this.posX += this.velociteLaterale; // mise a jour de la position
+		this.posY += this.velociteVerticale;
+		this.controleLimites(); //correction de la position si en dehors du terrain
+	}
+	
+	private void sauter() {
+		if(this.saute) {
+			this.posY -= VITESSE_MAXIMALE;
+		}
+		else {
+			this.velociteVerticale += VITESSE_VERTICALE;
+		}
 	}
 
 	
 	/** cette procedure permet de corriger la position et d'annuler la velocite si la voiture est hors des bornes du terrain (et donc de l'ecran)*/
-	private void resterDansTerrain() {
+	private void controleLimites() {
 		if( this.posX < 0 ) {
 			this.posX = 0;
 			this.velociteLaterale = 0;
@@ -55,6 +72,15 @@ public class Voiture {
 		else if ( this.posX + LARGEUR_VOITURE > Terrain.LARGEUR_TERRAIN) { // il faut prendre en compte la largeur de la voiture
 			this.posX = Terrain.LARGEUR_TERRAIN - LARGEUR_VOITURE;
 			this.velociteLaterale = 0;
+		}
+		if(this.posY < HAUTEUR_SAUT) {
+			this.posY = HAUTEUR_SAUT;
+			this.saute = false;
+			this.velociteVerticale = 0;
+		}
+		else if(this.posY > Terrain.HAUTEUR_SOL) {
+			this.posY = Terrain.HAUTEUR_SOL;
+			this.velociteVerticale = 0;
 		}
 	}
 	
@@ -134,6 +160,10 @@ public class Voiture {
 		this.droite = droite;
 	}
 	
+	public void setSaute(boolean saute) {
+		this.saute = saute;
+	}
+	
 	public void setTerrain(Terrain terrain) {
 		this.terrain = terrain;
 		this.sePosisionnerAuCentreDeLaRoute();
@@ -153,6 +183,10 @@ public class Voiture {
 	
 	public boolean isDroite() {
 		return this.droite;
+	}
+	
+	public boolean isSaute() {
+		return this.saute;
 	}
 
 }

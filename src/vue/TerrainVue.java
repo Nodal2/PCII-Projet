@@ -59,12 +59,12 @@ public class TerrainVue {
 		else {
 			double nouveauX;
 			//nouveau Y qui s'ecrase plus il est proche du point de fuite
-			double nouveauY = ((y-this.pointDeFuite.y)*(y-this.pointDeFuite.y))/(this.terrain.getVoiture().getPosY()-this.pointDeFuite.y)+this.pointDeFuite.y;
+			double nouveauY = ((y-this.pointDeFuite.y)*(y-this.pointDeFuite.y))/(Terrain.HAUTEUR_SOL-this.pointDeFuite.y)+this.pointDeFuite.y;
 			if(x<this.pointDeFuite.x) {
-				nouveauX = this.pointDeFuite.x-((y-this.pointDeFuite.y)*(this.pointDeFuite.x-x))/(this.terrain.getVoiture().getPosY()-this.pointDeFuite.y);
+				nouveauX = this.pointDeFuite.x-((y-this.pointDeFuite.y)*(this.pointDeFuite.x-x))/(Terrain.HAUTEUR_SOL-this.pointDeFuite.y);
 			}
 			else {
-				nouveauX = this.pointDeFuite.x+((y-this.pointDeFuite.y)*(x-this.pointDeFuite.x))/(this.terrain.getVoiture().getPosY()-this.pointDeFuite.y);
+				nouveauX = this.pointDeFuite.x+((y-this.pointDeFuite.y)*(x-this.pointDeFuite.x))/(Terrain.HAUTEUR_SOL-this.pointDeFuite.y);
 			}
 			return new Point2D.Double(nouveauX, nouveauY);
 		}

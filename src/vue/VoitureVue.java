@@ -18,26 +18,33 @@ public class VoitureVue {
 	
 	public VoitureVue(Voiture voiture) {
 		this.voiture = voiture;
-		this.imagesVoiture = new BufferedImage[3];
+		this.imagesVoiture = new BufferedImage[4];
 		try {
 			this.imagesVoiture[0] = ImageIO.read(new File("assets/car_gauche.png"));
 			this.imagesVoiture[1] = ImageIO.read(new File("assets/car.png"));
 			this.imagesVoiture[2] = ImageIO.read(new File("assets/car_droite.png"));
+			this.imagesVoiture[3] = ImageIO.read(new File("assets/car_saut.png"));
 		} catch (IOException e) {
 			System.out.println("impossible d'afficher l'image ! : "+e);
 		}
 	}
 	
 	public void afficherVoiture(Graphics g) {
-		if(this.voiture.isGauche()) {
-			g.drawImage(this.imagesVoiture[0], this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE, Voiture.HAUTEUR_VOITURE, null);
-		}
-		else if(this.voiture.isDroite()) {
-			g.drawImage(this.imagesVoiture[2], this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE, Voiture.HAUTEUR_VOITURE, null);
+		if(!this.voiture.isSaute()) {
+			if(this.voiture.isGauche()) {
+				g.drawImage(this.imagesVoiture[0], this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE, Voiture.HAUTEUR_VOITURE, null);
+			}
+			else if(this.voiture.isDroite()) {
+				g.drawImage(this.imagesVoiture[2], this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE, Voiture.HAUTEUR_VOITURE, null);
+			}
+			else {
+				g.drawImage(this.imagesVoiture[1], this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE, Voiture.HAUTEUR_VOITURE, null);
+			}
 		}
 		else {
-			g.drawImage(this.imagesVoiture[1], this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE, Voiture.HAUTEUR_VOITURE, null);
+			g.drawImage(this.imagesVoiture[3], this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE, Voiture.HAUTEUR_VOITURE, null);
 		}
+		
 		
 	}
 	
