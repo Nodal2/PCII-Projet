@@ -3,6 +3,7 @@ package controleur;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import modele.Terrain;
 import modele.Voiture;
 
 public class Controleur implements KeyListener{
@@ -26,7 +27,7 @@ public class Controleur implements KeyListener{
 		if(touche == KeyEvent.VK_LEFT) {
 			this.voiture.setGauche(true);
 		}
-		if(touche == KeyEvent.VK_UP) {
+		if(touche == KeyEvent.VK_UP  && this.voiture.getPosY() == Terrain.HAUTEUR_SOL) {
 			this.voiture.setSaute(true);
 		}
 	}
