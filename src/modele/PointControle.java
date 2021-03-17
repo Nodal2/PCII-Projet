@@ -18,7 +18,7 @@ public class PointControle {
 	/** cette procedure permet de faire reculer le point en fonction du nombre de fois ou il a deja recule */
 	public void reculerPointControle() {
 		this.numeroEtape++;
-		this.crediterVoiture();
+		this.crediterEnTemps();
 		this.posY = -Terrain.HAUTEUR_TERRAIN*this.numeroEtape;
 	}
 	
@@ -32,7 +32,7 @@ public class PointControle {
 
 
 	/** methode permettant de reinitialiser le timer lorsqu'un cp est franchis la duree du timer est ajustee en fonction du cp franchis */
-	public void crediterVoiture() {
+	public void crediterEnTemps() {
 		this.compteARebour.reset(this.numeroEtape * 3);
 	}
 	

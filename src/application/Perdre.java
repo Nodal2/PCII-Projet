@@ -4,20 +4,18 @@ import vue.MenuRejouer;
 
 public class Perdre extends Thread {
 	public boolean perdu = false;
-	private Partie partie;
-	private PartieManager manager;
+	private Jeu manager;
 	
-	public Perdre(Partie partie, PartieManager manager) {
-		this.partie = partie;
+	public Perdre(Jeu manager) {
 		this.manager = manager;
 	}
 	
 	@Override
 	public void run() {
 		while(!perdu) {
-			if(this.partie.getVoiture().getVitesse() == 0 || this.partie.getTerrain().getRoute().getPointControle().getCompteARebour().getTempsCourant() <= 0) {
-				this.stopperLesThreads();
-				new MenuRejouer(this.partie.getTerrain(), this.manager.getFenetre());
+			if(this.manager.getPartieCourante().getVoiture().getVitesse() == 0 || this.manager.getPartieCourante().getTerrain().getRoute().getPointControle().getCompteARebour().getTempsCourant() <= 0) {
+				this.manager.stopperPartieCourante();
+				new MenuRejouer(this.manager.getPartieCourante().getTerrain(), this.manager.getFenetre());
 				this.perdu = true;
 			}
 			try {
@@ -27,17 +25,6 @@ public class Perdre extends Thread {
 			}
 		}
 		this.manager.nouvellePartie();
-		
-	}
-	
-	private void stopperLesThreads() {
-		this.partie.getAvancer().arreter();
-		this.partie.getConduire().arreter();
-		this.manager.getAfficher().arreter();
-		this.partie.getTerrain().getRoute().getPointControle().getCompteARebour().getTimer().cancel();
-		this.partie.getTerrain().getChronometre().getTimer().cancel();
-		
-	
 	}
 
 }

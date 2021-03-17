@@ -1,9 +1,4 @@
-package application;
-
-import modele.Avancer;
-import modele.Conduire;
-import modele.Terrain;
-import modele.Voiture;
+package modele;
 
 public class Partie {
 	private Voiture voiture;
