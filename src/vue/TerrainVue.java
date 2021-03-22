@@ -7,6 +7,12 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import modele.Terrain;
 
 public class TerrainVue {
@@ -15,6 +21,7 @@ public class TerrainVue {
 	private Terrain terrain;
 	private VoitureVue voitureVue;
 	private RouteVue routeVue;
+	private DecorationVue decorationVue;
 	private Color couleurCielHaut;
 	private Color couleurCielBas;
 	private Color couleurSol;
@@ -24,10 +31,11 @@ public class TerrainVue {
 		this.terrain = terrain;
 		this.voitureVue = voitureVue;
 		this.routeVue = new RouteVue(this.terrain.getRoute(), this);
+		this.decorationVue = new DecorationVue(this);
 		this.pointDeFuite = new Point(Terrain.LARGEUR_TERRAIN/2, Terrain.HAUTEUR_HORIZON);
 		this.couleurCielHaut = new Color(100,100,100);
 		this.couleurCielBas = new Color(150,150,150);
-		this.couleurSol = new Color(150,178,24);
+		this.couleurSol = new Color(130,150,20);
 	}
 	
 	/** cette methode permet d'afficher tous les elements presents sur le train */
@@ -35,8 +43,9 @@ public class TerrainVue {
 		g.setColor(this.couleurSol);
 		g.fillRect(0, Terrain.HAUTEUR_HORIZON, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_TERRAIN);
 		Graphics2D g2 = (Graphics2D)g;
-		this.routeVue.afficherRoute(g2);
 		this.afficherLigneHorizon(g);
+		this.decorationVue.afficherDecors(g2);
+		this.routeVue.afficherRoute(g2);
 		this.voitureVue.afficherVoiture(g);
 		this.routeVue.afficherPointControle(g);
 	}
@@ -80,5 +89,13 @@ public class TerrainVue {
 	
 	public RouteVue getRouteVue() {
 		return this.routeVue;
+	}
+	
+	public void setDecorationVue(DecorationVue decorationVue) {
+		this.decorationVue = decorationVue;
+	}
+	
+	public DecorationVue getDecorationVue() {
+		return this.decorationVue;
 	}
 }

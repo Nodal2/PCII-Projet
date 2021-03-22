@@ -8,6 +8,8 @@ import controleur.Controleur;
 import modele.Partie;
 import vue.Affichage;
 import vue.Afficher;
+import vue.AvancerVue;
+import vue.DecorationVue;
 import vue.DecorsVue;
 import vue.HUD;
 import vue.TerrainVue;
@@ -23,6 +25,7 @@ public class Jeu {
 	private VoitureVue voitureVue;
 	private DecorsVue decorVue;
 	private Afficher afficher;
+	private AvancerVue avancerDecors;
 
 	public Jeu() {
 		initJeu();
@@ -48,14 +51,17 @@ public class Jeu {
 		this.hud = new HUD(this.partieCourante.getTerrain());
 		this.decorVue = new DecorsVue();
 		this.affichage = new Affichage(this.terrainVue, this.decorVue);
-
 		//intialisation du controleur et ecoute de l'affichage
 		this.controleur = new Controleur(this.partieCourante.getVoiture());
 		affichage.setFocusable(true);
 		affichage.addKeyListener(this.controleur);
-
+		
+		
+		this.avancerDecors = new AvancerVue(this.terrainVue.getDecorationVue());
+		this.avancerDecors.start();
+		
 		this.afficher = new Afficher(affichage, hud);
-		afficher.start();
+		this.afficher.start();
 
 
 		Perdre perdre = new Perdre(this);
@@ -71,9 +77,12 @@ public class Jeu {
 		this.terrainVue.getRouteVue().setRoute(this.terrainVue.getTerrain().getRoute());
 		this.hud.setTerrain(this.partieCourante.getTerrain());
 		this.controleur.setVoiture(this.partieCourante.getVoiture());
-
+		this.terrainVue.setDecorationVue(new DecorationVue(this.terrainVue));
+		this.avancerDecors = new AvancerVue(this.terrainVue.getDecorationVue());
+		this.avancerDecors.start();
+		
 		this.afficher = new Afficher(affichage, hud);
-		afficher.start();
+		this.afficher.start();
 
 
 		Perdre perdre = new Perdre(this);
@@ -83,6 +92,7 @@ public class Jeu {
 	public void stopperPartieCourante() {
 		this.partieCourante.getAvancer().arreter();
 		this.partieCourante.getConduire().arreter();
+		this.avancerDecors.arreter();
 		this.afficher.arreter();
 		this.partieCourante.getTerrain().getRoute().getPointControle().getCompteARebour().getTimer().cancel();
 		this.partieCourante.getTerrain().getChronometre().getTimer().cancel();

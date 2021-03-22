@@ -58,7 +58,6 @@ public class Route {
 			nouveauDernier = new Point2D.Double(nouveauControle.getX(),nouveauControle.getY()-(int) ((Math.random() * (DISTANCE_Y -DISTANCE_Y/2)) + DISTANCE_Y/2));
 		}
 		else {
-			
 			nouveauControle = new Point2D.Double(dernierPointFinal.getX(),dernierPointFinal.getY()-(int) ((Math.random() * (DISTANCE_Y -DISTANCE_Y/2)) + DISTANCE_Y/2)); 
 			nouveauDernier = new Point2D.Double(BORNE_INF_X+(BORNE_SUP_X-BORNE_INF_X)/2, nouveauControle.getY()-(int) ((Math.random() * (DISTANCE_Y -DISTANCE_Y/2)) + DISTANCE_Y/2)); 
 		}
