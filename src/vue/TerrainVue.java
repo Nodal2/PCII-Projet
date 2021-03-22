@@ -7,6 +7,11 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import modele.Terrain;
 
@@ -21,6 +26,7 @@ public class TerrainVue {
 	private Color couleurCielBas;
 	private Color couleurSol;
 	private Point pointDeFuite;
+	private BufferedImage imageHorizon;
 
 	public TerrainVue(Terrain terrain, VoitureVue voitureVue) {
 		this.terrain = terrain;
@@ -28,9 +34,14 @@ public class TerrainVue {
 		this.routeVue = new RouteVue(this.terrain.getRoute(), this);
 		this.decorationVue = new DecorationVue(this);
 		this.pointDeFuite = new Point(Terrain.LARGEUR_TERRAIN/2, Terrain.HAUTEUR_HORIZON);
-		this.couleurCielHaut = new Color(100,100,100);
-		this.couleurCielBas = new Color(150,150,150);
-		this.couleurSol = new Color(130,150,20);
+		this.couleurCielHaut = new Color(170,170,170);
+		this.couleurCielBas = new Color(100,100,100);
+		this.couleurSol = new Color(120,140,10);
+		try {
+			this.imageHorizon = ImageIO.read(new File("assets/mountain.png"));
+		} catch (IOException e) {
+			System.out.println("impossible d'afficher l'image ! : "+e);
+		}
 	}
 	
 	/** cette methode permet d'afficher tous les elements presents sur le train */
@@ -38,7 +49,7 @@ public class TerrainVue {
 		g.setColor(this.couleurSol);
 		g.fillRect(0, Terrain.HAUTEUR_HORIZON, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_TERRAIN);
 		Graphics2D g2 = (Graphics2D)g;
-		this.afficherLigneHorizon(g);
+		this.afficherHorizon(g);
 		this.decorationVue.afficherDecors(g2);
 		this.routeVue.afficherRoute(g2);
 		this.voitureVue.afficherVoiture(g);
@@ -46,12 +57,13 @@ public class TerrainVue {
 	}
 	
 	/** cette methode permet de tracer une ligne horizontale delimitant l'horizon */
-	private void afficherLigneHorizon(Graphics g) {
+	private void afficherHorizon(Graphics g) {
 		g.drawLine(0,Terrain.HAUTEUR_HORIZON, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_HORIZON);
 		GradientPaint grandient = new GradientPaint(0,Terrain.HAUTEUR_HORIZON,this.couleurCielBas,0, 0,this.couleurCielHaut);
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setPaint(grandient);
 		g2.fill(new Rectangle(0, 0, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_HORIZON));
+		g.drawImage(this.imageHorizon, 0, 0, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_HORIZON, null);
 	}
 	
 	/** cette fonction positionne un nouveau point a partir de deux coordonnees en fonction de la position du point de fuite */

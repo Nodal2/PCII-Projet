@@ -10,7 +10,6 @@ import vue.Affichage;
 import vue.Afficher;
 import vue.AvancerVue;
 import vue.DecorationVue;
-import vue.DecorsVue;
 import vue.HUD;
 import vue.TerrainVue;
 import vue.VoitureVue;
@@ -23,14 +22,11 @@ public class Jeu {
 	private Controleur controleur;
 	private TerrainVue terrainVue;
 	private VoitureVue voitureVue;
-	private DecorsVue decorVue;
 	private Afficher afficher;
 	private AvancerVue avancerDecors;
 
 	public Jeu() {
 		initJeu();
-
-
 		//instanciation de la fenetre
 		this.fenetre = new JFrame("MagneticRoad"); //instancie une fenetre avec un titre
 		this.fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //permet de quitter le programme quand on clique sur la croix
@@ -49,20 +45,17 @@ public class Jeu {
 		this.voitureVue = new VoitureVue(this.partieCourante.getVoiture());
 		this.terrainVue = new TerrainVue(this.partieCourante.getTerrain(), voitureVue);
 		this.hud = new HUD(this.partieCourante.getTerrain());
-		this.decorVue = new DecorsVue();
-		this.affichage = new Affichage(this.terrainVue, this.decorVue);
+		this.affichage = new Affichage(this.terrainVue);
 		//intialisation du controleur et ecoute de l'affichage
 		this.controleur = new Controleur(this.partieCourante.getVoiture());
 		affichage.setFocusable(true);
 		affichage.addKeyListener(this.controleur);
-		
 		
 		this.avancerDecors = new AvancerVue(this.terrainVue.getDecorationVue());
 		this.avancerDecors.start();
 		
 		this.afficher = new Afficher(affichage, hud);
 		this.afficher.start();
-
 
 		Perdre perdre = new Perdre(this);
 		perdre.start();

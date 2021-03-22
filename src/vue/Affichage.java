@@ -11,14 +11,12 @@ public class Affichage extends JPanel {
 
 	/** Attribut */
 	private TerrainVue terrainVue;
-	private DecorsVue decorsVue;
 	
 	
 	
 	/** constructeur */
-	public Affichage(TerrainVue terrainVue, DecorsVue decorsVue) {
+	public Affichage(TerrainVue terrainVue) {
 		this.terrainVue = terrainVue;
-		this.decorsVue = decorsVue;
 		setPreferredSize(new Dimension(Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_TERRAIN));
 	}
 	
@@ -26,15 +24,10 @@ public class Affichage extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g); //permet de nettoyer l'image
 		this.terrainVue.afficherTerrain(g);
-		this.decorsVue.afficherDecor(g);
 	}
 
 	public TerrainVue getTerrainVue() {
 		return terrainVue;
-	}
-
-	public DecorsVue getDecorsVue() {
-		return decorsVue;
 	}
 
 }

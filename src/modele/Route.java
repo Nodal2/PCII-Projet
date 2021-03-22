@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Route {
 	
 	/** constantes */
-	public final static int BORNE_INF_X = 300; //position X min des points de la courbe de gauche
+	public final static int BORNE_INF_X = 220; //position X min des points de la courbe de gauche
 	public final static int LARGEUR = 150; //largeur de la route
 	private final static int DISTANCE_Y = 70; //distance qui separe chaque point de chaque courbe
 	public final static int BORNE_SUP_X = Terrain.LARGEUR_TERRAIN-BORNE_INF_X-LARGEUR; //position X max des points de la courbe de gauche

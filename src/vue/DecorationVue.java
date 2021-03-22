@@ -13,8 +13,8 @@ import modele.Terrain;
 
 public class DecorationVue {
 	private final static int LARGEUR_ZONE = 300;
-	private final static int NB_DECORATION_COTE = 50;
-	private final static int DISTANCE_ARBRE_Y = 10;
+	private final static int NB_DECORATION_COTE = 10;
+	private final static int DISTANCE_ARBRE_Y = 40;
 	
 	private AvancerVue avancerDecors;
 	private TerrainVue terrainVue;
