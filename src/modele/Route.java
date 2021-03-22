@@ -39,26 +39,41 @@ public class Route {
 	
 	/** cette methode permet d'ajouter une courbe a la liste */
 	private QuadCurve2D ajouterCourbeCoteGauche() {
+		int randX;
 		Point2D dernierPointControle = this.courbes.get(this.courbes.size()-1).getCtrlPt();
 		Point2D dernierPointFinal = this.courbes.get(this.courbes.size()-1).getP2();
 		Point2D nouveauControle;
 		Point2D nouveauDernier;
 		if(dernierPointControle.getX() != dernierPointFinal.getX()) {
 			if(dernierPointControle.getX() < dernierPointFinal.getX()) {
-				nouveauControle = new Point2D.Double(BORNE_SUP_X,dernierPointFinal.getY()-DISTANCE_Y); 
+				double min = (BORNE_SUP_X-dernierPointFinal.getX())/4+dernierPointFinal.getX(); //permet d'eviter d'avoir nouveau point de ctrl colle au dernier pf
+				randX = (int) ((Math.random() * (BORNE_SUP_X - min)) + min);
+				nouveauControle = calculerPointTangeant(dernierPointControle, dernierPointFinal,randX);
 			}
 			else {
-				nouveauControle = new Point2D.Double(BORNE_INF_X, dernierPointFinal.getY()-DISTANCE_Y); 
-			}
-			nouveauDernier = new Point2D.Double(nouveauControle.getX(),nouveauControle.getY()-DISTANCE_Y); 
+				double max = (dernierPointFinal.getX()-BORNE_INF_X)/4+BORNE_INF_X; //permet d'eviter d'avoir nouveau point de ctrl colle au dernier pf
+				randX = (int) ((Math.random() * (max - BORNE_INF_X)) + BORNE_INF_X);
+				nouveauControle = calculerPointTangeant(dernierPointControle, dernierPointFinal,randX); 
+			}			
+			nouveauDernier = new Point2D.Double(nouveauControle.getX(),nouveauControle.getY()-(int) ((Math.random() * (DISTANCE_Y -DISTANCE_Y/2)) + DISTANCE_Y/2));
 		}
 		else {
-			nouveauControle = new Point2D.Double(dernierPointFinal.getX(),dernierPointFinal.getY()-DISTANCE_Y); 
-			nouveauDernier = new Point2D.Double(BORNE_INF_X+(BORNE_SUP_X-BORNE_INF_X)/2, nouveauControle.getY()-DISTANCE_Y); 
+			
+			nouveauControle = new Point2D.Double(dernierPointFinal.getX(),dernierPointFinal.getY()-(int) ((Math.random() * (DISTANCE_Y -DISTANCE_Y/2)) + DISTANCE_Y/2)); 
+			nouveauDernier = new Point2D.Double(BORNE_INF_X+(BORNE_SUP_X-BORNE_INF_X)/2, nouveauControle.getY()-(int) ((Math.random() * (DISTANCE_Y -DISTANCE_Y/2)) + DISTANCE_Y/2)); 
 		}
 		QuadCurve2D nouvelleCourbe = new QuadCurve2D.Double();
 		nouvelleCourbe.setCurve(dernierPointFinal, nouveauControle, nouveauDernier);
 		return nouvelleCourbe;
+		
+	}
+	
+	/** cette fonction calcul un point dans l'alignement de deux precedents points a la distance souhaitee */
+	private Point2D calculerPointTangeant(Point2D p1, Point2D p2, double p3X) {
+		double pente = (p1.getY() - p2.getY()) / (p1.getX() - p2.getX());
+		double p3Y = -pente*(p2.getX() - p3X) + p2.getY();
+		return new Point2D.Double(p3X, p3Y);
+		
 		
 	}
 	

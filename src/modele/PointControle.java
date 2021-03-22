@@ -33,7 +33,7 @@ public class PointControle {
 
 	/** methode permettant de reinitialiser le timer lorsqu'un cp est franchis la duree du timer est ajustee en fonction du cp franchis */
 	public void crediterEnTemps() {
-		this.compteARebour.reset(this.numeroEtape * 3);
+		this.compteARebour.reset(this.numeroEtape * Voiture.VITESSE_MAXIMALE);
 	}
 	
 	public CompteARebour getCompteARebour() {

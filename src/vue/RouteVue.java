@@ -68,11 +68,7 @@ public class RouteVue {
 			Point2D nouveauPremierDroite = this.terrainVue.calculPointPerspective(c.getP1().getX()+Route.LARGEUR,c.getP1().getY());
 			Point2D nouveauDernierDroite = this.terrainVue.calculPointPerspective(c.getP2().getX()+Route.LARGEUR,c.getP2().getY());
 			Point2D nouveauControleDroite = this.terrainVue.calculPointPerspective(c.getCtrlX()+Route.LARGEUR,c.getCtrlY());
-			/*
-			g.drawOval((int)nouveauPremierDroite.getX(), (int)nouveauPremierDroite.getY(), 10, 10);
-			g.drawOval((int)nouveauDernierDroite.getX(), (int)nouveauDernierDroite.getY(), 10, 10);
-			g.drawOval((int)nouveauControleDroite.getX(), (int)nouveauControleDroite.getY(), 5, 5);
-			*/
+			
 			//milieu route
 			Point2D milieuBas = this.terrainVue.calculPointPerspective(c.getP1().getX()+Route.LARGEUR/2,c.getP1().getY());
 			Point2D milieuHaut = this.terrainVue.calculPointPerspective(c.getP2().getX()+Route.LARGEUR/2,c.getP2().getY());
@@ -148,6 +144,11 @@ public class RouteVue {
 			Point2D nouveauControle = new Point2D.Double(c.getCtrlX() + Route.LARGEUR, c.getCtrlY());
 			QuadCurve2D nouvelleCourbe = new QuadCurve2D.Double();
 			nouvelleCourbe.setCurve(nouveauPremier, nouveauControle, nouveauDernier);
+			
+			g.drawOval((int)nouveauPremier.getX(), (int)nouveauPremier.getY(), 10, 10);
+			g.drawOval((int)nouveauDernier.getX(), (int)nouveauDernier.getY(), 10, 10);
+			g.drawOval((int)nouveauControle.getX(), (int)nouveauControle.getY(), 5, 5);
+			
 			g.draw(nouvelleCourbe);
 		});
 	}
