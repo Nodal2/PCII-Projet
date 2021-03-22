@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import modele.Terrain;
 
 public class DecorationVue {
-	private final static int LARGEUR_ZONE = 1000;
+	private final static int LARGEUR_ZONE = 300;
 	private final static int NB_DECORATION_COTE = 50;
 	private final static int DISTANCE_ARBRE_Y = 10;
 	
@@ -66,7 +66,7 @@ public class DecorationVue {
 				Point2D point2 = this.terrainVue.calculPointPerspective(d.getPoint().getX()+Decoration.LARGEUR,d.getPoint().getY());
 				int largeurImage = (int)(point2.getX()-point1.getX());
 				int hauteurImage = (int)(point2.getX()-point1.getX());
-				g.drawImage(this.imagesDecoration[d.getImage()], (int)point1.getX(), (int)point1.getY()-hauteurImage, largeurImage, hauteurImage, null);
+				g.drawImage(this.imagesDecoration[d.getImage()], (int)point1.getX()-(largeurImage/2), (int)point1.getY()-hauteurImage, largeurImage, hauteurImage, null);
 			}
 		}
 	}

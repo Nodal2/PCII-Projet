@@ -15,7 +15,7 @@ public class AvancerVue extends Thread {
 				this.decorations.avancer();
 			}
 			try {
-				Thread.sleep(40);
+				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
