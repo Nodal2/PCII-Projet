@@ -1,5 +1,7 @@
 package vue;
 
+import application.Jeu;
+
 public class Afficher extends Thread{
 	private volatile boolean running = true;
 	private Affichage affichage;
@@ -16,7 +18,7 @@ public class Afficher extends Thread{
 			this.affichage.repaint();
 			this.hud.repaint();
 			try {
-				Thread.sleep(10);
+				Thread.sleep(Jeu.FREQUENCE_RAFRAICHISSEMENT);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

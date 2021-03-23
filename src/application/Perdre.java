@@ -19,7 +19,7 @@ public class Perdre extends Thread {
 				this.perdu = true;
 			}
 			try {
-				Thread.sleep(20);
+				Thread.sleep(Jeu.FREQUENCE_RAFRAICHISSEMENT);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

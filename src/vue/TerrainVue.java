@@ -58,10 +58,9 @@ public class TerrainVue {
 	
 	/** cette methode permet de tracer une ligne horizontale delimitant l'horizon */
 	private void afficherHorizon(Graphics g) {
-		g.drawLine(0,Terrain.HAUTEUR_HORIZON, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_HORIZON);
-		GradientPaint grandient = new GradientPaint(0,Terrain.HAUTEUR_HORIZON,this.couleurCielBas,0, 0,this.couleurCielHaut);
+		GradientPaint gradient = new GradientPaint(0,Terrain.HAUTEUR_HORIZON,this.couleurCielBas,0, 0,this.couleurCielHaut);
 		Graphics2D g2 = (Graphics2D)g;
-		g2.setPaint(grandient);
+		g2.setPaint(gradient);
 		g2.fill(new Rectangle(0, 0, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_HORIZON));
 		g.drawImage(this.imageHorizon, 0, 0, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_HORIZON, null);
 	}

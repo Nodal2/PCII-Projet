@@ -66,8 +66,7 @@ public class DecorationVue {
 				Point2D point1 = this.terrainVue.calculPointPerspective(d.getPoint().getX(),d.getPoint().getY());
 				Point2D point2 = this.terrainVue.calculPointPerspective(d.getPoint().getX()+Decoration.LARGEUR,d.getPoint().getY());
 				int largeurImage = (int)(point2.getX()-point1.getX());
-				int hauteurImage = (int)(point2.getX()-point1.getX());
-				g.drawImage(this.imagesDecoration[d.getImage()], (int)point1.getX()-(largeurImage/2), (int)point1.getY()-hauteurImage, largeurImage, hauteurImage, null);
+				g.drawImage(this.imagesDecoration[d.getImage()], (int)point1.getX()-(largeurImage/2), (int)point1.getY()-largeurImage, largeurImage, largeurImage, null);
 			}
 		}
 	}
@@ -90,9 +89,4 @@ public class DecorationVue {
 	public AvancerVue getAvancerDecorations() {
 		return this.avancerDecors;
 	}
-	
-	
-		
-		
-
 }

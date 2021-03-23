@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 
 import modele.Route;
 import modele.Terrain;
+import modele.Voiture;
 
 public class RouteVue {
 	
@@ -26,6 +27,7 @@ public class RouteVue {
 	private Color couleurRoute;
 	private Color couleurLigneRoute;
 	private BufferedImage imagePointDeControle;
+	private BufferedImage imageObstacle;
 
 	public RouteVue(Route route, TerrainVue terrainVue) {
 		this.route = route;
@@ -34,6 +36,7 @@ public class RouteVue {
 		this.couleurLigneRoute = new Color(189,152,65);
 		try {
 			this.imagePointDeControle = ImageIO.read(new File("assets/checkpoint.png"));
+			this.imageObstacle = ImageIO.read(new File("assets/obstacle.png"));
 		} catch (IOException e) {
 			System.out.println("impossible d'afficher l'image ! : "+e);
 		}
@@ -59,20 +62,22 @@ public class RouteVue {
 	/** cette methode permet d'afficher les courbes du cote droit et gauche de la route */
 	private void afficherBordGaucheDroite(Graphics2D g) {
 		this.route.getCourbes().forEach(c -> {
+			QuadCurve2D courbe = c.getCourbe();
+			
 			//courbe cote gauche
-			Point2D nouveauPremierGauche = this.terrainVue.calculPointPerspective(c.getP1().getX(),c.getP1().getY());
-			Point2D nouveauDernierGauche = this.terrainVue.calculPointPerspective(c.getP2().getX(),c.getP2().getY());
-			Point2D nouveauControleGauche = this.terrainVue.calculPointPerspective(c.getCtrlX(),c.getCtrlY());
+			Point2D nouveauPremierGauche = this.terrainVue.calculPointPerspective(courbe.getP1().getX(),courbe.getP1().getY());
+			Point2D nouveauDernierGauche = this.terrainVue.calculPointPerspective(courbe.getP2().getX(),courbe.getP2().getY());
+			Point2D nouveauControleGauche = this.terrainVue.calculPointPerspective(courbe.getCtrlX(),courbe.getCtrlY());
 			
 			//courbe cote droit
-			Point2D nouveauPremierDroite = this.terrainVue.calculPointPerspective(c.getP1().getX()+Route.LARGEUR,c.getP1().getY());
-			Point2D nouveauDernierDroite = this.terrainVue.calculPointPerspective(c.getP2().getX()+Route.LARGEUR,c.getP2().getY());
-			Point2D nouveauControleDroite = this.terrainVue.calculPointPerspective(c.getCtrlX()+Route.LARGEUR,c.getCtrlY());
+			Point2D nouveauPremierDroite = this.terrainVue.calculPointPerspective(courbe.getP1().getX()+Route.LARGEUR,courbe.getP1().getY());
+			Point2D nouveauDernierDroite = this.terrainVue.calculPointPerspective(courbe.getP2().getX()+Route.LARGEUR,courbe.getP2().getY());
+			Point2D nouveauControleDroite = this.terrainVue.calculPointPerspective(courbe.getCtrlX()+Route.LARGEUR,courbe.getCtrlY());
 			
 			//milieu route
-			Point2D milieuBas = this.terrainVue.calculPointPerspective(c.getP1().getX()+Route.LARGEUR/2,c.getP1().getY());
-			Point2D milieuHaut = this.terrainVue.calculPointPerspective(c.getP2().getX()+Route.LARGEUR/2,c.getP2().getY());
-			Point2D milieuControle = this.terrainVue.calculPointPerspective(c.getCtrlX()+Route.LARGEUR/2,c.getCtrlY());
+			Point2D milieuBas = this.terrainVue.calculPointPerspective(courbe.getP1().getX()+Route.LARGEUR/2,courbe.getP1().getY());
+			Point2D milieuHaut = this.terrainVue.calculPointPerspective(courbe.getP2().getX()+Route.LARGEUR/2,courbe.getP2().getY());
+			Point2D milieuControle = this.terrainVue.calculPointPerspective(courbe.getCtrlX()+Route.LARGEUR/2,courbe.getCtrlY());
 			
 			//nouvelles courbes a partir des points calcules
 			QuadCurve2D nouvelleCourbeGauche = new QuadCurve2D.Double();
@@ -95,7 +100,6 @@ public class RouteVue {
 			closedCurve.lineTo(milieuHaut.getX(), milieuHaut.getY());
 			closedCurve.lineTo(milieuBas.getX(), milieuBas.getY());
 			
-			
 			g.setColor(this.couleurRoute);
 			g.fill(closedCurve);
 			g.setStroke(new BasicStroke(3.0f));
@@ -103,7 +107,13 @@ public class RouteVue {
 			g.draw(nouvelleCourbeMilieu);
 			g.setStroke(new BasicStroke(1.0f));
 			g.setColor(Color.black);
-			
+			if(c.getObstacle() != null) {
+				Point2D point1 = this.terrainVue.calculPointPerspective(c.getObstacle().getX(), c.getObstacle().getY());
+				Point2D point2 = this.terrainVue.calculPointPerspective(c.getObstacle().getX()+c.getObstacle().getLargeur(), c.getObstacle().getY());
+				//affichage de l'image
+				int largeurImage = (int)(point2.getX()-point1.getX());
+				g.drawImage(this.imageObstacle, (int)point1.getX(), (int)point1.getY(), largeurImage, largeurImage/2, null);
+			}
 		});
 
 	}
@@ -114,11 +124,9 @@ public class RouteVue {
 		if(this.route.getPointControle().getPosY() >= Terrain.HAUTEUR_HORIZON && this.route.getPointControle().getPosY() <= Terrain.HAUTEUR_TERRAIN) { //on affiche le point de controle seulement si il est a l'ecran		
 			Point2D point1 = this.terrainVue.calculPointPerspective(this.route.getXMilieuRoute(this.route.getPointControle().getPosY())-Route.LARGEUR,this.route.getPointControle().getPosY());
 			Point2D point2 = this.terrainVue.calculPointPerspective(this.route.getXMilieuRoute(this.route.getPointControle().getPosY())+Route.LARGEUR,this.route.getPointControle().getPosY());
-			g.drawLine((int)point1.getX(), (int)point1.getY(), (int)point2.getX(), (int)point2.getY());
 			//affichage de l'image
 			int largeurImage = (int)(point2.getX()-point1.getX());
-			int hauteurImage = (int)(point2.getX()-point1.getX())/2;
-			g.drawImage(this.imagePointDeControle, (int)point1.getX(), (int)point1.getY()-hauteurImage, largeurImage, hauteurImage, null);
+			g.drawImage(this.imagePointDeControle, (int)point1.getX(), (int)point1.getY()-largeurImage/2, largeurImage, largeurImage/2, null);
 
 		}
 	}
@@ -126,22 +134,29 @@ public class RouteVue {
 	
 	private void afficherBordGauche(Graphics2D g) {
 		this.route.getCourbes().forEach(c -> {
-			Point2D nouveauPremier = new Point2D.Double(c.getP1().getX(), c.getP1().getY());
-			Point2D nouveauDernier = new Point2D.Double(c.getP2().getX(), c.getP2().getY());
-			Point2D nouveauControle = new Point2D.Double(c.getCtrlX(), c.getCtrlY());
+			QuadCurve2D courbe = c.getCourbe();
+			Point2D nouveauPremier = new Point2D.Double(courbe.getP1().getX(), courbe.getP1().getY());
+			Point2D nouveauDernier = new Point2D.Double(courbe.getP2().getX(), courbe.getP2().getY());
+			Point2D nouveauControle = new Point2D.Double(courbe.getCtrlX(), courbe.getCtrlY());
 			QuadCurve2D nouvelleCourbe = new QuadCurve2D.Double();
 			nouvelleCourbe.setCurve(nouveauPremier, nouveauControle, nouveauDernier);
 			g.draw(nouvelleCourbe);
-			g.drawLine((int)c.getP1().getX()+Route.LARGEUR/2, (int)c.getP1().getY(), (int)c.getP2().getX()+Route.LARGEUR/2, (int)c.getP2().getY());
+			g.drawLine((int)courbe.getP1().getX()+Route.LARGEUR/2, (int)courbe.getP1().getY(), (int)courbe.getP2().getX()+Route.LARGEUR/2, (int)courbe.getP2().getY());
+			if(c.getObstacle() != null) {
+				g.drawRect(c.getObstacle().getX(), c.getObstacle().getY(), c.getObstacle().getLargeur(), c.getObstacle().getHauteur());
+		
+			}
+			g.drawRect(this.terrainVue.getTerrain().getVoiture().getPosX(), this.terrainVue.getTerrain().getVoiture().getPosY(), Voiture.LARGEUR_VOITURE, Voiture.HAUTEUR_VOITURE/2);
 		});
 	}
 
 
 	private void afficherBordDroite(Graphics2D g) {
 		this.route.getCourbes().forEach(c -> {
-			Point2D nouveauPremier = new Point2D.Double(c.getP1().getX() + Route.LARGEUR, c.getP1().getY());
-			Point2D nouveauDernier = new Point2D.Double(c.getP2().getX() + Route.LARGEUR, c.getP2().getY());
-			Point2D nouveauControle = new Point2D.Double(c.getCtrlX() + Route.LARGEUR, c.getCtrlY());
+			QuadCurve2D courbe = c.getCourbe();
+			Point2D nouveauPremier = new Point2D.Double(courbe.getP1().getX() + Route.LARGEUR, courbe.getP1().getY());
+			Point2D nouveauDernier = new Point2D.Double(courbe.getP2().getX() + Route.LARGEUR, courbe.getP2().getY());
+			Point2D nouveauControle = new Point2D.Double(courbe.getCtrlX() + Route.LARGEUR, courbe.getCtrlY());
 			QuadCurve2D nouvelleCourbe = new QuadCurve2D.Double();
 			nouvelleCourbe.setCurve(nouveauPremier, nouveauControle, nouveauDernier);
 			

@@ -15,6 +15,9 @@ import vue.TerrainVue;
 import vue.VoitureVue;
 
 public class Jeu {
+	
+	public static final int FREQUENCE_RAFRAICHISSEMENT = 20;
+	
 	private JFrame fenetre;
 	private Affichage affichage;
 	private HUD hud;

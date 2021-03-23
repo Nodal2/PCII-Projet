@@ -1,5 +1,7 @@
 package vue;
 
+import application.Jeu;
+
 public class AvancerVue extends Thread {
 	private volatile boolean running = true;
 	private DecorationVue decorations;
@@ -15,7 +17,7 @@ public class AvancerVue extends Thread {
 				this.decorations.avancer();
 			}
 			try {
-				Thread.sleep(20);
+				Thread.sleep(Jeu.FREQUENCE_RAFRAICHISSEMENT);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

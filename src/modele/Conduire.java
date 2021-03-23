@@ -1,5 +1,7 @@
 package modele;
 
+import application.Jeu;
+
 public class Conduire extends Thread{
 	private volatile boolean running = true;
 	private Voiture voiture;
@@ -16,7 +18,7 @@ public class Conduire extends Thread{
 				this.voiture.controleVitesse();
 			}
 			try {
-				Thread.sleep(20);
+				Thread.sleep(Jeu.FREQUENCE_RAFRAICHISSEMENT);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

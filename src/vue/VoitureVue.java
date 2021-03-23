@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 import modele.Voiture;
 
 public class VoitureVue {
-	
+	public final static int LARGEUR_VOITURE_VUE = 100;
 	private Voiture voiture;
 	private BufferedImage[] imagesVoiture;
 
@@ -32,17 +32,17 @@ public class VoitureVue {
 	public void afficherVoiture(Graphics g) {
 		if(!this.voiture.isSaute()) {
 			if(this.voiture.isGauche()) {
-				g.drawImage(this.imagesVoiture[0], this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE, Voiture.HAUTEUR_VOITURE, null);
+				g.drawImage(this.imagesVoiture[0], this.voiture.getPosX()-(LARGEUR_VOITURE_VUE-Voiture.LARGEUR_VOITURE)/2, this.voiture.getPosY(), LARGEUR_VOITURE_VUE, Voiture.HAUTEUR_VOITURE, null);
 			}
 			else if(this.voiture.isDroite()) {
-				g.drawImage(this.imagesVoiture[2], this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE, Voiture.HAUTEUR_VOITURE, null);
+				g.drawImage(this.imagesVoiture[2], this.voiture.getPosX()-(LARGEUR_VOITURE_VUE-Voiture.LARGEUR_VOITURE)/2, this.voiture.getPosY(), LARGEUR_VOITURE_VUE, Voiture.HAUTEUR_VOITURE, null);
 			}
 			else {
-				g.drawImage(this.imagesVoiture[1], this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE, Voiture.HAUTEUR_VOITURE, null);
+				g.drawImage(this.imagesVoiture[1], this.voiture.getPosX()-(LARGEUR_VOITURE_VUE-Voiture.LARGEUR_VOITURE)/2, this.voiture.getPosY(), LARGEUR_VOITURE_VUE, Voiture.HAUTEUR_VOITURE, null);
 			}
 		}
 		else {
-			g.drawImage(this.imagesVoiture[3], this.voiture.getPosX(), this.voiture.getPosY(), Voiture.LARGEUR_VOITURE, Voiture.HAUTEUR_VOITURE, null);
+			g.drawImage(this.imagesVoiture[3], this.voiture.getPosX()-(LARGEUR_VOITURE_VUE-Voiture.LARGEUR_VOITURE)/2, this.voiture.getPosY(), LARGEUR_VOITURE_VUE, Voiture.HAUTEUR_VOITURE, null);
 		}
 		
 		

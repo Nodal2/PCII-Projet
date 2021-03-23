@@ -4,26 +4,29 @@ import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
 import java.util.ArrayList;
 
+import vue.Courbe;
+
 public class Route {
-	
+
 	/** constantes */
 	public final static int BORNE_INF_X = 220; //position X min des points de la courbe de gauche
 	public final static int LARGEUR = 150; //largeur de la route
 	private final static int DISTANCE_Y = 70; //distance qui separe chaque point de chaque courbe
 	public final static int BORNE_SUP_X = Terrain.LARGEUR_TERRAIN-BORNE_INF_X-LARGEUR; //position X max des points de la courbe de gauche
-	
+	private final static int PROBA_OBSTACLE = 6;
+
 	/** attributs */
-	private ArrayList<QuadCurve2D> courbes;
+	private ArrayList<Courbe> courbes;
 	private Voiture voiture;
 	private PointControle pointControle;
-	
+
 	/** constructeur */
 	public Route(Voiture voiture) {
 		this.voiture = voiture;
 		this.initCoteGauche();
 		this.pointControle = new PointControle(this.voiture);
 	}
-	
+
 	/** cette methode initialise la liste de courbe de bas en haut jusqu'a ce que le dernier point de la derniere courbe soit en dehors de l'ecran */
 	private void initCoteGauche() {
 		this.courbes = new ArrayList<>();
@@ -31,17 +34,18 @@ public class Route {
 		premiereCourbe.setCurve(new Point2D.Double(BORNE_INF_X,Terrain.HAUTEUR_TERRAIN), 
 				new Point2D.Double(BORNE_INF_X, Terrain.HAUTEUR_TERRAIN-DISTANCE_Y), 
 				new Point2D.Double(BORNE_INF_X+(BORNE_SUP_X-BORNE_INF_X)/2, Terrain.HAUTEUR_TERRAIN-2*DISTANCE_Y));
-		this.courbes.add(premiereCourbe);
-		while(this.courbes.get(this.courbes.size()-1).getP2().getY() > 0) {
+		this.courbes.add(new Courbe(premiereCourbe));
+		while(this.courbes.get(this.courbes.size()-1).getCourbe().getP2().getY() > 0) {
 			this.courbes.add(ajouterCourbeCoteGauche());
 		}
 	}
 	
+
 	/** cette methode permet d'ajouter une courbe a la liste */
-	private QuadCurve2D ajouterCourbeCoteGauche() {
+	private Courbe ajouterCourbeCoteGauche() {
 		int randX;
-		Point2D dernierPointControle = this.courbes.get(this.courbes.size()-1).getCtrlPt();
-		Point2D dernierPointFinal = this.courbes.get(this.courbes.size()-1).getP2();
+		Point2D dernierPointControle = this.courbes.get(this.courbes.size()-1).getCourbe().getCtrlPt();
+		Point2D dernierPointFinal = this.courbes.get(this.courbes.size()-1).getCourbe().getP2();
 		Point2D nouveauControle;
 		Point2D nouveauDernier;
 		if(dernierPointControle.getX() != dernierPointFinal.getX()) {
@@ -63,73 +67,81 @@ public class Route {
 		}
 		QuadCurve2D nouvelleCourbe = new QuadCurve2D.Double();
 		nouvelleCourbe.setCurve(dernierPointFinal, nouveauControle, nouveauDernier);
-		return nouvelleCourbe;
-		
+		Courbe courbe = new Courbe(nouvelleCourbe);
+		int randObstacle = (int) (Math.random() * PROBA_OBSTACLE);
+		if(randObstacle == 1) {
+			courbe.associerUnObstacle();
+		}
+		return courbe;
+
 	}
-	
+
 	/** cette fonction calcul un point dans l'alignement de deux precedents points a la distance souhaitee */
 	private Point2D calculerPointTangeant(Point2D p1, Point2D p2, double p3X) {
 		double pente = (p1.getY() - p2.getY()) / (p1.getX() - p2.getX());
 		double p3Y = -pente*(p2.getX() - p3X) + p2.getY();
 		return new Point2D.Double(p3X, p3Y);
-		
-		
+
+
 	}
-	
+
 	/** cette procedure modifie la coordonnee Y de chaque point de chaque et met a jour la liste (suppression/ajout de courbe) dans certaines conditions */
 	public void avancer() {
-		//on incremente les coordonnees Y de chaque points des courbes de la route
-		this.courbes.forEach(c -> {
-			Point2D premier = new Point2D.Double(c.getP1().getX(),c.getP1().getY()+this.voiture.getVitesse());
-			Point2D controle = new Point2D.Double(c.getCtrlX(),c.getCtrlY()+this.voiture.getVitesse());
-			Point2D dernier = new Point2D.Double(c.getP2().getX(),c.getP2().getY()+this.voiture.getVitesse());
-			c.setCurve(premier, controle, dernier);
-		});
-		//partie qui ajoute et supprime des courbes au fur et a mesure de l'avancement
-		if(this.courbes.get(this.courbes.size()-1).getP2().getY() > Terrain.HAUTEUR_HORIZON) {
-			this.courbes.add(ajouterCourbeCoteGauche());
-		}
-		if(this.courbes.get(1).getCtrlY()>Terrain.HAUTEUR_TERRAIN) {
-			this.courbes.remove(0);
-			
-		}
+		this.avancerCourbes();
 		this.pointControle.avancer();
 	}
-	
+
+	private void avancerCourbes() {
+		//on incremente les coordonnees Y de chaque points des courbes de la route
+		this.courbes.forEach(c -> {
+			QuadCurve2D courbe = c.getCourbe();
+			Point2D premier = new Point2D.Double(courbe.getP1().getX(),courbe.getP1().getY()+this.voiture.getVitesse());
+			Point2D controle = new Point2D.Double(courbe.getCtrlX(),courbe.getCtrlY()+this.voiture.getVitesse());
+			Point2D dernier = new Point2D.Double(courbe.getP2().getX(),courbe.getP2().getY()+this.voiture.getVitesse());
+			courbe.setCurve(premier, controle, dernier);
+			c.setCourbe(courbe);
+		});
+		//partie qui ajoute et supprime des courbes au fur et a mesure de l'avancement
+		if(this.courbes.get(this.courbes.size()-1).getCourbe().getP2().getY() > Terrain.HAUTEUR_HORIZON) {
+			this.courbes.add(ajouterCourbeCoteGauche());
+		}
+		if(this.courbes.get(1).getCourbe().getCtrlY()>Terrain.HAUTEUR_TERRAIN) {
+			this.courbes.remove(0);
+
+		}
+	}
+
 	/** retourne la courbe la plus proche en Y de la voiture depuis la liste de courbes */
-	public QuadCurve2D getCourbeCourante(int y) {
-		for(QuadCurve2D courbe : this.courbes) {
-			if(courbe.getP2().getY() <= y && courbe.getP1().getY() >= y) {
+	public Courbe getCourbeCourante(int y) {
+		for(Courbe courbe : this.courbes) {
+			if(courbe.getCourbe().getP2().getY() <= y && courbe.getCourbe().getP1().getY() >= y) {
 				return courbe;
 			}
 		}
 		return null;
 	}
-	
+
 	/** retourne la coordonnee X du segment trace entre les points P1 et P2 de la courbe courante (+ largeur de route/2) */
 	public float getXMilieuRoute(int y) {
-		QuadCurve2D courbeCouranteGauche = this.getCourbeCourante(y);
-		
+		QuadCurve2D courbeCouranteGauche = this.getCourbeCourante(y).getCourbe();
+
 		int p1x = (int)courbeCouranteGauche.getP1().getX(); //definition ligne milieu de route
 		int p1y = (int)courbeCouranteGauche.getP1().getY();
 		int p2x = (int)courbeCouranteGauche.getP2().getX();
 		int p2y = (int)courbeCouranteGauche.getP2().getY();
-		
+
 		float pente = (p1y-p2y)/(float)(p1x-p2x); //calcul de la pente de cette ligne
 		return -((p1y-y)/pente)+p1x+Route.LARGEUR/2; 
 	}
-	
+
 	/** getter et setters */
-	
+
 	public PointControle getPointControle() {
 		return this.pointControle;
 	}
 
-	
-	public ArrayList<QuadCurve2D> getCourbes() {
+
+	public ArrayList<Courbe> getCourbes() {
 		return this.courbes;
 	}
-
-	
-
 }
