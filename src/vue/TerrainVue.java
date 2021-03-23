@@ -38,7 +38,7 @@ public class TerrainVue {
 		this.couleurCielBas = new Color(100,100,100);
 		this.couleurSol = new Color(120,140,10);
 		try {
-			this.imageHorizon = ImageIO.read(new File("assets/mountain.png"));
+			this.imageHorizon = ImageIO.read(new File("assets/background.png"));
 		} catch (IOException e) {
 			System.out.println("impossible d'afficher l'image ! : "+e);
 		}

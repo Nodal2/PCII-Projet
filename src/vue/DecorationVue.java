@@ -24,13 +24,14 @@ public class DecorationVue {
 	public DecorationVue(TerrainVue terrainVue) {
 		this.terrainVue = terrainVue;
 		this.decorations = new ArrayList<>();
-		this.imagesDecoration = new BufferedImage[5];
+		this.imagesDecoration = new BufferedImage[6];
 		try {
 			this.imagesDecoration[0] = ImageIO.read(new File("assets/tree_1.png"));
 			this.imagesDecoration[1] = ImageIO.read(new File("assets/tree_2.png"));
 			this.imagesDecoration[2] = ImageIO.read(new File("assets/tree_3.png"));
 			this.imagesDecoration[3] = ImageIO.read(new File("assets/stone_1.png"));
 			this.imagesDecoration[4] = ImageIO.read(new File("assets/stone_2.png"));
+			this.imagesDecoration[5] = ImageIO.read(new File("assets/bush_1.png"));
 		} catch (IOException e) {
 			System.out.println("impossible d'afficher l'image ! : "+e);
 		}
