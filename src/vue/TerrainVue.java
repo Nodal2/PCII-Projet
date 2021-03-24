@@ -24,7 +24,8 @@ public class TerrainVue {
 	private DecorationVue decorationVue;
 	private Color couleurCielHaut;
 	private Color couleurCielBas;
-	private Color couleurSol;
+	private Color couleurSolHaut;
+	private Color couleurSolBas;
 	private Point pointDeFuite;
 	private BufferedImage imageHorizon;
 
@@ -36,7 +37,8 @@ public class TerrainVue {
 		this.pointDeFuite = new Point(Terrain.LARGEUR_TERRAIN/2, Terrain.HAUTEUR_HORIZON);
 		this.couleurCielHaut = new Color(170,170,170);
 		this.couleurCielBas = new Color(100,100,100);
-		this.couleurSol = new Color(120,140,10);
+		this.couleurSolBas = new Color(80,100,0);
+		this.couleurSolHaut = new Color(130,150,20);
 		try {
 			this.imageHorizon = ImageIO.read(new File("assets/background.png"));
 		} catch (IOException e) {
@@ -46,9 +48,11 @@ public class TerrainVue {
 	
 	/** cette methode permet d'afficher tous les elements presents sur le train */
 	public void afficherTerrain(Graphics g) {
-		g.setColor(this.couleurSol);
-		g.fillRect(0, Terrain.HAUTEUR_HORIZON, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_TERRAIN);
+		GradientPaint gradient = new GradientPaint(Terrain.HAUTEUR_HORIZON,Terrain.HAUTEUR_TERRAIN,this.couleurSolBas,0, 0,this.couleurSolHaut);
 		Graphics2D g2 = (Graphics2D)g;
+		g2.setPaint(gradient);
+		g2.fill(new Rectangle(0, Terrain.HAUTEUR_HORIZON, Terrain.LARGEUR_TERRAIN, Terrain.HAUTEUR_TERRAIN));
+		
 		this.afficherHorizon(g);
 		this.decorationVue.afficherDecors(g2);
 		this.routeVue.afficherRoute(g2);

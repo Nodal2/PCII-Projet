@@ -152,7 +152,7 @@ public class Voiture {
 
 	private void gererCollisionObstacle() {
 		if (detecterCollision()) {
-			this.vitesse = 1;
+			this.vitesse -= FREINAGE*4;
 			if(this.vitesse < 0) {
 				this.vitesse = 0;
 			}
