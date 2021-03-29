@@ -2,7 +2,6 @@ package vue;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -28,10 +27,10 @@ public class VoitureVue {
 		this.voiture = voiture;
 		this.imagesVoiture = new BufferedImage[4];
 		try {
-			this.imagesVoiture[0] = ImageIO.read(new File("assets/car_gauche.png"));
-			this.imagesVoiture[1] = ImageIO.read(new File("assets/car.png"));
-			this.imagesVoiture[2] = ImageIO.read(new File("assets/car_droite.png"));
-			this.imagesVoiture[3] = ImageIO.read(new File("assets/car_saut.png"));
+			this.imagesVoiture[0] = ImageIO.read(getClass().getClassLoader().getResource("car_gauche.png"));
+			this.imagesVoiture[1] = ImageIO.read(getClass().getClassLoader().getResource("car.png"));
+			this.imagesVoiture[2] = ImageIO.read(getClass().getClassLoader().getResource("car_droite.png"));
+			this.imagesVoiture[3] = ImageIO.read(getClass().getClassLoader().getResource("car_saut.png"));
 		} catch (IOException e) {
 			System.out.println("impossible d'afficher l'image ! : "+e);
 		}

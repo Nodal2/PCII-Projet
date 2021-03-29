@@ -3,7 +3,6 @@ package vue;
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -34,12 +33,12 @@ public class DecorationsVue {
 		this.decorations = new ArrayList<>();
 		this.imagesDecoration = new BufferedImage[6];
 		try {
-			this.imagesDecoration[0] = ImageIO.read(new File("assets/tree_1.png"));
-			this.imagesDecoration[1] = ImageIO.read(new File("assets/tree_2.png"));
-			this.imagesDecoration[2] = ImageIO.read(new File("assets/tree_3.png"));
-			this.imagesDecoration[3] = ImageIO.read(new File("assets/stone_1.png"));
-			this.imagesDecoration[4] = ImageIO.read(new File("assets/stone_2.png"));
-			this.imagesDecoration[5] = ImageIO.read(new File("assets/bush_1.png"));
+			this.imagesDecoration[0] = ImageIO.read(getClass().getClassLoader().getResource("tree_1.png"));
+			this.imagesDecoration[1] = ImageIO.read(getClass().getClassLoader().getResource("tree_2.png"));
+			this.imagesDecoration[2] = ImageIO.read(getClass().getClassLoader().getResource("tree_3.png"));
+			this.imagesDecoration[3] = ImageIO.read(getClass().getClassLoader().getResource("stone_1.png"));
+			this.imagesDecoration[4] = ImageIO.read(getClass().getClassLoader().getResource("stone_2.png"));
+			this.imagesDecoration[5] = ImageIO.read(getClass().getClassLoader().getResource("bush_1.png"));
 		} catch (IOException e) {
 			System.out.println("impossible d'afficher l'image ! : "+e);
 		}

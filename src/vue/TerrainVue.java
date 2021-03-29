@@ -8,7 +8,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -43,7 +42,7 @@ public class TerrainVue {
 		this.couleurSolBas = new Color(80,100,0);
 		this.couleurSolHaut = new Color(130,150,20);
 		try {
-			this.imageHorizon = ImageIO.read(new File("assets/background.png"));
+			this.imageHorizon = ImageIO.read(getClass().getClassLoader().getResource("background.png"));
 		} catch (IOException e) {
 			System.out.println("impossible d'afficher l'image ! : "+e);
 		}

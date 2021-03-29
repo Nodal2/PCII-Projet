@@ -8,7 +8,6 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ConcurrentModificationException;
 
@@ -39,8 +38,8 @@ public class RouteVue {
 		this.couleurRoute = new Color(71,71,71);
 		this.couleurLigneRoute = new Color(189,152,65);
 		try {
-			this.imagePointDeControle = ImageIO.read(new File("assets/checkpoint.png"));
-			this.imageObstacle = ImageIO.read(new File("assets/obstacle.png"));
+			this.imagePointDeControle = ImageIO.read(getClass().getClassLoader().getResource("checkpoint.png"));
+			this.imageObstacle = ImageIO.read(getClass().getClassLoader().getResource("obstacle.png"));
 		} catch (IOException e) {
 			System.out.println("impossible d'afficher l'image ! : "+e);
 		}
