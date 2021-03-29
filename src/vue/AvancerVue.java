@@ -2,11 +2,14 @@ package vue;
 
 import application.Jeu;
 
+/** cette classe est un thread qui fait avancer les decors sur les cotes de la route toutes les FREQUENCE_RAFRAICHISSEMENT ms */
+
+
 public class AvancerVue extends Thread {
 	private volatile boolean running = true;
-	private DecorationVue decorations;
+	private DecorationsVue decorations;
 	
-	public AvancerVue(DecorationVue decorations) {
+	public AvancerVue(DecorationsVue decorations) {
 		this.decorations = decorations;
 	}
 	

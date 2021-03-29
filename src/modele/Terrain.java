@@ -1,5 +1,10 @@
 package modele;
 
+/** cette classe represente un terrain cote modele. Un terrain 
+ * possede des attributs des principales classes du modele
+ * contient des constantes qui definissent le cadre du jeu
+ */
+
 public class Terrain {
 	
 	/** constantes */
@@ -12,7 +17,6 @@ public class Terrain {
 	private Route route;
 	private Voiture voiture;
 	private Chronometre chronometre;
-	//private CompteARebour compteARebour;
 	
 	/** constructeur */
 	public Terrain(Voiture voiture) {
@@ -35,7 +39,4 @@ public class Terrain {
 	public Chronometre getChronometre() {
 		return this.chronometre;
 	}
-
-	//public CompteARebour getCompteARebour(){ return this.compteARebour;}
-
 }

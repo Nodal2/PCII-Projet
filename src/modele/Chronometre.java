@@ -3,11 +3,18 @@ package modele;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/** cette classe represente un chronometre. Un chronometre peut :
+ * - lancer un timer qui incremente les secondes
+ * - afficher le temps a partir du nombre de secondes ecoulees 
+ */
+
 public class Chronometre {
 	
+	/** attributs */
 	private Timer timer;
 	private int secondesEcoulees;
 	
+	/** constructeur */
 	public Chronometre() {
 		this.secondesEcoulees = 0;
 		this.timer = new Timer();
@@ -19,6 +26,7 @@ public class Chronometre {
 		}, 1000, 1000);
 	}
 	
+	/** cette fonction permet d'afficher un temps au format MM:SS a partir des secondes ecoulees */
 	public String toString() {
 		String affichage = "";
 		int minutes = this.secondesEcoulees/60;
@@ -34,6 +42,8 @@ public class Chronometre {
 		affichage+=secondes;
 		return affichage;
 	}
+	
+	/** getters et setters */
 	
 	public int getSecondesEcoulees() {
 		return this.secondesEcoulees;

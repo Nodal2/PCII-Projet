@@ -15,25 +15,28 @@ import javax.imageio.ImageIO;
 
 import modele.Terrain;
 
+/** cette classe represente tout l'affichage princpal du jeu. */
+
 public class TerrainVue {
 	
 	/** attributs */
 	private Terrain terrain;
 	private VoitureVue voitureVue;
 	private RouteVue routeVue;
-	private DecorationVue decorationVue;
+	private DecorationsVue decorationVue;
 	private Color couleurCielHaut;
 	private Color couleurCielBas;
 	private Color couleurSolHaut;
 	private Color couleurSolBas;
 	private Point pointDeFuite;
 	private BufferedImage imageHorizon;
-
+	
+	/** constructeur */
 	public TerrainVue(Terrain terrain, VoitureVue voitureVue) {
 		this.terrain = terrain;
 		this.voitureVue = voitureVue;
 		this.routeVue = new RouteVue(this.terrain.getRoute(), this);
-		this.decorationVue = new DecorationVue(this);
+		this.decorationVue = new DecorationsVue(this);
 		this.pointDeFuite = new Point(Terrain.LARGEUR_TERRAIN/2, Terrain.HAUTEUR_HORIZON);
 		this.couleurCielHaut = new Color(170,170,170);
 		this.couleurCielBas = new Color(100,100,100);
@@ -89,6 +92,8 @@ public class TerrainVue {
 		}
 	}
 	
+	/** getter et setters */
+	
 	public Terrain getTerrain() {
 		return this.terrain;
 	}
@@ -101,11 +106,11 @@ public class TerrainVue {
 		return this.routeVue;
 	}
 	
-	public void setDecorationVue(DecorationVue decorationVue) {
+	public void setDecorationVue(DecorationsVue decorationVue) {
 		this.decorationVue = decorationVue;
 	}
 	
-	public DecorationVue getDecorationVue() {
+	public DecorationsVue getDecorationVue() {
 		return this.decorationVue;
 	}
 }

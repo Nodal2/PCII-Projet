@@ -16,16 +16,25 @@ import javax.swing.UIManager;
 
 import modele.Terrain;
 
+/** cette classe est un JPanel qui contient les élément nécessaire pour afficher une fin de partie. Cette classe permet au joueur de :
+ * - relancer une partie 
+ * - quitter le programme
+ */
+
 public class MenuRejouer extends JPanel implements ActionListener{
 	
+	/** constantes */
 	private static final long serialVersionUID = -1853653778276537077L;
+	
+	/** attributs */
 	private JLabel labelScore;
 	private Terrain terrain;
 	private  JFrame fenetrePrincipale;
 	private JButton boutonQuitter;
 	private Color couleurBouttonQuitter;
 	private Color couleurTempsFinal;
-
+	
+	/** constructeur */
 	public MenuRejouer(Terrain terrain, JFrame fenetre) {
 		this.terrain = terrain;
 		this.fenetrePrincipale = fenetre;
@@ -38,6 +47,7 @@ public class MenuRejouer extends JPanel implements ActionListener{
 		JOptionPane.showMessageDialog(this.fenetrePrincipale, this, "Game Over", JOptionPane.PLAIN_MESSAGE);
 	}
 	
+	/** cette methode permet d'initialiser la zone de texte qui contient le temps final du joueur */
 	private void initialiserLabelTempsFinal() {
 		this.labelScore = new JLabel("label temps final", SwingConstants.CENTER);
 		this.labelScore.setText("Time survived : "+this.terrain.getChronometre().toString());
@@ -47,17 +57,19 @@ public class MenuRejouer extends JPanel implements ActionListener{
 		this.add(labelScore, BorderLayout.CENTER);
 	}
 	
+	/** cette methode permet de creer le bouton pour quitter le programme */
 	private void initialiserBoutonQuitter() {
 		this.boutonQuitter = new JButton("Quit");
 		this.boutonQuitter.setBackground(couleurBouttonQuitter);
 		this.boutonQuitter.addActionListener(this);
 		this.add(this.boutonQuitter, BorderLayout.SOUTH);
 	}
-
+	
+	/** cette implementation de la methode actionPerformed permet de definir l'action du bouton pour quitter le programme */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == this.boutonQuitter) {
-			System.exit(0);
+			System.exit(0); //permet d'arreter le programme
 		}
 		
 	}

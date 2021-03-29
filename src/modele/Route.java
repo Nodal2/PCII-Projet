@@ -4,7 +4,12 @@ import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
 import java.util.ArrayList;
 
-import vue.Courbe;
+/** cette classe represente une route cote modele. Une route 
+ * possede une ArrayList de courbes
+ * peut initialiser cette liste
+ * peut generer une nouvelle courbe
+ * peut faire avancer chacune de ces courbes
+ */
 
 public class Route {
 
@@ -39,25 +44,26 @@ public class Route {
 			this.courbes.add(ajouterCourbeCoteGauche());
 		}
 	}
-	
 
 	/** cette methode permet d'ajouter une courbe a la liste */
 	private Courbe ajouterCourbeCoteGauche() {
 		int randX;
-		Point2D dernierPointControle = this.courbes.get(this.courbes.size()-1).getCourbe().getCtrlPt();
-		Point2D dernierPointFinal = this.courbes.get(this.courbes.size()-1).getCourbe().getP2();
-		Point2D nouveauControle;
-		Point2D nouveauDernier;
+		Point2D dernierPointControle = this.courbes.get(this.courbes.size()-1).getCourbe().getCtrlPt(); //point de controle de la precedente courbe de la liste
+		Point2D dernierPointFinal = this.courbes.get(this.courbes.size()-1).getCourbe().getP2(); //point final de la precedente courbe de la liste
+		Point2D nouveauControle; // nouveau point de controle a calculer
+		Point2D nouveauDernier; //nouveau point final a calculer
+		
+		//code qui permet de postionner aleatoirement le nouveauControle et nouveauFinal en evitant les cassures
 		if(dernierPointControle.getX() != dernierPointFinal.getX()) {
 			if(dernierPointControle.getX() < dernierPointFinal.getX()) {
 				double min = (BORNE_SUP_X-dernierPointFinal.getX())/4+dernierPointFinal.getX(); //permet d'eviter d'avoir nouveau point de ctrl colle au dernier pf
 				randX = (int) ((Math.random() * (BORNE_SUP_X - min)) + min);
-				nouveauControle = calculerPointTangeant(dernierPointControle, dernierPointFinal,randX);
+				nouveauControle = Utils.calculerPointTangeant(dernierPointControle, dernierPointFinal,randX);
 			}
 			else {
 				double max = (dernierPointFinal.getX()-BORNE_INF_X)/4+BORNE_INF_X; //permet d'eviter d'avoir nouveau point de ctrl colle au dernier pf
 				randX = (int) ((Math.random() * (max - BORNE_INF_X)) + BORNE_INF_X);
-				nouveauControle = calculerPointTangeant(dernierPointControle, dernierPointFinal,randX); 
+				nouveauControle = Utils.calculerPointTangeant(dernierPointControle, dernierPointFinal,randX); 
 			}			
 			nouveauDernier = new Point2D.Double(nouveauControle.getX(),nouveauControle.getY()-(int) ((Math.random() * (DISTANCE_Y -DISTANCE_Y/2)) + DISTANCE_Y/2));
 		}
@@ -65,24 +71,22 @@ public class Route {
 			nouveauControle = new Point2D.Double(dernierPointFinal.getX(),dernierPointFinal.getY()-(int) ((Math.random() * (DISTANCE_Y -DISTANCE_Y/2)) + DISTANCE_Y/2)); 
 			nouveauDernier = new Point2D.Double(BORNE_INF_X+(BORNE_SUP_X-BORNE_INF_X)/2, nouveauControle.getY()-(int) ((Math.random() * (DISTANCE_Y -DISTANCE_Y/2)) + DISTANCE_Y/2)); 
 		}
+		
+		//creation de la nouvelle courbe avec P1 : dernier point final, Ctrl : nouveauControle et P2 : nouveauDernier
 		QuadCurve2D nouvelleCourbe = new QuadCurve2D.Double();
 		nouvelleCourbe.setCurve(dernierPointFinal, nouveauControle, nouveauDernier);
-		Courbe courbe = new Courbe(nouvelleCourbe);
-		int randObstacle = (int) (Math.random() * PROBA_OBSTACLE);
-		if(randObstacle == 1) {
-			courbe.associerUnObstacle();
-		}
+		Courbe courbe = new Courbe(nouvelleCourbe); //creation de l'objet courbe
+		genererObstacleSurCourbe(courbe); //generation de l'eventuel obstacle sur cette nouvelle courbe
 		return courbe;
 
 	}
-
-	/** cette fonction calcul un point dans l'alignement de deux precedents points a la distance souhaitee */
-	private Point2D calculerPointTangeant(Point2D p1, Point2D p2, double p3X) {
-		double pente = (p1.getY() - p2.getY()) / (p1.getX() - p2.getX());
-		double p3Y = -pente*(p2.getX() - p3X) + p2.getY();
-		return new Point2D.Double(p3X, p3Y);
-
-
+	
+	/** cette methode permet d'attribut ou non un obstacle a une courbe */
+	private void genererObstacleSurCourbe(Courbe courbe) {
+		int randObstacle = (int) (Math.random() * PROBA_OBSTACLE);
+		if(randObstacle == 0) {
+			courbe.associerUnObstacle();
+		}
 	}
 
 	/** cette procedure modifie la coordonnee Y de chaque point de chaque et met a jour la liste (suppression/ajout de courbe) dans certaines conditions */
@@ -90,7 +94,8 @@ public class Route {
 		this.avancerCourbes();
 		this.pointControle.avancer();
 	}
-
+	
+	/** cette methode permet de faire avancer les courbes et en ajoute ou en supprime*/
 	private void avancerCourbes() {
 		//on incremente les coordonnees Y de chaque points des courbes de la route
 		this.courbes.forEach(c -> {
@@ -119,19 +124,6 @@ public class Route {
 			}
 		}
 		return null;
-	}
-
-	/** retourne la coordonnee X du segment trace entre les points P1 et P2 de la courbe courante (+ largeur de route/2) */
-	public float getXMilieuRoute(int y) {
-		QuadCurve2D courbeCouranteGauche = this.getCourbeCourante(y).getCourbe();
-
-		int p1x = (int)courbeCouranteGauche.getP1().getX(); //definition ligne milieu de route
-		int p1y = (int)courbeCouranteGauche.getP1().getY();
-		int p2x = (int)courbeCouranteGauche.getP2().getX();
-		int p2y = (int)courbeCouranteGauche.getP2().getY();
-
-		float pente = (p1y-p2y)/(float)(p1x-p2x); //calcul de la pente de cette ligne
-		return -((p1y-y)/pente)+p1x+Route.LARGEUR/2; 
 	}
 
 	/** getter et setters */

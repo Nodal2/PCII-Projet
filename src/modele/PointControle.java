@@ -1,5 +1,11 @@
 package modele;
 
+/** cette classe represente un point de controle cote modele. Un point de controle peut :
+ * - reculer si il atteint le bas du terrain
+ * - avancer
+ * - crediter le compte a rebours en temps supplementaire
+ */
+
 public class PointControle {
 	
 	/** attributs */
@@ -15,7 +21,7 @@ public class PointControle {
 		this.compteARebour = new CompteARebour();
 	}
 	
-	/** cette procedure permet de faire reculer le point en fonction du nombre de fois ou il a deja recule */
+	/** cette procedure permet de faire reculer le point en fonction du nombre de fois ou il a recule */
 	public void reculerPointControle() {
 		this.numeroEtape++;
 		this.crediterEnTemps();
@@ -30,10 +36,12 @@ public class PointControle {
 		}
 	}
 
-	/** methode permettant de reinitialiser le timer lorsqu'un cp est franchis la duree du timer est ajustee en fonction du cp franchis */
+	/** cette methode permet de reinitialiser le timer lorsqu'un cp est franchis la duree du timer est ajustee en fonction du cp franchis */
 	public void crediterEnTemps() {
 		this.compteARebour.reset(this.numeroEtape * Voiture.VITESSE_MAXIMALE);
 	}
+	
+	/** getters et setters */
 	
 	public CompteARebour getCompteARebour() {
 		return this.compteARebour;

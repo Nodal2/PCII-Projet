@@ -14,21 +14,25 @@ import java.util.ConcurrentModificationException;
 
 import javax.imageio.ImageIO;
 
+import modele.Courbe;
 import modele.Route;
 import modele.Terrain;
 import modele.Voiture;
 
 public class RouteVue {
 	
+	/** constantes */
 	private static final boolean DEBUG_MOD = false;
 	
+	/** attributs */
 	private Route route;
 	private TerrainVue terrainVue;
 	private Color couleurRoute;
 	private Color couleurLigneRoute;
 	private BufferedImage imagePointDeControle;
 	private BufferedImage imageObstacle;
-
+	
+	/** constructeur */
 	public RouteVue(Route route, TerrainVue terrainVue) {
 		this.route = route;
 		this.terrainVue = terrainVue;
@@ -88,7 +92,7 @@ public class RouteVue {
 			nouvelleCourbeMilieu.setCurve(milieuBas, milieuControle, milieuHaut);
 			
 			
-			
+			//cette partie du code permet de colorier la route
 			GeneralPath closedCurve;
 			closedCurve = new GeneralPath();
 			
@@ -107,6 +111,8 @@ public class RouteVue {
 			g.draw(nouvelleCourbeMilieu);
 			g.setStroke(new BasicStroke(1.0f));
 			g.setColor(Color.black);
+			
+			//cette partie du code permet de recuperer et d'afficher l'obstacle de la courbe (s'il n'est pas null)
 			if(c.getObstacle() != null) {
 				Point2D point1 = this.terrainVue.calculPointPerspective(c.getObstacle().getX(), c.getObstacle().getY());
 				Point2D point2 = this.terrainVue.calculPointPerspective(c.getObstacle().getX()+c.getObstacle().getLargeur(), c.getObstacle().getY());
@@ -121,9 +127,10 @@ public class RouteVue {
 	/** cette methode permet d'afficher le point de controle sur la route*/
 	public void afficherPointControle(Graphics g) {
 		g.setColor(Color.black);
+		Courbe courbePointControle = this.route.getCourbeCourante(this.route.getPointControle().getPosY());
 		if(this.route.getPointControle().getPosY() >= Terrain.HAUTEUR_HORIZON && this.route.getPointControle().getPosY() <= Terrain.HAUTEUR_TERRAIN) { //on affiche le point de controle seulement si il est a l'ecran		
-			Point2D point1 = this.terrainVue.calculPointPerspective(this.route.getXMilieuRoute(this.route.getPointControle().getPosY())-Route.LARGEUR,this.route.getPointControle().getPosY());
-			Point2D point2 = this.terrainVue.calculPointPerspective(this.route.getXMilieuRoute(this.route.getPointControle().getPosY())+Route.LARGEUR,this.route.getPointControle().getPosY());
+			Point2D point1 = this.terrainVue.calculPointPerspective(courbePointControle.getXMilieuRoute(this.route.getPointControle().getPosY())-Route.LARGEUR,this.route.getPointControle().getPosY());
+			Point2D point2 = this.terrainVue.calculPointPerspective(courbePointControle.getXMilieuRoute(this.route.getPointControle().getPosY())+Route.LARGEUR,this.route.getPointControle().getPosY());
 			//affichage de l'image
 			int largeurImage = (int)(point2.getX()-point1.getX());
 			g.drawImage(this.imagePointDeControle, (int)point1.getX(), (int)point1.getY()-largeurImage/2, largeurImage, largeurImage/2, null);
@@ -131,7 +138,7 @@ public class RouteVue {
 		}
 	}
 	
-	
+	/** cette methode permet d'afficher uniquement le cote gauche */
 	private void afficherBordGauche(Graphics2D g) {
 		this.route.getCourbes().forEach(c -> {
 			QuadCurve2D courbe = c.getCourbe();
@@ -150,7 +157,7 @@ public class RouteVue {
 		});
 	}
 
-
+	/** cette methode permet d'afficher uniquement le cote droit */
 	private void afficherBordDroite(Graphics2D g) {
 		this.route.getCourbes().forEach(c -> {
 			QuadCurve2D courbe = c.getCourbe();
@@ -167,6 +174,8 @@ public class RouteVue {
 			g.draw(nouvelleCourbe);
 		});
 	}
+	
+	/** getters et setters */
 	
 	public void setRoute(Route route) {
 		this.route = route;

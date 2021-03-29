@@ -2,10 +2,15 @@ package modele;
 
 import application.Jeu;
 
+/** cette classe est un thread qui fait bouger la voiture lateralement toutes les FREQUENCE_RAFRAICHISSEMENT ms */
+
 public class Conduire extends Thread{
+	
+	/** attributs */
 	private volatile boolean running = true;
 	private Voiture voiture;
 	
+	/** constructeur */
 	public Conduire(Voiture voiture) {
 		this.voiture = voiture;
 	}
@@ -25,6 +30,7 @@ public class Conduire extends Thread{
 		}
 	}
 	
+	/** cette methode permet de sortir de la boucle de run() */
 	public void arreter() {
 		this.running = false;
 	}

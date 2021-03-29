@@ -3,11 +3,21 @@ package modele;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/** cette classe represente un compte un rebours. Un compte a rebours peut :
+ * - lancer un timer qui decremente un temps restant en secondes
+ * - afficher le temps a partir du nombre du temps restant en seconde
+ */
+
 public class CompteARebour {
+	
+	/** constantes */
 	private static final int TEMPS_INITIAL = 60;
+	
+	/** attributs */
     private Timer timer;
     private int tempsCourant;
     
+    /** constructeur */
     public CompteARebour(){
     	this.tempsCourant = TEMPS_INITIAL;
         this.timer = new Timer();
@@ -25,7 +35,8 @@ public class CompteARebour {
     public void reset(int n){
        this.tempsCourant += n;
     }
-
+    
+    /** cette fonction permet d'afficher un temps au format MM:SS a partir des secondes ecoulees */
     public String toString(){
         String affichage = "";
         int minutes = this.tempsCourant/60;
@@ -41,6 +52,8 @@ public class CompteARebour {
         affichage+=secondes;
         return affichage;
     }
+    
+    /** getters et setters */
     
     public Timer getTimer() {
     	return this.timer;

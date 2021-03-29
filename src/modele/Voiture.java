@@ -1,5 +1,11 @@
 package modele;
 
+/** cette classe represente une voiture cote modele. Une voiture peut : 
+ *  - accelerer ou freiner par rapport a sa position a la route
+ *  - aller a gauche ou a droite sans sortir du terrain
+ *  - sauter jusqu'a une hauteur maximale
+ *  - freiner si elle rencontre un obstacle
+ */
 
 public class Voiture {
 
@@ -9,9 +15,9 @@ public class Voiture {
 	public final static int VITESSE_MAXIMALE = 5; //vitesse verticale max
 	private final static float ACCELERATION = 0.01f; //force de l'acceleration
 	private final static float FREINAGE = 0.05f; //force du freinage
-	private final static float VITESSE_LATERALE = 0.7f; //vitesse de deplacement laterale du vehicule
+	private final static float VITESSE_LATERALE = 0.5f; //vitesse de deplacement laterale du vehicule
 	private final static float VITESSE_VERTICALE = 0.5f; //vitesse de deplacement verticale du vehicule
-	private final static int HAUTEUR_SAUT = 300;
+	private final static int HAUTEUR_SAUT = 300; //hauteur max que peut atteindre un saut
 
 	/** attributs */
 	private int posX;
@@ -47,19 +53,19 @@ public class Voiture {
 		else{
 			this.freinerLateralement();
 		}
-		this.gererCollisionObstacle();
 		this.sauter();
 		this.posX += this.velociteLaterale; // mise a jour de la position
 		this.posY += this.velociteVerticale;
 		this.controleLimites(); //correction de la position si en dehors du terrain
 	}
-
+	
+	/** cette methode permet de gerer le saut et la chutte de la voiture */
 	private void sauter() {
-		if(this.saute) {
+		if(this.saute) { //si on est en train de sauter
 			this.posY -= VITESSE_MAXIMALE;
 		}
-		else {
-			this.velociteVerticale += VITESSE_VERTICALE;
+		else { //sinon la voiture tombe
+			this.velociteVerticale += VITESSE_VERTICALE; 
 		}
 	}
 
@@ -108,9 +114,13 @@ public class Voiture {
 
 	/** permet de freiner ou accelerer la voiture du joueur en fonction de sa position par rapport a la route */
 	public void controleVitesse() {
-		float x = this.terrain.getRoute().getXMilieuRoute(posY);
+		Courbe courbeCourante = this.terrain.getRoute().getCourbeCourante(posY);
+		float x = courbeCourante.getXMilieuRoute(posY);
 		if(posX+LARGEUR_VOITURE/2 < x-Route.LARGEUR || posX+LARGEUR_VOITURE/2 > x + Route.LARGEUR) {
-			this.freiner();
+			this.freiner(1);
+		}
+		else if (detecterCollision(courbeCourante)) {
+			this.freiner(3);
 		}
 		else {
 			this.accelerer();
@@ -132,16 +142,17 @@ public class Voiture {
 	}
 
 	/** permet de diminuer la vitesse de la voiture sans depasser la vitesse minimale */
-	private void freiner() {
-		this.vitesse -= FREINAGE;
+	private void freiner(int force) {
+		this.vitesse -= FREINAGE*force;
 		if(this.vitesse < 0) {
 			this.vitesse = 0;
 		}
 
 	}
-
-	private boolean detecterCollision() {
-		Obstacle obstacleCourant = this.terrain.getRoute().getCourbeCourante(this.posY).getObstacle();
+	
+	/** renvoie vrai si le rectangle entourant la voiture est superpose au rectangle entourant l'obstacle le plus proche */
+	private boolean detecterCollision(Courbe courbeCourante) {
+		Obstacle obstacleCourant = courbeCourante.getObstacle();
 		if (obstacleCourant != null && this.posY == Terrain.HAUTEUR_SOL &&
 				this.posX < obstacleCourant.getX() + obstacleCourant.getLargeur() && this.posX + LARGEUR_VOITURE > obstacleCourant.getX() &&
 				this.posY < obstacleCourant.getY() + obstacleCourant.getHauteur() && this.posY + HAUTEUR_VOITURE/2 > obstacleCourant.getY()) {
@@ -149,18 +160,10 @@ public class Voiture {
 		}
 		return false;
 	}
-
-	private void gererCollisionObstacle() {
-		if (detecterCollision()) {
-			this.vitesse -= FREINAGE*4;
-			if(this.vitesse < 0) {
-				this.vitesse = 0;
-			}
-		}
-	}
-
-	private void sePosisionnerAuCentreDeLaRoute() {
-		this.posX = (int)this.terrain.getRoute().getXMilieuRoute(posY);
+	
+	/** permet de placer la voiture au centre de la courbe courante a partir de sa position Y */
+	private void sePositionnerAuCentreDeLaRoute() {
+		this.posX = (int)this.terrain.getRoute().getCourbeCourante(posY).getXMilieuRoute(posY);
 	}
 
 	/** getters et setters */
@@ -186,7 +189,7 @@ public class Voiture {
 
 	public void setTerrain(Terrain terrain) {
 		this.terrain = terrain;
-		this.sePosisionnerAuCentreDeLaRoute();
+		this.sePositionnerAuCentreDeLaRoute();
 	}
 
 	public float getVitesse() {
