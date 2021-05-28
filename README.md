@@ -6,7 +6,7 @@ The objective of this project was to make a video game inspired by the 80s in wh
 
 # How to play ?
 
-The object of the game is to survive as long as possible. The game ends when the player's "remaining time" reaches 0, and that time is continually decreasing. The only way for the player to get time credit is to go through increasingly spaced checkpoints. 
+The goal of the game is to survive as long as possible. The game ends when the player's "remaining time" reaches 0, and that time is continually decreasing. The only way for the player to get time credit is to go through increasingly spaced checkpoints. 
 
 To have time to get to the next point, the player must maintain a high speed. This speed is increased when the vehicle is in contact with the road in the center of the playing field and is decreased when it exits.
 
